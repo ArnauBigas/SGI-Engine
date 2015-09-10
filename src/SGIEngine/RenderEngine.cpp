@@ -116,7 +116,6 @@ bool RenderEngine::initGL() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
-    glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -124,6 +123,13 @@ bool RenderEngine::initGL() {
     projection = glm::perspectiveFov(glm::radians((float) Config::graphics.fov), (float) Config::graphics.width, (float) Config::graphics.height, (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance);
 
     ortho = glm::ortho(0.0f, (float) Config::graphics.width, (float) Config::graphics.height, 0.0f);
+    
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        cout << "there was an error while initializing OpenGL:" << endl;
+        cout << err << endl;
+        return false;
+    }
 
     //GENERATE GLYPH TEXTURE MAP//============================================//
 
@@ -147,7 +153,7 @@ bool RenderEngine::initGL() {
         uvCoords[c].x /= img->w;
         uvCoords[c].y /= img->w;
     }
-
+    
     glyphTextureMap = generateTexture(GL_RGBA, img->w, img->h, GL_RGBA, img->pixels, GL_UNSIGNED_BYTE, GL_NEAREST, GL_NEAREST);
 
     SDL_FreeSurface(img);
@@ -157,8 +163,9 @@ bool RenderEngine::initGL() {
 
     err = glGetError();
     if (err != GL_NO_ERROR) {
-        cout << "there was an error while initializing OpenGL:" << endl;
+        cout << "there was an error while creating the glyph map:" << endl;
         cout << err << endl;
+        return false;
     }
     
     //TO ACTIVATE H4CK3R MODE UNCOMMENT THIS LINE:

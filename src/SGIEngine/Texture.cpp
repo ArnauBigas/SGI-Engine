@@ -4,7 +4,6 @@
 #include <map>
 
 GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageFormat, void* data, GLenum type, GLint mag_filter, GLint min_filter) {
-    glEnable(GL_TEXTURE_2D);
     GLuint id;
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -20,8 +19,6 @@ GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageF
     glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
-
-    glDisable(GL_TEXTURE_2D);
     return id;
 }
 
