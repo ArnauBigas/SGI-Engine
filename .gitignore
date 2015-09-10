@@ -1,6 +1,5 @@
 build/
 dist/
 include/
-nbproject/*
-!nbproject/configurations.xml
+nbproject/private/*
 .dep.inc
