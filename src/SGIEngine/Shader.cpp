@@ -4,8 +4,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <rapidjson/document.h>
-#include <rapidjson/filestream.h>
+#include <document.h>
+#include <filestream.h>
 
 #include "definitions.h"
 

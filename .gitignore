@@ -1,6 +1,7 @@
 build/
 dist/
 include/
-nbproject/
+nbproject/*
+!nbproject/configurations.xml
 .dep.inc
 Makefile

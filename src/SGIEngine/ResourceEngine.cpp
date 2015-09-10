@@ -9,7 +9,7 @@
 
 #include <vector>
 #include <iostream>
-#include <SDL2/SDL_audio.h>
+#include <SDL_audio.h>
 
 #include "Utility.h"
 #include "Prop.h"

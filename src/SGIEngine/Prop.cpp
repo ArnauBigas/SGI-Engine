@@ -10,8 +10,8 @@
 #include <map>
 #include <GL/glew.h>
 #include <iostream>
-#include <rapidjson/document.h>
-#include <rapidjson/filestream.h>
+#include <document.h>
+#include <filestream.h>
 
 #include "ColladaLoader.h"
 #include "Texture.h"

@@ -7,12 +7,12 @@
 
 #include "World.h"
 
-#include <glm/vec3.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <vec3.hpp>
+#include <gtc/matrix_transform.hpp>
 #include <GL/glew.h>
-#include <rapidjson/rapidjson.h>
-#include <rapidjson/document.h>
-#include <rapidjson/filestream.h>
+#include <rapidjson.h>
+#include <document.h>
+#include <filestream.h>
 #include <iostream>
 
 #include "definitions.h"

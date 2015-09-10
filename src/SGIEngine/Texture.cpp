@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #include <map>
 
 GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageFormat, void* data, GLenum type, GLint mag_filter, GLint min_filter) {

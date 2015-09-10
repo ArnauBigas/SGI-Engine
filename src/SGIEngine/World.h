@@ -10,8 +10,8 @@
 
 #include <string>
 #include <vector>
-#include <glm/vec3.hpp>
-#include <sdl2/SDL_events.h>
+#include <vec3.hpp>
+#include <SDL_events.h>
 
 #include "WorldObject.h"
 #include "Terrain.h"

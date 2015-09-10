@@ -8,7 +8,7 @@
 #ifndef TERRAIN_H
 #define	TERRAIN_H
 
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 
 #include "Model.h"
 

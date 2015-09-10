@@ -8,7 +8,7 @@
 #ifndef WORLDOBJECT_H
 #define	WORLDOBJECT_H
 
-#include <glm/vec3.hpp>
+#include <vec3.hpp>
 #include "Collider.h"
 #include "RenderEngine.h"
 

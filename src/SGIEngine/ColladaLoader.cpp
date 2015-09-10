@@ -8,8 +8,8 @@
 #include "ColladaLoader.h"
 
 #include <iostream>
-#include <rapidxml/rapidxml_utils.hpp>
-#include <rapidxml/rapidxml.hpp>
+#include <rapidxml_utils.hpp>
+#include <rapidxml.hpp>
 #include <string>
 #include <vector>
 #include <GL/glew.h>

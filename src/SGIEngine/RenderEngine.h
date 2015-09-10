@@ -9,9 +9,9 @@
 #define	RENDERENGINE_H
 
 #include <string>
-#include <SDL2/SDL_ttf.h>
-#include <glm/mat4x4.hpp>
-#include <glm/vec2.hpp>
+#include <SDL_ttf.h>
+#include <mat4x4.hpp>
+#include <vec2.hpp>
 
 enum RenderPass {
     DIFFUSE, SHADOWMAPPING, POSTFX

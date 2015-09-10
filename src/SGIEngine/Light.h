@@ -8,7 +8,7 @@
 #ifndef LIGHT_H
 #define	LIGHT_H
 
-#include <glm/vec3.hpp>
+#include <vec3.hpp>
 #include <string>
 
 enum LightType{

@@ -9,7 +9,7 @@
 #include "AudioEngine.h"
 
 #include <iostream>
-#include <glm/geometric.hpp>
+#include <geometric.hpp>
 
 bool PositionalAudioObject::generateSamples(float* stream, size_t streamLength){
     SampleInfo adjustedInfo = sampleInfo;

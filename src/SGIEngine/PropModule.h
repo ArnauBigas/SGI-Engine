@@ -8,7 +8,7 @@
 #ifndef PROPMODULE_H
 #define	PROPMODULE_H
 
-#include <rapidjson/document.h>
+#include <document.h>
 
 #include "WorldObject.h"
 #include "World.h"

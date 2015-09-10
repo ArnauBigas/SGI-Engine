@@ -8,8 +8,8 @@
 #ifndef GUIELEMENT_H
 #define	GUIELEMENT_H
 
-#include <glm/vec2.hpp>
-#include <sdl2/SDL_events.h>
+#include <vec2.hpp>
+#include <SDL_events.h>
 
 class GuiElement {
 public:

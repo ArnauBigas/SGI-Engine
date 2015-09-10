@@ -8,7 +8,7 @@
 #ifndef COLLIDER_H
 #define	COLLIDER_H
 
-#include <glm/vec3.hpp>
+#include <vec3.hpp>
 
 enum ColliderType {
     TRIG, SPHERE

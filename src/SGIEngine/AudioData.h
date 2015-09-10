@@ -9,7 +9,7 @@
 #define	AUDIODATA_H
 
 #include "SampleInfo.h"
-#include <SDL2/SDL_audio.h>
+#include <SDL_audio.h>
 #include <string>
 
 class AudioData {

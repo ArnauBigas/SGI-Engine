@@ -10,9 +10,9 @@
 
 #include <string>
 #include <vector>
-#include <glm/vec3.hpp>
-#include <rapidjson/document.h>
-#include <rapidxml/rapidxml.hpp>
+#include <vec3.hpp>
+#include <document.h>
+#include <rapidxml.hpp>
 
 std::vector<std::string> getSubDirectories(std::string baseDir);
 

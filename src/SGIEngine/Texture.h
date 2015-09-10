@@ -10,7 +10,7 @@
 
 #include <GL/glew.h>
 #include <string>
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 
 using namespace std;
 

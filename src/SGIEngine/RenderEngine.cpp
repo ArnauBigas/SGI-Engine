@@ -9,11 +9,11 @@
 
 #include <GL/glew.h>
 #include <GL/gl.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <GL/glu.h>
 #include <iostream>
-#include <glm/gtx/transform.hpp>
-#include <sdl2/SDL_image.h>
+#include <gtx/transform.hpp>
+#include <SDL_image.h>
 #include <map>
 
 #include "Shader.h"

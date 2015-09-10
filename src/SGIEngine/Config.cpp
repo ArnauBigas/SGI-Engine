@@ -7,9 +7,9 @@
 
 #include "Config.h"
 
-#include <rapidjson/prettywriter.h>
-#include <rapidjson/reader.h>
-#include <rapidjson/writer.h>
+#include <prettywriter.h>
+#include <reader.h>
+#include <writer.h>
 #include "TaskEngine.h"
 #include <string>
 

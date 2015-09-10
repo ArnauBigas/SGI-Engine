@@ -13,8 +13,8 @@
 #include <stdio.h>
 #include <vector>
 #include <queue>
-#include <SDL2/SDL_thread.h>
-#include <SDL2/SDL_cpuinfo.h>
+#include <SDL_thread.h>
+#include <SDL_cpuinfo.h>
 #include <iostream>
 
 std::queue<Task*> tasks;
