@@ -4,4 +4,3 @@ include/
 nbproject/*
 !nbproject/configurations.xml
 .dep.inc
-Makefile
