@@ -117,7 +117,7 @@ void Game::start() {
     while (run) {        
         while (SDL_PollEvent(& event)) {
             if(!states[currentState]->processSDLEvent(event)){
-                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
+                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT) {
                     Game::stop();
                 }
             }
