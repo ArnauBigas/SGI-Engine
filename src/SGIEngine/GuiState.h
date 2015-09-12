@@ -25,7 +25,7 @@ public:
         this->gui = gui;
     }
 protected:
-    Gui* gui;
+    Gui* gui = 0;
 };
 
 #endif	/* GUISTATE_H */
