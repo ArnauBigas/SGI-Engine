@@ -13,6 +13,7 @@
 #include <gtc/matrix_transform.hpp>
 #include <string>
 #include <document.h>
+#include <iostream>
 
 #include "Collider.h"
 #include "RenderEngine.h"
@@ -28,9 +29,14 @@ public:
 
     virtual void loadFromJson(rapidjson::Value& json){
         position = getVec3(json["position"]);
+        rotation = getVec3(json["rotation"]);
     }
     
     virtual void render() = 0;
+    
+    virtual void update() {};
+    
+    virtual void interact() {};
 
     //TODO: get collider generation working properly
     virtual Collider* getCollider(){
@@ -39,18 +45,19 @@ public:
     
     //TODO: handle rotation and scalation
     virtual glm::mat4 getModelMatrix(){
-        return glm::translate(glm::mat4(1.0f), position);
+        glm::mat4 modelMatrix(1.0f);
+        modelMatrix = glm::translate(modelMatrix, position);
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));        
+        return modelMatrix;
     }
     
-    virtual WorldObject* clone() = 0;
-    
-    virtual void update() = 0;
-    
-    virtual void interact() = 0;
+    virtual WorldObject* clone() = 0; 
     
     virtual bool shouldIntegrate() {return true;}
     
-    std::string getShader() {return shader;}
+    std::string getShaderRequired() {return shader;}
 
     glm::vec3 position;
     glm::vec3 velocity;

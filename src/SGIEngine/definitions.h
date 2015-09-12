@@ -29,6 +29,7 @@
 #define FAMBIENT    FAUDIO"ambient/"
 
 #define FPROPS	    "props/"
+#define FWALLS      "walls/"
 
 #define BUFFER_OFFSET(i) ((void*)(i))
 

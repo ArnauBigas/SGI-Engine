@@ -4,6 +4,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <fstream>
 
 #if defined WINDOWS
 #include <windows.h>
@@ -81,4 +82,17 @@ void split(std::string s, std::string delimiter, std::vector<std::string> *conta
           if (j == std::string::npos)
              container->push_back(s.substr(i, s.length()));
     }
+}
+
+bool readJsonFile(std::string dir, rapidjson::Document& doc){
+    std::ifstream stream(dir, std::ios::in);
+    if (stream.is_open()) {
+        std::string content((std::istreambuf_iterator<char>(stream)),
+                       (std::istreambuf_iterator<char>()));
+        rapidjson::StringStream ss(content.c_str());
+        doc.ParseStream(ss);
+        return true;
+    } else {
+        return false;
+    }    
 }

@@ -208,8 +208,7 @@ void RenderEngine::set2D(){
         shader2D = getShader(Config::graphics.shader2D);
     }
     if(shaderCurrent != shader2D){
-        shaderCurrent = shader2D;
-        shaderCurrent->link();
+        setCurrentShader(shader2D);
     }
     projection = projection2D;
     view = glm::mat4(1.0f);
@@ -224,6 +223,7 @@ ShaderProgram* RenderEngine::getCurrentShader(){
 
 void RenderEngine::setCurrentShader(ShaderProgram* shader){
     shaderCurrent = shader;
+    shaderCurrent->link();
 }
 
 TTF_Font* RenderEngine::getFont() {

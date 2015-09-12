@@ -97,6 +97,8 @@
         <itemPath>src/SGIEngine/Prop.h</itemPath>
         <itemPath>src/SGIEngine/Terrain.cpp</itemPath>
         <itemPath>src/SGIEngine/Terrain.h</itemPath>
+        <itemPath>src/SGIEngine/Wall.cpp</itemPath>
+        <itemPath>src/SGIEngine/Wall.h</itemPath>
         <itemPath>src/SGIEngine/World.cpp</itemPath>
         <itemPath>src/SGIEngine/World.h</itemPath>
         <itemPath>src/SGIEngine/WorldObject.cpp</itemPath>
@@ -308,6 +310,10 @@
       </item>
       <item path="src/SGIEngine/Utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/Wall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Wall.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/World.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/World.h" ex="false" tool="3" flavor2="0">
@@ -511,6 +517,10 @@
       </item>
       <item path="src/SGIEngine/Utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/Wall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Wall.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/World.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/World.h" ex="false" tool="3" flavor2="0">
@@ -710,6 +720,10 @@
       <item path="src/SGIEngine/Utility.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/SGIEngine/Utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Wall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Wall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/World.cpp" ex="false" tool="1" flavor2="8">
       </item>

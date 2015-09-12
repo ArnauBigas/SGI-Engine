@@ -20,6 +20,8 @@ void loadAllDomainResources();
 
 void loadProps(std::string domain);
 
+void loadWalls(std::string domain);
+
 void loadShaders();
 
 void loadTextures();

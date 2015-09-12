@@ -20,11 +20,11 @@ void Camera::enable(){
 
 glm::mat4 Camera::getViewMatrix(){
     return glm::lookAt(position,
-            position + glm::normalize(glm::vec3(
+            position + glm::vec3(
             cos(glm::radians(pitch)) * cos(glm::radians(yaw)),
             sin(glm::radians(pitch)),
             cos(glm::radians(pitch)) * sin(glm::radians(yaw))
-            )),
+            ),
             glm::vec3(sin(glm::radians(roll)),cos(glm::radians(roll)),0));
 }
 

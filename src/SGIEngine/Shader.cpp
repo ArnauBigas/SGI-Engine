@@ -5,8 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <document.h>
-#include <filestream.h>
 
+#include "Utility.h"
 #include "definitions.h"
 
 std::string* getSource(const char* path) {
@@ -88,21 +88,14 @@ unsigned int loadProgram(const char* vertexShaderFile, const char* fragmentShade
 }
 
 ShaderProgram::ShaderProgram(std::string file) {
-    FILE* f;
-    f = fopen(file.c_str(), "r");
-    if (f == NULL) {
-        std::cout << "Couldn't load the shader file!" << std::endl;
-    } else {
-        rapidjson::Document doc;
-        rapidjson::FileStream is(f);
-        doc.ParseStream<0>(is);
+    rapidjson::Document doc;
+    if(readJsonFile(file, doc)){
         programID = loadProgram((FSHADERS + std::string(doc["vertexShader"].GetString())).c_str(), (FSHADERS + std::string(doc["fragmentShader"].GetString())).c_str());
         link();
         rapidjson::Value& uniforms = doc["uniforms"];
         for (rapidjson::SizeType i = 0; i < uniforms.Size(); i++) {
             this->uniforms.insert(std::make_pair(uniforms[i].GetString(), glGetUniformLocation(programID, uniforms[i].GetString())));
         }
-        fclose(f);
     }
 }
 

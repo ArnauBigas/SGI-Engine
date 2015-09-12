@@ -55,7 +55,9 @@ void serializeGraphics(rapidjson::Document* doc) {
         g.AddMember("borderless", Config::graphics.borderless, doc->GetAllocator());
         g.AddMember("nearPlaneClipping", Config::graphics.nearPlaneClipping, doc->GetAllocator());
         g.AddMember("renderDistance", Config::graphics.renderDistance, doc->GetAllocator());
-        g.AddMember("shader2D", Config::graphics.shader2D.c_str(), doc->GetAllocator());
+        rapidjson::Value valObjectString(rapidjson::kStringType);
+        valObjectString.SetString(Config::graphics.shader2D.c_str(), Config::graphics.shader2D.length());
+        g.AddMember("shader2D", valObjectString, doc->GetAllocator());
         g.AddMember("antialiasing", Config::graphics.antialiasing, doc->GetAllocator());
         g.AddMember("bobbing", Config::graphics.bobbing, doc->GetAllocator());
         g.AddMember("modelDetail", Config::graphics.modelDetail, doc->GetAllocator());

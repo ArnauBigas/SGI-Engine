@@ -11,21 +11,15 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <document.h>
-#include <filestream.h>
 
+#include "Utility.h"
 #include "ColladaLoader.h"
 #include "Texture.h"
 
 Prop::Prop(std::string dir) {    
     texture = loadTextureFromPNG(dir + "texture.png");
-    FILE* f;
-    f = fopen((dir + "prop.json").c_str(), "r");
-    if (f == NULL) {
-        std::cout << "Couldn't load the prop file!" << std::endl;
-    } else {
-        rapidjson::Document doc;
-        rapidjson::FileStream is(f);
-        doc.ParseStream<0>(is);
+    rapidjson::Document doc;
+    if(readJsonFile(dir + "prop.json", doc)){
         mass = doc["mass"].GetDouble();
         std::string colliderType = doc["collider"]["type"].GetString();
         if (colliderType == "sphere") {
@@ -44,7 +38,6 @@ Prop::Prop(std::string dir) {
             module->loadConfig(mdls[i]);
             this->modules.push_back(module);
         }
-        fclose(f);
     }
 }
 

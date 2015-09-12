@@ -17,6 +17,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "AudioData.h"
+#include "Wall.h"
 
 std::string loadingStatus;
 
@@ -49,6 +50,7 @@ void loadAllDomainResources() {
     for (std::string s : domains) {
         updateStatus("Loading domain " + s);
         loadProps(s);
+        loadWalls(s);
     }
 }
 
@@ -57,6 +59,14 @@ void loadProps(std::string domain) {
     for (std::string s : props) {
         updateStatus("Loading prop " + domain + ":" + s);
         registerWorldObject("prop:" + domain + ":" + s, new Prop(FGAMEDATA + domain + "/" + FPROPS + s + "/"));
+    }
+}
+
+void loadWalls(std::string domain) {
+    std::vector<std::string> props = getSubDirectories(FGAMEDATA + domain + "/" + FWALLS);
+    for (std::string s : props) {
+        updateStatus("Loading wall " + domain + ":" + s);
+        registerWorldObject("wall:" + domain + ":" + s, new Wall(FGAMEDATA + domain + "/" + FWALLS + s + "/"));
     }
 }
 

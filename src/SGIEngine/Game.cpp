@@ -9,7 +9,6 @@
 
 #include <document.h>
 #include <stringbuffer.h>
-#include <filestream.h>
 #include <prettywriter.h>
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -26,6 +25,7 @@
 #include "ResourceEngine.h"
 #include "LogicEngine.h"
 #include "AudioEngine.h"
+#include "Utility.h"
 
 bool run = true;
 std::string title;
@@ -37,31 +37,25 @@ long long microseconds;
 void saveConfig() {
     std::cout << "Saving config file..." << std::endl;
     FILE* file = fopen("config.json", "w");
-    rapidjson::GenericStringBuffer< rapidjson::UTF8<> > buffer;
-    rapidjson::PrettyWriter<rapidjson::GenericStringBuffer< rapidjson::UTF8<> > > writer(buffer);
+    rapidjson::StringBuffer buffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
     rapidjson::Document doc;
     Config::serialize(&doc);
     doc.Accept(writer);
-    fwrite(buffer.GetString(), buffer.Size(), 1, file);
+    fwrite(buffer.GetString(), buffer.GetSize(), 1, file);
     fclose(file);
     std::cout << "Saved config file." << std::endl;
 }
 
 bool loadConfig() {
     std::cout << "Loading configuration file." << std::endl;
-    FILE* file;
-    file = fopen("config.json", "r");
-    if (file == NULL) {
-        fclose(file);
-        saveConfig();
-    } else {
-        rapidjson::Document doc;
-        rapidjson::FileStream is(file);
-        doc.ParseStream<0>(is);
+    rapidjson::Document doc;
+    if(readJsonFile("config.json", doc)){
         Config::deserialize(&doc);
-        fclose(file);
-    }
-    return true;
+        return true;
+    } else {
+        return false;
+    }    
 }
 
 bool Game::init(std::string title) {

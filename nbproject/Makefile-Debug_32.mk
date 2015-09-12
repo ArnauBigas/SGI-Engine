@@ -69,6 +69,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/Texture.o \
 	${OBJECTDIR}/src/SGIEngine/TexturedGuiQuad.o \
 	${OBJECTDIR}/src/SGIEngine/Utility.o \
+	${OBJECTDIR}/src/SGIEngine/Wall.o \
 	${OBJECTDIR}/src/SGIEngine/World.o \
 	${OBJECTDIR}/src/SGIEngine/WorldObject.o \
 	${OBJECTDIR}/src/SGIEngine/WorldState.o
@@ -269,6 +270,11 @@ ${OBJECTDIR}/src/SGIEngine/Utility.o: src/SGIEngine/Utility.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Iinclude -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Utility.o src/SGIEngine/Utility.cpp
+
+${OBJECTDIR}/src/SGIEngine/Wall.o: src/SGIEngine/Wall.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Wall.o src/SGIEngine/Wall.cpp
 
 ${OBJECTDIR}/src/SGIEngine/World.o: src/SGIEngine/World.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine

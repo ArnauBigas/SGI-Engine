@@ -26,5 +26,7 @@ rapidxml::xml_node<>* searchByAttribute(rapidxml::xml_node<> *node, const char* 
 
 void split(std::string s, std::string delimiter, std::vector<std::string> *container);
 
+bool readJsonFile(std::string dir, rapidjson::Document& doc);
+
 #endif	/* UTILITY_H */
 

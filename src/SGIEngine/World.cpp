@@ -9,9 +9,9 @@
 
 #include <rapidjson.h>
 #include <document.h>
-#include <filestream.h>
 #include <GL/glew.h>
 #include <iostream>
+#include <gtc/type_ptr.hpp>
 
 #include "RenderEngine.h"
 #include "Shader.h"
@@ -33,6 +33,9 @@ void World::renderWorld() {
             for(WorldObject* o : p.second){
                 RenderEngine::setModelMatrix(o->getModelMatrix());
                 RenderEngine::updateMatrices();
+                if(p.first->hasUniform("fragmentPosition_worldspace")){
+                    glUniform3fv(p.first->getUniform("fragmentPosition_worldspace"), 1, glm::value_ptr(o->position));
+                }
                 o->render();
             }
         }
@@ -67,24 +70,19 @@ bool World::processEvent(SDL_Event event) {
 }
 
 bool World::loadFromFile(std::string filename){
-    FILE* f;
-    f = fopen(filename.c_str(), "r");
-    if (f == NULL) {
-        std::cout << "Couldn't load the map!" << std::endl;
-    } else {
-        std::cout << "Loading level..." << std::endl;
-        rapidjson::Document doc;
-        rapidjson::FileStream is(f);
-        doc.ParseStream<0>(is);
+    rapidjson::Document doc;
+    if(readJsonFile(filename, doc)){
         rapidjson::Value& objects = doc["objects"];
         for (rapidjson::SizeType i = 0; i < objects.Size(); i++) {
+            //std::cout << "loading object of type " << objects[i]["type"].GetString() << std::endl;
             WorldObject* o = getWorldObject(objects[i]["type"].GetString())->clone();
             o->loadFromJson(objects[i]);
             addObject(o);
+            //std::cout << "object loaded" << std::endl;
         }
         player = new ControllableEntity((float) doc["player"]["speed"].GetDouble());
         player->loadFromJson(doc["player"]);
-        fclose(f);
+        std::cout << "Level loaded" << std::endl;
     }
 }
 
@@ -93,7 +91,7 @@ ControllableEntity* World::getPlayer(){
 }
 
 void World::addObject(WorldObject* object){
-    ShaderProgram* shader = getShader(object->getShader());
+    ShaderProgram* shader = getShader(object->getShaderRequired());
     if(renderMap.find(shader) == renderMap.end()){
         renderMap.insert(std::make_pair(shader, std::vector<WorldObject*>()));
     }
