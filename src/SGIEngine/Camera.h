@@ -19,9 +19,9 @@ public:
     
     void setProjectionMatrix(glm::mat4 matrix);
     glm::vec3 position;
-    float pitch;
-    float yaw;
-    float roll;
+    float pitch = 0;
+    float yaw = 0;
+    float roll = 0;
 protected:
     virtual glm::mat4 getViewMatrix();    
 private:
