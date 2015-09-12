@@ -17,7 +17,7 @@ public:
 
     void link();
 
-    bool hasUniform();
+    bool hasUniform(std::string name);
 
     int getUniform(std::string name);
 

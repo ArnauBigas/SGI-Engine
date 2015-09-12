@@ -37,6 +37,7 @@ Prop::Prop(std::string dir) {
         } else if(modelType == "collada"){
             model = loadColladaModel(dir + "model.dae");
         }
+        shader = doc["shader"].GetString();
         rapidjson::Value& mdls = doc["modules"];
         for (rapidjson::SizeType i = 0; i < mdls.Size(); i++) {
             PropModule* module = getPropModule(mdls[i]["name"].GetString())->clone();
@@ -59,35 +60,19 @@ void Prop::interact(){
     }
 }
 
-Prop::Prop(Prop* orig) {
-    this->model = orig->model;
-    this->texture = orig->texture;
-    if (orig->collider->getType() == SPHERE) {
-        this->collider = new SphereCollider(position, ((SphereCollider*) orig->collider)->getRadius());
+Prop::Prop(const Prop& orig) {
+    this->model = orig.model;
+    this->texture = orig.texture;
+    this->shader = orig.shader;
+    if (orig.collider->getType() == SPHERE) {
+        this->collider = new SphereCollider(position, ((SphereCollider*) orig.collider)->getRadius());
     }
-    for(PropModule* mod : orig->modules){
+    for(PropModule* mod : orig.modules){
         this->modules.push_back(mod->clone());
     }
 }
 
-void Prop::render(RenderPass pass) {
-    if (pass == DIFFUSE) {
-        glBindTexture(GL_TEXTURE_2D, texture);
-    }
+void Prop::render() {
+    glBindTexture(GL_TEXTURE_2D, texture);
     model->render();
-}
-
-Prop::~Prop() {
-    delete model;
-}
-
-std::map<std::string, Prop*> props;
-
-void addProp(std::string name, Prop* prop) {
-    props.insert(std::make_pair(name, prop));
-}
-
-Prop* getProp(std::string prop) {
-    assert(props.find(prop) != props.end());
-    return props.at(prop);
 }

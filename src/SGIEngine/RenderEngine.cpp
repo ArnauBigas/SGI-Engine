@@ -16,7 +16,6 @@
 #include <SDL_image.h>
 #include <map>
 
-#include "Shader.h"
 #include "definitions.h"
 #include "Config.h"
 #include "Texture.h"
@@ -25,13 +24,19 @@
 std::string windowTitle;
 SDL_Window* window;
 SDL_GLContext glContext;
+
 glm::mat4 projection;
-glm::mat4 ortho;
+glm::mat4 view;
+glm::mat4 model;
+
+glm::mat4 projection2D;
+
+ShaderProgram* shader2D;
+ShaderProgram* shaderCurrent;
 
 std::map<char, glm::vec2> uvCoords;
 TTF_Font* font;
 unsigned int glyphTextureMap;
-
 unsigned int stringVao;
 unsigned int stringVbo;
 
@@ -113,16 +118,14 @@ bool RenderEngine::initGL() {
     //Clear error buffer
     err = glGetError();
 
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    projection = glm::perspectiveFov(glm::radians((float) Config::graphics.fov), (float) Config::graphics.width, (float) Config::graphics.height, (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance);
-
-    ortho = glm::ortho(0.0f, (float) Config::graphics.width, (float) Config::graphics.height, 0.0f);
+    projection2D = glm::ortho(0.0f, (float) Config::graphics.width, (float) Config::graphics.height, 0.0f);
     
     err = glGetError();
     if (err != GL_NO_ERROR) {
@@ -179,13 +182,48 @@ void RenderEngine::swapBuffers() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-glm::mat4 RenderEngine::getProjectionMatrix() {
-    return projection;
-    //return glm::ortho<float>(-20, 20, -20, 20, -20, 20);
+void RenderEngine::setProjectionMatrix(glm::mat4 matrix) {
+    projection = matrix;
 }
 
-glm::mat4 RenderEngine::getOrthoMatrix() {
-    return ortho;
+void RenderEngine::setViewMatrix(glm::mat4 matrix) {
+    view = matrix;
+}
+
+void RenderEngine::setModelMatrix(glm::mat4 matrix) {
+    model = matrix;
+}
+
+void RenderEngine::updateMatrices(){
+    glm::mat4 mvp = projection * view * model;
+    glUniformMatrix4fv(shaderCurrent->getUniform("MVP"), 1, GL_FALSE, &mvp[0][0]);
+}
+
+void RenderEngine::set3D(){
+    glEnable(GL_DEPTH_TEST);
+}
+
+void RenderEngine::set2D(){
+    if(shader2D == 0){
+        shader2D = getShader(Config::graphics.shader2D);
+    }
+    if(shaderCurrent != shader2D){
+        shaderCurrent = shader2D;
+        shaderCurrent->link();
+    }
+    projection = projection2D;
+    view = glm::mat4(1.0f);
+    model = glm::mat4(1.0f);
+    updateMatrices();
+    glDisable(GL_DEPTH_TEST);
+}
+
+ShaderProgram* RenderEngine::getCurrentShader(){
+    return shaderCurrent;
+}
+
+void RenderEngine::setCurrentShader(ShaderProgram* shader){
+    shaderCurrent = shader;
 }
 
 TTF_Font* RenderEngine::getFont() {

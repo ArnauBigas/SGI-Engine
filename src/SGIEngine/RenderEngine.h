@@ -13,9 +13,7 @@
 #include <mat4x4.hpp>
 #include <vec2.hpp>
 
-enum RenderPass {
-    DIFFUSE, SHADOWMAPPING, POSTFX
-};
+#include "Shader.h"
 
 namespace RenderEngine {
 
@@ -45,22 +43,55 @@ namespace RenderEngine {
      * It also clears the GL Color and Depth buffers for the next frame.
      */
     void swapBuffers();
-
+    
     /**
-     * Gets the projection matrix with the current graphical settings.
-     * Used for 3D rendering using glsl shaders.
-     * 
-     * @return a 4x4 matrix containing the 3d prespective projection.
+     * Sets the current projection matrix that will be multiplied and sent
+     * to the shader when updateMatrices() is called.
+     * @param matrix The projection matrix that transforms from worldspace to 
+     * screenspace
      */
-    glm::mat4 getProjectionMatrix();
-
+    void setProjectionMatrix(glm::mat4 matrix);
+    
     /**
-     * Gets the orthographic projection matrix with the current graphical
-     * settings. Used for 2D rendering using glsl shaders.
-     * 
-     * @return a 4x4 matrix containing the 2d orthographic projection.
+     * Sets the current view matrix that will be multiplied and sent
+     * to the shader when updateMatrices() is called.
+     * @param matrix The view matrix that translates from worlspace to
+     * cameraspace
      */
-    glm::mat4 getOrthoMatrix();
+    void setViewMatrix(glm::mat4 matrix);
+    
+    /**
+     * Sets the current model matrix that will be multiplied and sent
+     * to the shader when updateMatrices() is called.
+     * @param matrix The model matrix that modifies the object (translates it,
+     * rotates it and scales it)
+     */
+    void setModelMatrix(glm::mat4 matrix);
+    
+    /**
+     * Multiplies the matrices and sends the MVP matrix to the shader.
+     */
+    void updateMatrices();
+    
+    /**
+     * Sets up the rendering engine to be ready for drawing 3D geometry.
+     */
+    void set3D();
+    
+    /**
+     * Sets up the rendering engine to be ready for drawing 2D geometry.
+     */
+    void set2D();
+    
+    /**
+     * @return The current shader.
+     */
+    ShaderProgram* getCurrentShader();
+    
+    /**
+     * Sets the current shader that's going to be used
+     */
+    void setCurrentShader(ShaderProgram* shader);
 
     /**
      * Returns the current font used for the game.

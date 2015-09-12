@@ -9,8 +9,15 @@
 #define	WORLDOBJECT_H
 
 #include <vec3.hpp>
+#include <mat4x4.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <string>
+#include <document.h>
+
 #include "Collider.h"
 #include "RenderEngine.h"
+#include "Utility.h"
+
 
 class WorldObject {
 public:
@@ -19,53 +26,52 @@ public:
         delete collider;
     }
 
-    virtual void render(RenderPass pass) = 0;
-
-    virtual Collider* getCollider() = 0;
-
-    glm::vec3 getPosition() {
-        return position;
+    virtual void loadFromJson(rapidjson::Value& json){
+        position = getVec3(json["position"]);
     }
+    
+    virtual void render() = 0;
 
-    void setPosition(glm::vec3 pos) {
-        position = pos;
+    //TODO: get collider generation working properly
+    virtual Collider* getCollider(){
+        
     }
-
-    glm::vec3 getRotation() {
-        return rotation;
+    
+    //TODO: handle rotation and scalation
+    virtual glm::mat4 getModelMatrix(){
+        return glm::translate(glm::mat4(1.0f), position);
     }
-
-    void setRotation(glm::vec3 rot) {
-        rotation = rot;
-    }
-
-    glm::vec3 getVelocity() {
-        return velocity;
-    }
-
-    void setVelocity(glm::vec3 vel) {
-        velocity = vel;
-    }
-
-    float getMass() {
-        return mass;
-    }
-
-    virtual bool shouldIntegrate() {
-        return true;
-    }
+    
+    virtual WorldObject* clone() = 0;
     
     virtual void update() = 0;
     
     virtual void interact() = 0;
+    
+    virtual bool shouldIntegrate() {return true;}
+    
+    std::string getShader() {return shader;}
 
     glm::vec3 position;
     glm::vec3 velocity;
     glm::vec3 rotation;
-protected:
     float mass;
+protected:
     Collider* collider;
+    std::string shader;
 };
+
+template<class Derived>
+class BaseWorldObject : public WorldObject{
+public:
+    virtual WorldObject* clone(){
+        return new Derived(static_cast<const Derived&>(*this));
+    }
+};
+
+void registerWorldObject(std::string name, WorldObject* object);
+
+WorldObject* getWorldObject(std::string name);
 
 #endif	/* WORLDOBJECT_H */
 

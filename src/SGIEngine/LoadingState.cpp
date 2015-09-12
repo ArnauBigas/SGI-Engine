@@ -21,13 +21,9 @@ void LoadingState::onEnter() {
 void LoadingState::run() {
     loadShaders();
 
-    getShader("gui")->link();
+    RenderEngine::set2D();
 
-    glUniformMatrix4fv(getShader("gui")->getUniform("MVP"), 1, GL_FALSE, &RenderEngine::getOrthoMatrix()[0][0]);
-
-    glProgramUniform1i(getShader("gui")->getProgramID(), getShader("gui")->getUniform("sampler"), 0);
-
-    glDisable(GL_DEPTH_TEST);
+    glProgramUniform1i(RenderEngine::getCurrentShader()->getProgramID(), RenderEngine::getCurrentShader()->getUniform("sampler"), 0);
 
     RenderEngine::drawString("Loading textures...", 0, 0);
 

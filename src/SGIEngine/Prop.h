@@ -18,21 +18,14 @@
 
 #include <iostream>
 
-class Prop : public WorldObject {
+//TODO: enhance this class, make it nicer
+class Prop : public BaseWorldObject<Prop> {
 public:
-    Prop(std::string dir);
-    Prop(Prop* orig);
-    virtual ~Prop();
+    Prop(std::string);
+    
+    Prop(const Prop& orig);
 
-    virtual Collider* getCollider() {
-        if (collider->getType() == SPHERE) {
-            SphereCollider* sphere = static_cast<SphereCollider*> (collider);
-            sphere->update(getPosition());
-        }
-        return collider;
-    }
-
-    virtual void render(RenderPass pass);
+    virtual void render();
     
     virtual void update();
     
@@ -44,10 +37,6 @@ private:
     unsigned int texture;
     
 };
-
-void addProp(std::string name, Prop* prop);
-
-Prop* getProp(std::string name);
 
 #endif	/* PROP_H */
 

@@ -39,8 +39,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/AudioEngine.o \
 	${OBJECTDIR}/src/SGIEngine/AudioObject.o \
 	${OBJECTDIR}/src/SGIEngine/Button.o \
+	${OBJECTDIR}/src/SGIEngine/Camera.o \
 	${OBJECTDIR}/src/SGIEngine/ColladaLoader.o \
 	${OBJECTDIR}/src/SGIEngine/Config.o \
+	${OBJECTDIR}/src/SGIEngine/ControllableEntity.o \
+	${OBJECTDIR}/src/SGIEngine/Entity.o \
+	${OBJECTDIR}/src/SGIEngine/FirstPersonCamera.o \
 	${OBJECTDIR}/src/SGIEngine/Game.o \
 	${OBJECTDIR}/src/SGIEngine/Gui.o \
 	${OBJECTDIR}/src/SGIEngine/GuiElement.o \
@@ -66,6 +70,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/TexturedGuiQuad.o \
 	${OBJECTDIR}/src/SGIEngine/Utility.o \
 	${OBJECTDIR}/src/SGIEngine/World.o \
+	${OBJECTDIR}/src/SGIEngine/WorldObject.o \
 	${OBJECTDIR}/src/SGIEngine/WorldState.o
 
 
@@ -115,6 +120,11 @@ ${OBJECTDIR}/src/SGIEngine/Button.o: src/SGIEngine/Button.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Button.o src/SGIEngine/Button.cpp
 
+${OBJECTDIR}/src/SGIEngine/Camera.o: src/SGIEngine/Camera.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Camera.o src/SGIEngine/Camera.cpp
+
 ${OBJECTDIR}/src/SGIEngine/ColladaLoader.o: src/SGIEngine/ColladaLoader.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
@@ -124,6 +134,21 @@ ${OBJECTDIR}/src/SGIEngine/Config.o: src/SGIEngine/Config.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Config.o src/SGIEngine/Config.cpp
+
+${OBJECTDIR}/src/SGIEngine/ControllableEntity.o: src/SGIEngine/ControllableEntity.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/ControllableEntity.o src/SGIEngine/ControllableEntity.cpp
+
+${OBJECTDIR}/src/SGIEngine/Entity.o: src/SGIEngine/Entity.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Entity.o src/SGIEngine/Entity.cpp
+
+${OBJECTDIR}/src/SGIEngine/FirstPersonCamera.o: src/SGIEngine/FirstPersonCamera.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/FirstPersonCamera.o src/SGIEngine/FirstPersonCamera.cpp
 
 ${OBJECTDIR}/src/SGIEngine/Game.o: src/SGIEngine/Game.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
@@ -249,6 +274,11 @@ ${OBJECTDIR}/src/SGIEngine/World.o: src/SGIEngine/World.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/World.o src/SGIEngine/World.cpp
+
+${OBJECTDIR}/src/SGIEngine/WorldObject.o: src/SGIEngine/WorldObject.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/WorldObject.o src/SGIEngine/WorldObject.cpp
 
 ${OBJECTDIR}/src/SGIEngine/WorldState.o: src/SGIEngine/WorldState.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine

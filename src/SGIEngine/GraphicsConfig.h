@@ -8,6 +8,8 @@
 #ifndef GRAPHICSCONFIG_H
 #define	GRAPHICSCONFIG_H
 
+#include <string>
+
 struct GraphicsConfig {
     int width = 1280;
     int height = 720;
@@ -16,6 +18,7 @@ struct GraphicsConfig {
     bool vsync = true;
     bool borderless = false;
     double renderDistance = 200;
+    std::string shader2D = "gui";
     int antialiasing = 16; //Not implemented
     bool bobbing = false; //Not implemented
     int modelDetail = 4; //Not implemented

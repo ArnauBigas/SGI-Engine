@@ -116,6 +116,7 @@ void Game::start() {
     SDL_Event event;
     while (run) {        
         while (SDL_PollEvent(& event)) {
+            //std::cout << "game event" << std::endl;
             if(!states[currentState]->processSDLEvent(event)){
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT) {
                     Game::stop();
@@ -144,6 +145,7 @@ bool Game::enterState(std::string name) {
         states[currentState]->onExit();
     }
     currentState = name;
+    std::cout << "Entering state " << name << std::endl;
     states[currentState]->onEnter();
     return true;
 }

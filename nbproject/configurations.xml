@@ -59,8 +59,12 @@
           <itemPath>src/SGIEngine/TexturedGuiQuad.cpp</itemPath>
           <itemPath>src/SGIEngine/TexturedGuiQuad.h</itemPath>
         </logicalFolder>
+        <itemPath>src/SGIEngine/Camera.cpp</itemPath>
+        <itemPath>src/SGIEngine/Camera.h</itemPath>
         <itemPath>src/SGIEngine/ColladaLoader.cpp</itemPath>
         <itemPath>src/SGIEngine/ColladaLoader.h</itemPath>
+        <itemPath>src/SGIEngine/FirstPersonCamera.cpp</itemPath>
+        <itemPath>src/SGIEngine/FirstPersonCamera.h</itemPath>
         <itemPath>src/SGIEngine/GraphicsConfig.h</itemPath>
         <itemPath>src/SGIEngine/IndexVector.cpp</itemPath>
         <itemPath>src/SGIEngine/IndexVector.h</itemPath>
@@ -85,12 +89,17 @@
         <itemPath>src/SGIEngine/WorldState.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="world_engine" projectFiles="true">
+        <itemPath>src/SGIEngine/ControllableEntity.cpp</itemPath>
+        <itemPath>src/SGIEngine/ControllableEntity.h</itemPath>
+        <itemPath>src/SGIEngine/Entity.cpp</itemPath>
+        <itemPath>src/SGIEngine/Entity.h</itemPath>
         <itemPath>src/SGIEngine/Prop.cpp</itemPath>
         <itemPath>src/SGIEngine/Prop.h</itemPath>
         <itemPath>src/SGIEngine/Terrain.cpp</itemPath>
         <itemPath>src/SGIEngine/Terrain.h</itemPath>
         <itemPath>src/SGIEngine/World.cpp</itemPath>
         <itemPath>src/SGIEngine/World.h</itemPath>
+        <itemPath>src/SGIEngine/WorldObject.cpp</itemPath>
         <itemPath>src/SGIEngine/WorldObject.h</itemPath>
       </logicalFolder>
       <itemPath>src/SGIEngine/Utility.cpp</itemPath>
@@ -151,6 +160,10 @@
       </item>
       <item path="src/SGIEngine/Button.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
@@ -160,6 +173,24 @@
       <item path="src/SGIEngine/Config.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -280,6 +311,8 @@
       <item path="src/SGIEngine/World.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/World.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/WorldObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/WorldObject.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -330,6 +363,10 @@
       </item>
       <item path="src/SGIEngine/Button.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
@@ -339,6 +376,24 @@
       <item path="src/SGIEngine/Config.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -460,6 +515,8 @@
       </item>
       <item path="src/SGIEngine/World.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/WorldObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/SGIEngine/WorldObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/WorldState.cpp" ex="false" tool="1" flavor2="0">
@@ -506,6 +563,10 @@
       </item>
       <item path="src/SGIEngine/Button.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
@@ -515,6 +576,24 @@
       <item path="src/SGIEngine/Config.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/SGIEngine/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ControllableEntity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Entity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SGIEngine/FirstPersonCamera.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Game.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -635,6 +714,8 @@
       <item path="src/SGIEngine/World.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/SGIEngine/World.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/WorldObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/WorldObject.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -18,26 +18,21 @@ GuiState::GuiState() {
 }
 
 void GuiState::run() {
-    getShader("gui")->link();
+    if(gui != 0){
+        RenderEngine::set2D();
+    
+        glProgramUniform1i(RenderEngine::getCurrentShader()->getProgramID(), RenderEngine::getCurrentShader()->getUniform("sampler"), 0);
 
-    glUniformMatrix4fv(getShader("gui")->getUniform("MVP"), 1, GL_FALSE, &RenderEngine::getOrthoMatrix()[0][0]);
-
-    glProgramUniform1i(getShader("gui")->getProgramID(), getShader("gui")->getUniform("sampler"), 0);
-
-    glDisable(GL_DEPTH_TEST);
-
-    gui->draw();
-
-    if (Game::lastTickTime() > 0) {
-        RenderEngine::drawString(std::to_string(1000000 / Game::lastTickTime()), 0, 0);
+        gui->draw();
     }
-
-    glEnable(GL_DEPTH_TEST);
     RenderEngine::swapBuffers();
 }
 
 bool GuiState::processSDLEvent(SDL_Event& event) {
-    return gui->processSDLEvent(event);
+    if(gui != 0){
+        return gui->processSDLEvent(event);
+    }
+    return false;
 }
 
 GuiState::GuiState(const GuiState& orig) {

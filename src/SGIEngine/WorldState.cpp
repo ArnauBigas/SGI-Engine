@@ -32,9 +32,8 @@ void WorldState::onEnter() {
 
 void WorldState::run() {
     world->integratePhysics();
-    //Shadow system is broken, so ignore this
-    //world->renderWorld(SHADOWMAPPING);
-    world->renderWorld(DIFFUSE);
+    world->logicUpdate();
+    world->renderWorld();
     GuiState::run();
 }
 

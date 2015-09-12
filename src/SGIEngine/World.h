@@ -10,48 +10,32 @@
 
 #include <string>
 #include <vector>
-#include <vec3.hpp>
+#include <map>
 #include <SDL_events.h>
 
 #include "WorldObject.h"
-#include "Terrain.h"
 #include "Light.h"
+#include "Entity.h"
+#include "Camera.h"
+#include "ControllableEntity.h"
 
 class World {
 public:
-    World();
-    World(const World& orig);
-    virtual ~World();
-    void renderWorld(RenderPass pass);
-    void integratePhysics();
-    bool loadFromFile(std::string filename);
-    bool processEvent(SDL_Event event);
-    unsigned int getShadowmapTexture();
-    glm::vec3 getCameraPos(){
-        return cameraPosition;
-    }
-    void addLightSource(PointLight light);
-private:
+    virtual void renderWorld();
+    virtual void integratePhysics();
+    virtual void logicUpdate();
+    virtual bool loadFromFile(std::string filename);
+    virtual bool processEvent(SDL_Event event);
+    virtual void addObject(WorldObject* object);
+    virtual void addCamera(Camera* camera);
+    virtual void addLightSource(PointLight light);
+    virtual ControllableEntity* getPlayer();
+protected:
+    std::map<ShaderProgram*, std::vector<WorldObject*>> renderMap;
     std::vector<WorldObject*> objects;
-    glm::vec3 cameraPosition = glm::vec3(0.0f, 2.0f, 0.0f);
-    glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 sunDirection = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 sunUp = glm::vec3(1, 1, 1);
+    std::vector<Camera*> cameras;
     std::vector<PointLight> lights;
-    glm::vec3 upDirection = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 ambientLight = glm::vec3(1, 1, 1);
-    bool frwd = false;
-    bool back = false;
-    bool left = false;
-    bool right = false;
-    bool up = false;
-    bool down = false;
-    bool lightMovement = false;
-    int dx, dy = 0;
-    float pitch = 0.0f;
-    float yaw = 0.0f;
-    float speed = 0.1f;
-    Terrain* terrain;
+    ControllableEntity* player;
 };
 
 #endif	/* WORLD_H */

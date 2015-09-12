@@ -111,7 +111,15 @@ void ShaderProgram::link() {
 }
 
 int ShaderProgram::getUniform(std::string name) {
-    return uniforms.at(name);
+    if(hasUniform(name)){
+        return uniforms.at(name);
+    }
+    std::cout << "Couldn't find uniform " << name << std::endl;
+    return 0;
+}
+
+bool ShaderProgram::hasUniform(std::string name){
+    return uniforms.find(name) != uniforms.end();
 }
 
 std::map<std::string, ShaderProgram*> programs;
@@ -121,5 +129,9 @@ void addShader(std::string name, ShaderProgram* program) {
 }
 
 ShaderProgram* getShader(std::string name) {
+    if(programs.find(name) == programs.end()){
+        std::cout << "Couldn't find shader program " << name << std::endl;
+        return 0;
+    }
     return programs.at(name);
 }

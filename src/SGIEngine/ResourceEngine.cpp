@@ -56,8 +56,7 @@ void loadProps(std::string domain) {
     std::vector<std::string> props = getSubDirectories(FGAMEDATA + domain + "/" + FPROPS);
     for (std::string s : props) {
         updateStatus("Loading prop " + domain + ":" + s);
-        addProp(domain + ":" + s, new Prop(FGAMEDATA + domain + "/" + FPROPS + s + "/"));
-
+        registerWorldObject("prop:" + domain + ":" + s, new Prop(FGAMEDATA + domain + "/" + FPROPS + s + "/"));
     }
 }
 
