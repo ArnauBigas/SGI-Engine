@@ -41,12 +41,8 @@ void Wall::render(){
         position = current;
         RenderEngine::setModelMatrix(getModelMatrix());
         RenderEngine::updateMatrices();
-        if(RenderEngine::getCurrentShader()->hasUniform("fragmentPosition_worldspace")){
-            glm::vec3 pos = position;
-            pos = glm::rotateX(pos, glm::radians(rotation.x));
-            pos = glm::rotateY(pos, glm::radians(rotation.y));
-            pos = glm::rotateZ(pos, glm::radians(rotation.z));  
-            glUniform3fv(RenderEngine::getCurrentShader()->getUniform("fragmentPosition_worldspace"), 1, glm::value_ptr(pos));
+        if(RenderEngine::getCurrentShader()->hasUniform("Model")){
+            glUniformMatrix4fv(RenderEngine::getCurrentShader()->getUniform("Model"), 1, GL_FALSE, &getModelMatrix()[0][0]);
         }
         model->render();
         current += modelLength;

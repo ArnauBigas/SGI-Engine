@@ -33,8 +33,8 @@ void World::renderWorld() {
             for(WorldObject* o : p.second){
                 RenderEngine::setModelMatrix(o->getModelMatrix());
                 RenderEngine::updateMatrices();
-                if(p.first->hasUniform("fragmentPosition_worldspace")){
-                    glUniform3fv(p.first->getUniform("fragmentPosition_worldspace"), 1, glm::value_ptr(o->position));
+                if(p.first->hasUniform("Model")){
+                    glUniformMatrix4fv(p.first->getUniform("Model"), 1, GL_FALSE, &o->getModelMatrix()[0][0]);
                 }
                 o->render();
             }
