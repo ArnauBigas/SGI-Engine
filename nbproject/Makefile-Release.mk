@@ -40,7 +40,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/AudioObject.o \
 	${OBJECTDIR}/src/SGIEngine/Button.o \
 	${OBJECTDIR}/src/SGIEngine/Camera.o \
-	${OBJECTDIR}/src/SGIEngine/ColladaLoader.o \
 	${OBJECTDIR}/src/SGIEngine/Config.o \
 	${OBJECTDIR}/src/SGIEngine/ControllableEntity.o \
 	${OBJECTDIR}/src/SGIEngine/Entity.o \
@@ -49,12 +48,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/Gui.o \
 	${OBJECTDIR}/src/SGIEngine/GuiElement.o \
 	${OBJECTDIR}/src/SGIEngine/GuiState.o \
-	${OBJECTDIR}/src/SGIEngine/IndexVector.o \
 	${OBJECTDIR}/src/SGIEngine/Label.o \
 	${OBJECTDIR}/src/SGIEngine/Light.o \
 	${OBJECTDIR}/src/SGIEngine/LightEmitterModule.o \
 	${OBJECTDIR}/src/SGIEngine/LoadingState.o \
 	${OBJECTDIR}/src/SGIEngine/LogicEngine.o \
+	${OBJECTDIR}/src/SGIEngine/Material.o \
+	${OBJECTDIR}/src/SGIEngine/Mesh.o \
 	${OBJECTDIR}/src/SGIEngine/Model.o \
 	${OBJECTDIR}/src/SGIEngine/PositionalAudioObject.o \
 	${OBJECTDIR}/src/SGIEngine/Prop.o \
@@ -126,11 +126,6 @@ ${OBJECTDIR}/src/SGIEngine/Camera.o: src/SGIEngine/Camera.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Camera.o src/SGIEngine/Camera.cpp
 
-${OBJECTDIR}/src/SGIEngine/ColladaLoader.o: src/SGIEngine/ColladaLoader.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/ColladaLoader.o src/SGIEngine/ColladaLoader.cpp
-
 ${OBJECTDIR}/src/SGIEngine/Config.o: src/SGIEngine/Config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
@@ -171,11 +166,6 @@ ${OBJECTDIR}/src/SGIEngine/GuiState.o: src/SGIEngine/GuiState.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/GuiState.o src/SGIEngine/GuiState.cpp
 
-${OBJECTDIR}/src/SGIEngine/IndexVector.o: src/SGIEngine/IndexVector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/IndexVector.o src/SGIEngine/IndexVector.cpp
-
 ${OBJECTDIR}/src/SGIEngine/Label.o: src/SGIEngine/Label.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
@@ -200,6 +190,16 @@ ${OBJECTDIR}/src/SGIEngine/LogicEngine.o: src/SGIEngine/LogicEngine.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/LogicEngine.o src/SGIEngine/LogicEngine.cpp
+
+${OBJECTDIR}/src/SGIEngine/Material.o: src/SGIEngine/Material.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Material.o src/SGIEngine/Material.cpp
+
+${OBJECTDIR}/src/SGIEngine/Mesh.o: src/SGIEngine/Mesh.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Mesh.o src/SGIEngine/Mesh.cpp
 
 ${OBJECTDIR}/src/SGIEngine/Model.o: src/SGIEngine/Model.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine

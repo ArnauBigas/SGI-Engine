@@ -55,6 +55,12 @@ glm::vec3 getVec3(rapidjson::Value& val) {
     return glm::vec3(val[0u].GetDouble(), val[1u].GetDouble(), val[2u].GetDouble());
 }
 
+glm::vec4 getVec4(rapidxml::xml_node<> *val){
+    std::vector<std::string> container;
+    split(val->value(), " ", &container);
+    return glm::vec4(std::stof(container[0]), std::stof(container[1]), std::stof(container[2]), std::stof(container[3]));
+}
+
 std::string remove_extension(const std::string& filename) {
     size_t lastdot = filename.find_last_of(".");
     if (lastdot == std::string::npos) return filename;

@@ -9,22 +9,18 @@
 
 #include "Texture.h"
 #include <iostream>
-#include "ColladaLoader.h"
 #include <document.h>
 #include <GL/glew.h>
 #include <gtx/rotate_vector.hpp>
 #include <gtc/type_ptr.hpp>
 
 Wall::Wall(std::string dir) {
-    texture = loadTextureFromPNG(dir + "texture.png");
     rapidjson::Document doc;
     if(readJsonFile(dir+"wall.json", doc)){
         mass = doc["mass"].GetDouble();
-        std::string modelType = doc["modelType"].GetString();
-        if(modelType == "wavefront"){
-            model = new Model(dir + "model.obj");
-        } else if(modelType == "collada"){
-            model = loadColladaModel(dir + "model.dae");
+        model = new Model();
+        if(!model->loadCollada(dir + "model.dae")){
+            std::cout << "Couldn't load model for this prop!" << std::endl;
         }
         shader = doc["shader"].GetString();
         modelLength = getVec3(doc["modelLength"]);
@@ -33,18 +29,12 @@ Wall::Wall(std::string dir) {
 
 //TODO: find a better algorithm
 void Wall::render(){
-    glBindTexture(GL_TEXTURE_2D, texture);
     glm::vec3 dist = end - position;
     glm::vec3 current = position;
     glm::vec3 oldPos = position;
     while((glm::length(dist) - glm::length(modelLength)) >= 0){
         position = current;
-        RenderEngine::setModelMatrix(getModelMatrix());
-        RenderEngine::updateMatrices();
-        if(RenderEngine::getCurrentShader()->hasUniform("Model")){
-            glUniformMatrix4fv(RenderEngine::getCurrentShader()->getUniform("Model"), 1, GL_FALSE, &getModelMatrix()[0][0]);
-        }
-        model->render();
+        model->render(getModelMatrix());
         current += modelLength;
         dist -= modelLength;
     }

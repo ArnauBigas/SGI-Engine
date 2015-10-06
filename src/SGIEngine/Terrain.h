@@ -9,6 +9,7 @@
 #define	TERRAIN_H
 
 #include <SDL_surface.h>
+#include <mat4x4.hpp>
 
 #include "Model.h"
 
@@ -19,7 +20,7 @@ public:
     virtual ~Terrain();
 
     void render() {
-        model->render();
+        model->render(glm::mat4(1.0f));
     }
 private:
     unsigned int vboid;

@@ -130,7 +130,8 @@ Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
 
     std::cout << "terrain loaded (" << indices.size() << " indices)" << std::endl;
 
-    model = new Model(data, indices);
+    //TODO: fix this
+    //model = new Model(data, indices);
 }
 
 Terrain::Terrain(const Terrain& orig) {

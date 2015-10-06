@@ -13,11 +13,9 @@
 #include <document.h>
 
 #include "Utility.h"
-#include "ColladaLoader.h"
 #include "Texture.h"
 
-Prop::Prop(std::string dir) {    
-    texture = loadTextureFromPNG(dir + "texture.png");
+Prop::Prop(std::string dir) {
     rapidjson::Document doc;
     if(readJsonFile(dir + "prop.json", doc)){
         mass = doc["mass"].GetDouble();
@@ -26,10 +24,9 @@ Prop::Prop(std::string dir) {
             collider = new SphereCollider(position, (float) doc["collider"]["radius"].GetDouble());
         }
         std::string modelType = doc["modelType"].GetString();
-        if(modelType == "wavefront"){
-            model = new Model(dir + "model.obj");
-        } else if(modelType == "collada"){
-            model = loadColladaModel(dir + "model.dae");
+        model = new Model();
+        if(!model->loadCollada(dir + "model.dae")){
+            std::cout << "Couldn't load model for this prop!" << std::endl;
         }
         shader = doc["shader"].GetString();
         rapidjson::Value& mdls = doc["modules"];
@@ -55,7 +52,6 @@ void Prop::interact(){
 
 Prop::Prop(const Prop& orig) {
     this->model = orig.model;
-    this->texture = orig.texture;
     this->shader = orig.shader;
     if (orig.collider->getType() == SPHERE) {
         this->collider = new SphereCollider(position, ((SphereCollider*) orig.collider)->getRadius());
@@ -66,6 +62,5 @@ Prop::Prop(const Prop& orig) {
 }
 
 void Prop::render() {
-    glBindTexture(GL_TEXTURE_2D, texture);
-    model->render();
+    model->render(getModelMatrix());
 }

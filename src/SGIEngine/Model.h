@@ -10,28 +10,24 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <mat4x4.hpp>
+
+#include "Mesh.h"
 
 class Model {
-public:
-    Model(std::string file);
-    Model(std::vector<float> data, std::vector<unsigned int> indices);
-    Model(const Model& orig);
-    virtual ~Model();
+public:    
+    /**
+     * Load a "fully" supported collada object.
+     * @return true if the loading was successful.
+     */
+    bool loadCollada(std::string filename);
 
-    bool success() {
-        return loaded;
-    }
+    void render(glm::mat4 transform);
 
-    void render();
-
+    Mesh getMesh(std::string name);
 private:
-    bool loaded = false;
-    unsigned int vboid;
-    unsigned int iboid;
-    unsigned int vaoid;
-    int elements;
-
-    void sendToOpengl(std::vector<float> data, std::vector<unsigned int> indices);
+    std::map<std::string, std::pair<glm::mat4, Mesh>> meshes;
 };
 
 #endif	/* MODEL_H */

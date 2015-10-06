@@ -24,7 +24,6 @@ private:
     glm::vec3 end;
     glm::vec3 modelLength;
     Model* model;
-    unsigned int texture;
 };
 
 #endif	/* WALL_H */

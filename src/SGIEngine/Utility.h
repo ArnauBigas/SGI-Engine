@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <vec3.hpp>
+#include <vec4.hpp>
 #include <document.h>
 #include <rapidxml.hpp>
 
@@ -19,6 +20,8 @@ std::vector<std::string> getSubDirectories(std::string baseDir);
 std::vector<std::string> getFilesList(std::string dir, std::string filter);
 
 glm::vec3 getVec3(rapidjson::Value& val);
+
+glm::vec4 getVec4(rapidxml::xml_node<> *val);
 
 std::string remove_extension(const std::string& filename);
 

@@ -25,17 +25,7 @@ void World::renderWorld() {
         camera->enable();
         for(std::pair<ShaderProgram*, std::vector<WorldObject*>> p : renderMap){
             RenderEngine::setCurrentShader(p.first);
-            //Does the shader support textures?
-            if(p.first->hasUniform("sampler")){
-                glUniform1i(p.first->getUniform("sampler"), 0);
-                glActiveTexture(GL_TEXTURE0);
-            }
             for(WorldObject* o : p.second){
-                RenderEngine::setModelMatrix(o->getModelMatrix());
-                RenderEngine::updateMatrices();
-                if(p.first->hasUniform("Model")){
-                    glUniformMatrix4fv(p.first->getUniform("Model"), 1, GL_FALSE, &o->getModelMatrix()[0][0]);
-                }
                 o->render();
             }
         }

@@ -61,15 +61,15 @@
         </logicalFolder>
         <itemPath>src/SGIEngine/Camera.cpp</itemPath>
         <itemPath>src/SGIEngine/Camera.h</itemPath>
-        <itemPath>src/SGIEngine/ColladaLoader.cpp</itemPath>
-        <itemPath>src/SGIEngine/ColladaLoader.h</itemPath>
         <itemPath>src/SGIEngine/FirstPersonCamera.cpp</itemPath>
         <itemPath>src/SGIEngine/FirstPersonCamera.h</itemPath>
         <itemPath>src/SGIEngine/GraphicsConfig.h</itemPath>
-        <itemPath>src/SGIEngine/IndexVector.cpp</itemPath>
-        <itemPath>src/SGIEngine/IndexVector.h</itemPath>
         <itemPath>src/SGIEngine/Light.cpp</itemPath>
         <itemPath>src/SGIEngine/Light.h</itemPath>
+        <itemPath>src/SGIEngine/Material.cpp</itemPath>
+        <itemPath>src/SGIEngine/Material.h</itemPath>
+        <itemPath>src/SGIEngine/Mesh.cpp</itemPath>
+        <itemPath>src/SGIEngine/Mesh.h</itemPath>
         <itemPath>src/SGIEngine/Model.cpp</itemPath>
         <itemPath>src/SGIEngine/Model.h</itemPath>
         <itemPath>src/SGIEngine/RenderEngine.cpp</itemPath>
@@ -139,7 +139,7 @@
           <incDir>
             <pElem>include</pElem>
           </incDir>
-          <commandLine>-std=c++11</commandLine>
+          <commandLine>-std=c++11 -ggdb</commandLine>
         </ccTool>
         <archiverTool>
         </archiverTool>
@@ -165,10 +165,6 @@
       <item path="src/SGIEngine/Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Collider.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -212,10 +208,6 @@
       </item>
       <item path="src/SGIEngine/GuiState.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/SGIEngine/IndexVector.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/IndexVector.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/SGIEngine/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Label.h" ex="false" tool="3" flavor2="0">
@@ -238,6 +230,14 @@
       <item path="src/SGIEngine/LogicEngine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/LogicEngine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Model.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -373,10 +373,6 @@
       </item>
       <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/SGIEngine/Collider.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Config.cpp" ex="false" tool="1" flavor2="0">
@@ -419,10 +415,6 @@
       </item>
       <item path="src/SGIEngine/GuiState.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/SGIEngine/IndexVector.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/IndexVector.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/SGIEngine/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Label.h" ex="false" tool="3" flavor2="0">
@@ -445,6 +437,14 @@
       <item path="src/SGIEngine/LogicEngine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/LogicEngine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Model.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -550,7 +550,7 @@
           <incDir>
             <pElem>include</pElem>
           </incDir>
-          <commandLine>-std=c++11</commandLine>
+          <commandLine>-std=c++11 -ggdb</commandLine>
         </ccTool>
         <archiverTool>
         </archiverTool>
@@ -576,10 +576,6 @@
       <item path="src/SGIEngine/Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Camera.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/ColladaLoader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/ColladaLoader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Collider.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -623,10 +619,6 @@
       </item>
       <item path="src/SGIEngine/GuiState.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/SGIEngine/IndexVector.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/SGIEngine/IndexVector.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/SGIEngine/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Label.h" ex="false" tool="3" flavor2="0">
@@ -649,6 +641,14 @@
       <item path="src/SGIEngine/LogicEngine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/LogicEngine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Material.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Mesh.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/Model.cpp" ex="false" tool="1" flavor2="8">
       </item>

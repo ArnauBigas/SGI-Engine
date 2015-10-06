@@ -33,9 +33,7 @@ public:
     
     std::vector<PropModule*> modules;
 private:
-    Model* model;
-    unsigned int texture;
-    
+    Model* model;    
 };
 
 #endif	/* PROP_H */
