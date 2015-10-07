@@ -25,6 +25,9 @@ void World::renderWorld() {
         camera->enable();
         for(std::pair<ShaderProgram*, std::vector<WorldObject*>> p : renderMap){
             RenderEngine::setCurrentShader(p.first);
+            if(p.first->hasUniform("cameraPosition")){
+                glUniform3fv(p.first->getUniform("cameraPosition"), 1, glm::value_ptr(camera->position));
+            }
             for(WorldObject* o : p.second){
                 o->render();
             }
