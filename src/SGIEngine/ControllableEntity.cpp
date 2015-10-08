@@ -17,22 +17,22 @@ bool ControllableEntity::processSDLEvent(SDL_Event& event){
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
-                motionX = speed;
+                motionX = 1;
                 break;
             case SDLK_s:
-                motionX = -speed;
+                motionX = -1;
                 break;
             case SDLK_a:
-                motionZ = -speed;
+                motionZ = -1;
                 break;
             case SDLK_d:
-                motionZ = speed;
+                motionZ = 1;
                 break;
             case SDLK_SPACE:
-                motionY = speed;
+                motionY = 1;
                 break;
             case SDLK_c:
-                motionY = -speed;
+                motionY = -1;
                 break;
             case SDLK_LSHIFT:
                 speed = 1.0f;
@@ -96,7 +96,7 @@ void ControllableEntity::update(){
     front.y = sin(glm::radians(cameraPitch));
     front.z = cos(glm::radians(cameraPitch)) * sin(glm::radians(cameraYaw));
     front = glm::normalize(front);
-    position += front * motionX;
-    position += glm::cross(front, glm::vec3(0,1,0)) * motionZ;
-    position += glm::vec3(0,1,0) * motionY;
+    position += front * motionX * speed;
+    position += glm::vec3(sin(glm::radians(-cameraYaw)), 0, cos(glm::radians(-cameraYaw))) * motionZ * speed;
+    position += glm::vec3(0,1,0) * motionY * speed;
 }
