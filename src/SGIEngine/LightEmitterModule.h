@@ -8,15 +8,15 @@
 #ifndef LIGHTEMITTERMODULE_H
 #define	LIGHTEMITTERMODULE_H
 
-#include "PropModule.h"
+#include "ObjectModule.h"
 
 #include "Light.h"
 
 
-class LightEmitterModule : public BasePropModule<LightEmitterModule>{
+class LightEmitterModule : public BaseObjectModule<LightEmitterModule>{
 public:    
     virtual void loadConfig(rapidjson::Value& json);
-    virtual void loadModule(WorldObject* prop, World* world, rapidjson::Value& json);
+    virtual void loadModule(WorldObject* obj, World* world, rapidjson::Value& json);
     virtual std::string getName(){return "lightEmitter";};
 private:
     std::string type;

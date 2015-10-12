@@ -28,8 +28,8 @@
         <logicalFolder name="f1" displayName="prop_modules" projectFiles="true">
           <itemPath>src/SGIEngine/LightEmitterModule.cpp</itemPath>
           <itemPath>src/SGIEngine/LightEmitterModule.h</itemPath>
-          <itemPath>src/SGIEngine/PropModule.cpp</itemPath>
-          <itemPath>src/SGIEngine/PropModule.h</itemPath>
+          <itemPath>src/SGIEngine/ObjectModule.cpp</itemPath>
+          <itemPath>src/SGIEngine/ObjectModule.h</itemPath>
           <itemPath>src/SGIEngine/SoundEmitterModule.cpp</itemPath>
           <itemPath>src/SGIEngine/SoundEmitterModule.h</itemPath>
         </logicalFolder>
@@ -243,6 +243,10 @@
       </item>
       <item path="src/SGIEngine/Model.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/ObjectModule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ObjectModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/PhysicsConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/PositionalAudioObject.cpp"
@@ -258,10 +262,6 @@
       <item path="src/SGIEngine/Prop.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Prop.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/RenderEngine.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -450,6 +450,10 @@
       </item>
       <item path="src/SGIEngine/Model.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/ObjectModule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ObjectModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/PhysicsConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/PositionalAudioObject.cpp"
@@ -465,10 +469,6 @@
       <item path="src/SGIEngine/Prop.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Prop.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/RenderEngine.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -654,6 +654,10 @@
       </item>
       <item path="src/SGIEngine/Model.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/ObjectModule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ObjectModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/PhysicsConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/PositionalAudioObject.cpp"
@@ -669,10 +673,6 @@
       <item path="src/SGIEngine/Prop.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/SGIEngine/Prop.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SGIEngine/PropModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/RenderEngine.cpp" ex="false" tool="1" flavor2="8">
       </item>

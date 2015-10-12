@@ -8,6 +8,8 @@
 #include "LightEmitterModule.h"
 
 #include "Utility.h"
+#include "WorldObject.h"
+#include "World.h"
 #include <iostream>
 
 void LightEmitterModule::loadConfig(rapidjson::Value& json){
@@ -15,7 +17,7 @@ void LightEmitterModule::loadConfig(rapidjson::Value& json){
 }
 
 void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::Value& json){
-    BasePropModule::loadModule(prop, world, json);
+    BaseObjectModule::loadModule(prop, world, json);
     if(type == "pointlight"){
         PointLight light;
         light.color = getVec3(json["color"]);

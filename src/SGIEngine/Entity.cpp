@@ -8,7 +8,7 @@
 #include "Entity.h"
 
 void Entity::render(){
-    //meh
+    BaseWorldObject::render();
 }
     
 void Entity::update(){

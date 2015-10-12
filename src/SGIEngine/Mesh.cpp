@@ -9,7 +9,7 @@
 
 #include <GL/glew.h>
 
-void Mesh::addPolyGroup(PolyGroup poly){
+void Mesh::addPolyGroup(PolyGroup& poly){
     polygroups.push_back(poly);
 }
 

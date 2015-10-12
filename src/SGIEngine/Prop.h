@@ -14,7 +14,7 @@
 #include "Model.h"
 #include "WorldObject.h"
 #include "SphereCollider.h"
-#include "PropModule.h"
+#include "ObjectModule.h"
 
 #include <iostream>
 
@@ -23,16 +23,10 @@ class Prop : public BaseWorldObject<Prop> {
 public:
     Prop(std::string);
     
-    Prop(const Prop& orig);
+    Prop(const Prop& other);
 
     virtual void render();
     
-    virtual void update();
-    
-    virtual void interact();
-    
-    std::vector<PropModule*> modules;
-private:
     Model* model;    
 };
 

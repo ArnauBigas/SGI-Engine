@@ -17,18 +17,18 @@
 Wall::Wall(std::string dir) {
     rapidjson::Document doc;
     if(readJsonFile(dir+"wall.json", doc)){
-        mass = doc["mass"].GetDouble();
+        loadFromJson(doc);
+        modelLength = getVec3(doc["modelLength"]);
         model = new Model();
         if(!model->loadCollada(dir + "model.dae")){
             std::cout << "Couldn't load model for this prop!" << std::endl;
-        }
-        shader = doc["shader"].GetString();
-        modelLength = getVec3(doc["modelLength"]);
+        }        
     }
 }
 
 //TODO: find a better algorithm
 void Wall::render(){
+    BaseWorldObject::render();
     glm::vec3 dist = end - position;
     glm::vec3 current = position;
     glm::vec3 oldPos = position;
@@ -41,8 +41,8 @@ void Wall::render(){
     position = oldPos;
 }
 
-void Wall::loadFromJson(rapidjson::Value& json){
-    WorldObject::loadFromJson(json);
+void Wall::initFromJson(rapidjson::Value& json){
+    WorldObject::initFromJson(json);
     modelLength = glm::rotateX(modelLength, glm::radians(rotation.x));
     modelLength = glm::rotateY(modelLength, glm::radians(rotation.y));
     modelLength = glm::rotateZ(modelLength, glm::radians(rotation.z));  

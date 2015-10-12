@@ -20,10 +20,15 @@ struct PolyGroup{
 };
 
 class Mesh {
-public:    
-    void addPolyGroup(PolyGroup poly);
+public:
+    
+    void addPolyGroup(PolyGroup& poly);
     
     void render();
+    
+    PolyGroup& getPolyGroup(int index){
+        return polygroups.at(index);
+    }
 private:
     std::vector<PolyGroup> polygroups;
 };

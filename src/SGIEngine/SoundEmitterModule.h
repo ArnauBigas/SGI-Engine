@@ -8,11 +8,11 @@
 #ifndef SOUNDEMITTERMODULE_H
 #define	SOUNDEMITTERMODULE_H
 
-#include "PropModule.h"
+#include "ObjectModule.h"
 
 #include <string>
 
-class SoundEmitterModule : public BasePropModule<SoundEmitterModule>{
+class SoundEmitterModule : public BaseObjectModule<SoundEmitterModule>{
 public:    
     virtual void loadModule(WorldObject* prop, World* world, rapidjson::Value& json);
     virtual void onInteract();

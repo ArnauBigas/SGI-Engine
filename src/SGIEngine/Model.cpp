@@ -307,6 +307,6 @@ void Model::render(glm::mat4 transform) {
     }
 }
 
-Mesh Model::getMesh(std::string name){
-    return meshes.at("name").second;
+Mesh& Model::getMesh(std::string name){
+    return meshes.at(name).second;
 }

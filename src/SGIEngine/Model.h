@@ -25,7 +25,7 @@ public:
 
     void render(glm::mat4 transform);
 
-    Mesh getMesh(std::string name);
+    Mesh& getMesh(std::string name);
 private:
     std::map<std::string, std::pair<glm::mat4, Mesh>> meshes;
 };

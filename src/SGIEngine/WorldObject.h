@@ -18,32 +18,30 @@
 #include "Collider.h"
 #include "RenderEngine.h"
 #include "Utility.h"
+#include "ObjectModule.h"
 
 
 class WorldObject {
 public:
+    WorldObject(){};
 
+    WorldObject(const WorldObject& other);
+    
     virtual ~WorldObject() {
         delete collider;
     }
-
-    virtual void loadFromJson(rapidjson::Value& json){
-        position = getVec3(json["position"]);
-        rotation = getVec3(json["rotation"]);
-    }
     
-    virtual void render() = 0;
+    virtual void initFromJson(rapidjson::Value& json);
     
-    virtual void update() {};
+    virtual void render();
     
-    virtual void interact() {};
+    virtual void update();
+    
+    virtual void interact();
 
     //TODO: get collider generation working properly
-    virtual Collider* getCollider(){
-        
-    }
+    virtual Collider* getCollider() {};
     
-    //TODO: handle rotation and scalation
     virtual glm::mat4 getModelMatrix(){
         glm::mat4 modelMatrix(1.0f);
         modelMatrix = glm::translate(modelMatrix, position);
@@ -64,13 +62,20 @@ public:
     glm::vec3 rotation;
     float mass;
 protected:
-    Collider* collider;
+    void loadFromJson(rapidjson::Value& json);
+    
+    std::vector<ObjectModule*> modules;
+    Collider* collider = 0;
     std::string shader;
 };
 
 template<class Derived>
 class BaseWorldObject : public WorldObject{
 public:
+    BaseWorldObject(){};
+    
+    BaseWorldObject(const BaseWorldObject& other) : WorldObject(other) {};
+    
     virtual WorldObject* clone(){
         return new Derived(static_cast<const Derived&>(*this));
     }

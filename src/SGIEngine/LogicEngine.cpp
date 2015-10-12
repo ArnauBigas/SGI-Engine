@@ -14,7 +14,7 @@
 }*/
 
 //#include <iostream>
-#include "PropModule.h"
+#include "ObjectModule.h"
 #include "SoundEmitterModule.h"
 #include "LightEmitterModule.h"
 
@@ -26,7 +26,7 @@ bool LogicEngine::init() {
     }
     lua_call(state, 0, 0);
     lua_close(state);*/
-    addPropModule("soundEmitter", new SoundEmitterModule());
-    addPropModule("lightEmitter", new LightEmitterModule());
+    addObjectModule("soundEmitter", new SoundEmitterModule());
+    addObjectModule("lightEmitter", new LightEmitterModule());
     return true;
 }

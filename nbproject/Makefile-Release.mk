@@ -56,9 +56,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/Material.o \
 	${OBJECTDIR}/src/SGIEngine/Mesh.o \
 	${OBJECTDIR}/src/SGIEngine/Model.o \
+	${OBJECTDIR}/src/SGIEngine/ObjectModule.o \
 	${OBJECTDIR}/src/SGIEngine/PositionalAudioObject.o \
 	${OBJECTDIR}/src/SGIEngine/Prop.o \
-	${OBJECTDIR}/src/SGIEngine/PropModule.o \
 	${OBJECTDIR}/src/SGIEngine/RenderEngine.o \
 	${OBJECTDIR}/src/SGIEngine/ResourceEngine.o \
 	${OBJECTDIR}/src/SGIEngine/Shader.o \
@@ -206,6 +206,11 @@ ${OBJECTDIR}/src/SGIEngine/Model.o: src/SGIEngine/Model.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Model.o src/SGIEngine/Model.cpp
 
+${OBJECTDIR}/src/SGIEngine/ObjectModule.o: src/SGIEngine/ObjectModule.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/ObjectModule.o src/SGIEngine/ObjectModule.cpp
+
 ${OBJECTDIR}/src/SGIEngine/PositionalAudioObject.o: src/SGIEngine/PositionalAudioObject.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
@@ -215,11 +220,6 @@ ${OBJECTDIR}/src/SGIEngine/Prop.o: src/SGIEngine/Prop.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Prop.o src/SGIEngine/Prop.cpp
-
-${OBJECTDIR}/src/SGIEngine/PropModule.o: src/SGIEngine/PropModule.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/PropModule.o src/SGIEngine/PropModule.cpp
 
 ${OBJECTDIR}/src/SGIEngine/RenderEngine.o: src/SGIEngine/RenderEngine.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
