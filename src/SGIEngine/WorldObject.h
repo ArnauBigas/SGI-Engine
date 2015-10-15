@@ -31,7 +31,7 @@ public:
         delete collider;
     }
     
-    virtual void initFromJson(rapidjson::Value& json);
+    virtual void initFromJson(World* world, rapidjson::Value& json);
     
     virtual void render();
     

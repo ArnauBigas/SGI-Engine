@@ -18,7 +18,7 @@ public:
     
     virtual void render();
     
-    virtual void initFromJson(rapidjson::Value& json);
+    virtual void initFromJson(World* world, rapidjson::Value& json);
 
 private:
     glm::vec3 end;

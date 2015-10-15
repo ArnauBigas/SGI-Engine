@@ -69,12 +69,12 @@ bool World::loadFromFile(std::string filename){
         for (rapidjson::SizeType i = 0; i < objects.Size(); i++) {
             //std::cout << "loading object of type " << objects[i]["type"].GetString() << std::endl;
             WorldObject* o = getWorldObject(objects[i]["type"].GetString())->clone();
-            o->initFromJson(objects[i]);
+            o->initFromJson(this, objects[i]);
             addObject(o);
             //std::cout << "object loaded" << std::endl;
         }
         player = new ControllableEntity((float) doc["player"]["speed"].GetDouble());
-        player->initFromJson(doc["player"]);
+        player->initFromJson(this, doc["player"]);
         std::cout << "Level loaded" << std::endl;
     }
 }

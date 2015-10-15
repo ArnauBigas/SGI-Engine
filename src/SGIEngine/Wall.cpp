@@ -41,8 +41,8 @@ void Wall::render(){
     position = oldPos;
 }
 
-void Wall::initFromJson(rapidjson::Value& json){
-    WorldObject::initFromJson(json);
+void Wall::initFromJson(World* world, rapidjson::Value& json){
+    WorldObject::initFromJson(world, json);
     modelLength = glm::rotateX(modelLength, glm::radians(rotation.x));
     modelLength = glm::rotateY(modelLength, glm::radians(rotation.y));
     modelLength = glm::rotateZ(modelLength, glm::radians(rotation.z));  
