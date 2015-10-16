@@ -40,7 +40,7 @@ class BaseObjectModule : public ObjectModule{
     }
 };
 
-void addObjectModule(std::string name, ObjectModule* module);
+void addObjectModule(ObjectModule* module);
 
 ObjectModule* getObjectModule(std::string name);
 

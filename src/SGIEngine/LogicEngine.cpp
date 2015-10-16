@@ -26,7 +26,7 @@ bool LogicEngine::init() {
     }
     lua_call(state, 0, 0);
     lua_close(state);*/
-    addObjectModule("soundEmitter", new SoundEmitterModule());
-    addObjectModule("lightEmitter", new LightEmitterModule());
+    addObjectModule(new SoundEmitterModule());
+    addObjectModule(new LightEmitterModule());
     return true;
 }

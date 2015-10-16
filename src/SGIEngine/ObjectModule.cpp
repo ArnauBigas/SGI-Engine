@@ -9,8 +9,8 @@ void ObjectModule::loadModule(WorldObject* obj, World* world, rapidjson::Value& 
     this->world = world;
 }
 
-void addObjectModule(std::string name, ObjectModule* module){
-    modules.insert(std::make_pair(name, module));
+void addObjectModule(ObjectModule* module){
+    modules.insert(std::make_pair(module->getName(), module));
 }
 
 ObjectModule* getObjectModule(std::string name){
