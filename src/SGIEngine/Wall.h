@@ -21,9 +21,9 @@ public:
     virtual void initFromJson(World* world, rapidjson::Value& json);
 
 private:
-    glm::vec3 end;
-    glm::vec3 modelLength;
+    float modelLength;
     Model* model;
+    std::vector<glm::mat4> matrices;
 };
 
 #endif	/* WALL_H */
