@@ -8,6 +8,37 @@
 
 #if defined WINDOWS
 #include <windows.h>
+#elif defined LINUX
+#include <dirent.h>
+#include <sys/stat.h>
+#endif
+
+#ifdef LINUX
+std::vector<std::string> LINUXgetDirectoryContents(std::string baseDir, bool dirMode) {
+    std::vector<std::string> ents;
+    
+    DIR *dStream = opendir(baseDir.c_str());
+    
+    struct dirent *ent;
+    while ((ent = readdir(dStream)) != NULL) {
+        std::string str(ent->d_name);
+        
+        if (str == "." || str == "..") continue;
+        
+        struct stat st;
+        if (fstatat(dirfd(dStream), str.c_str(), &st, 0) < 0) {
+            std::cout << "Error (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+            break;
+        }
+        
+        if (S_ISDIR(st.st_mode) == dirMode) {
+            ents.push_back(str);
+        }
+    }
+    closedir(dStream);
+    
+    return ents;
+}
 #endif
 
 std::vector<std::string> getSubDirectories(std::string baseDir) {
@@ -24,7 +55,7 @@ std::vector<std::string> getSubDirectories(std::string baseDir) {
         } while (FindNextFileA(handle, &files));
     }
 #elif defined LINUX
-
+    return LINUXgetDirectoryContents(baseDir, true);
 #else
 #error unknown platform
 #endif
@@ -43,7 +74,7 @@ std::vector<std::string> getFilesList(std::string dir, std::string filter) {
         } while (FindNextFileA(handle, &files));
     }
 #elif defined LINUX
-
+    return LINUXgetDirectoryContents(dir, false);
 #else
 #error unknown platform    
 #endif
