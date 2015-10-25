@@ -6,8 +6,6 @@
  */
 #include "WorldState.h"
 
-#include <synchapi.h>
-
 #include "RenderEngine.h"
 #include "TaskEngine.h"
 #include "Label.h"
