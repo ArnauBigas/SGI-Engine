@@ -1,6 +1,5 @@
 build/
 dist/
-include/
 nbproject/private/*
 .dep.inc
 lib/
