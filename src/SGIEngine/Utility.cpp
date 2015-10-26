@@ -84,7 +84,7 @@ std::vector<std::string> getFilesList(std::string dir, std::string filter) {
 #endif
     std::vector<std::string> results;
     std::smatch m;
-    std::regex reg("json$");
+    std::regex reg(filter);
     for (std::string str : contents) {
         if (std::regex_search(str, m, reg)) {
             results.push_back(str);
