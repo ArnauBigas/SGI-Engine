@@ -72,7 +72,7 @@ void loadWalls(std::string domain) {
 
 void loadShaders() {
     updateStatus("Loading shaders...");
-    std::vector<std::string> programs = getFilesList(FSHADERS, "*.json");
+    std::vector<std::string> programs = getFilesList(FSHADERS, "(\\.json)$");
     for (std::string program : programs) {
         updateStatus("Loading shader program " + program);
         addShader(remove_extension(program), new ShaderProgram(FSHADERS + program));
@@ -81,14 +81,14 @@ void loadShaders() {
 
 void loadTextures() {
     updateStatus("Loading shared textures...");
-    std::vector<std::string> textures = getFilesList(FSHRDTEXT, "*.png");
+    std::vector<std::string> textures = getFilesList(FSHRDTEXT, "(\\.png)$");
     for (std::string texture : textures) {
         updateStatus("Loading shared texture " + texture);
         addTexture(remove_extension(texture), loadTextureFromPNG(FSHRDTEXT + texture));
     }
     textures.clear();
     updateStatus("Loading gui textures...");
-    textures = getFilesList(FGUI, "*.png");
+    textures = getFilesList(FGUI, "(\\.png)$");
     for (std::string texture : textures) {
         updateStatus("Loading gui texture " + texture);
         addTexture(remove_extension("gui:" + texture), loadTextureFromPNG(FGUI + texture));
@@ -97,7 +97,7 @@ void loadTextures() {
 
 void loadAudio(){
     updateStatus("Loading music files...");
-    std::vector<std::string> musicFiles = getFilesList(FMUSIC, "*.wav");
+    std::vector<std::string> musicFiles = getFilesList(FMUSIC, "(\\.wav)$");
     for(std::string s : musicFiles){
         updateStatus("Loading music audio file " + s);
         AudioData* audio = loadAudioFromWAV(FMUSIC + s);
