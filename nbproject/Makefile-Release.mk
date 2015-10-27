@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Timer.o \
 	${OBJECTDIR}/src/SGIEngine/AudioData.o \
 	${OBJECTDIR}/src/SGIEngine/AudioEngine.o \
 	${OBJECTDIR}/src/SGIEngine/AudioObject.o \
@@ -100,6 +101,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a: ${OBJECTFILES}
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a
+
+${OBJECTDIR}/Timer.o: Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Timer.o Timer.cpp
 
 ${OBJECTDIR}/src/SGIEngine/AudioData.o: src/SGIEngine/AudioData.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
