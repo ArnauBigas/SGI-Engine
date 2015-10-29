@@ -5,49 +5,92 @@
 #include <assert.h>
 #include <iostream>
 #include <fstream>
+#include <regex>
 
 #if defined WINDOWS
 #include <windows.h>
+#include <vector>
+#elif defined LINUX
+#include <dirent.h>
+#include <sys/stat.h>
 #endif
 
-std::vector<std::string> getSubDirectories(std::string baseDir) {
+#ifdef LINUX
+std::vector<std::string> LINUXgetDirectoryContents(std::string baseDir, bool dirMode) {
+    std::vector<std::string> ents;
+    
+    DIR *dStream = opendir(baseDir.c_str());
+    
+    if (dStream == NULL) {
+        return ents;
+    }
+    
+    struct dirent *ent;
+    while ((ent = readdir(dStream)) != NULL) {
+        std::string str(ent->d_name);
+        
+        if (str == "." || str == "..") continue;
+        
+        struct stat st;
+        if (fstatat(dirfd(dStream), str.c_str(), &st, 0) < 0) {
+            std::cout << "Error (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+            break;
+        }
+        
+        if (S_ISDIR(st.st_mode) == dirMode) {
+            ents.push_back(str);
+        }
+    }
+    closedir(dStream);
+    
+    return ents;
+}
+#endif
+
+#ifdef WINDOWS
+std::vector<std::string> WINDOWSgetDirectoryContents(std::string baseDir, bool dirMode) {
     std::vector<std::string> result;
-#if defined WINDOWS
     WIN32_FIND_DATA files;
     HANDLE handle = FindFirstFileA((baseDir + "/*").c_str(), &files);
 
     if (handle != INVALID_HANDLE_VALUE) {
         do {
-            if (strcmp(files.cFileName, ".") && strcmp(files.cFileName, "..") && files.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+            if (strcmp(files.cFileName, ".") && strcmp(files.cFileName, "..") && (files.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY) == dirMode) {
                 result.push_back(files.cFileName);
             }
         } while (FindNextFileA(handle, &files));
     }
+    return result;
+}
+#endif
+std::vector<std::string> getSubDirectories(std::string baseDir) {
+#if defined WINDOWS
+    return WINDOWSgetDirectoryContents(baseDir, true);
 #elif defined LINUX
-
+    return LINUXgetDirectoryContents(baseDir, true);
 #else
 #error unknown platform
 #endif
-    return result;
 }
 
 std::vector<std::string> getFilesList(std::string dir, std::string filter) {
-    std::vector<std::string> result;
+    std::vector<std::string> contents;
 #if defined WINDOWS
-    WIN32_FIND_DATA files;
-    HANDLE handle = FindFirstFileA((dir + filter).c_str(), &files);
-
-    if (handle != INVALID_HANDLE_VALUE) {
-        do {
-            result.push_back(files.cFileName);
-        } while (FindNextFileA(handle, &files));
-    }
+    contents = WINDOWSgetDirectoryContents(dir, false);
 #elif defined LINUX
-
+    contents = LINUXgetDirectoryContents(dir, false);
 #else
 #error unknown platform    
 #endif
-    return result;
+    std::vector<std::string> results;
+    std::smatch m;
+    std::regex reg(filter);
+    for (std::string str : contents) {
+        if (std::regex_search(str, m, reg)) {
+            results.push_back(str);
+        }
+    }
+    return results;
 }
 
 glm::vec3 getVec3(rapidjson::Value& val) {

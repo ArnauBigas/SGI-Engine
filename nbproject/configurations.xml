@@ -33,6 +33,8 @@
           <itemPath>src/SGIEngine/SoundEmitterModule.cpp</itemPath>
           <itemPath>src/SGIEngine/SoundEmitterModule.h</itemPath>
         </logicalFolder>
+        <itemPath>src/SGIEngine/ArgumentHandler.cpp</itemPath>
+        <itemPath>src/SGIEngine/ArgumentHandler.h</itemPath>
         <itemPath>src/SGIEngine/LogicEngine.cpp</itemPath>
         <itemPath>src/SGIEngine/LogicEngine.h</itemPath>
       </logicalFolder>
@@ -123,7 +125,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>src</Elem>
+    <Elem>src/SGIEngine</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -149,6 +151,10 @@
       <item path="src/SGIEngine/Animation.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ArgumentHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ArgumentHandler.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -361,6 +367,10 @@
       </item>
       <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/SGIEngine/ArgumentHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ArgumentHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioData.cpp" ex="false" tool="1" flavor2="0">
@@ -568,6 +578,10 @@
       <item path="src/SGIEngine/Animation.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ArgumentHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/ArgumentHandler.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>

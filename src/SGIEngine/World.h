@@ -31,7 +31,7 @@ public:
     virtual void addLightSource(PointLight light);
     virtual ControllableEntity* getPlayer();
 protected:
-    std::map<ShaderProgram*, std::vector<WorldObject*>> renderMap;
+    std::map<ShaderProgram*, std::vector<WorldObject*> > renderMap;
     std::vector<WorldObject*> objects;
     std::vector<Camera*> cameras;
     std::vector<PointLight> lights;

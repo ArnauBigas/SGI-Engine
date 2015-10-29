@@ -8,7 +8,6 @@
 #include "TaskEngine.h"
 
 #include <assert.h>
-#include <synchapi.h>
 #include <csignal>
 #include <stdio.h>
 #include <vector>
@@ -29,8 +28,6 @@ void handleSignal(int signum) {
     // cleanup and close up stuff here
     // terminate program
     //game->~Game();
-
-    Sleep(1000);
 
     exit(signum);
 }
