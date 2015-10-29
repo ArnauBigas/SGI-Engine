@@ -9,18 +9,17 @@
 #include <iostream>
 #include <map>
 
-AudioData::AudioData(SDL_AudioSpec spec, Uint8* start, Uint32 length){
+WAVAudioData::WAVAudioData(SDL_AudioSpec spec, Uint8* start, Uint32 length){
     this->spec = spec;
     this->start = start;
     end = start + length;
 }
 
-AudioData::~AudioData(){
-    //Hardcoded nonsense, don't mind me
+WAVAudioData::~WAVAudioData(){
     SDL_FreeWAV(start);
 }
     
-size_t AudioData::generateSamples(float* stream, size_t streamLength, size_t audioPos, SampleInfo sampleInfo){
+size_t WAVAudioData::generateSamples(float* stream, size_t streamLength, size_t audioPos, SampleInfo sampleInfo){
     Uint8* pos = start + audioPos; 
     
     if(pos >= end || pos < start){
@@ -69,5 +68,5 @@ AudioData* loadAudioFromWAV(std::string filename){
         std::cerr << "Couldn't load wav file: " << filename << "Error: " << SDL_GetError() << std::endl;
         return 0;
     }
-    return new AudioData(spec, wavStart, wavLength);
+    return new WAVAudioData(spec, wavStart, wavLength);
 }

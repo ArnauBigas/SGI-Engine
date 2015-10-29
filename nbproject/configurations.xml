@@ -59,6 +59,8 @@
           <itemPath>src/SGIEngine/TexturedGuiQuad.cpp</itemPath>
           <itemPath>src/SGIEngine/TexturedGuiQuad.h</itemPath>
         </logicalFolder>
+        <itemPath>src/SGIEngine/Animation.cpp</itemPath>
+        <itemPath>src/SGIEngine/Animation.h</itemPath>
         <itemPath>src/SGIEngine/Camera.cpp</itemPath>
         <itemPath>src/SGIEngine/Camera.h</itemPath>
         <itemPath>src/SGIEngine/FirstPersonCamera.cpp</itemPath>
@@ -144,6 +146,10 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="src/SGIEngine/Animation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioData.cpp" ex="false" tool="1" flavor2="0">
@@ -351,6 +357,10 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="src/SGIEngine/Animation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioData.cpp" ex="false" tool="1" flavor2="0">
@@ -555,6 +565,10 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="src/SGIEngine/Animation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SGIEngine/Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/SGIEngine/AudioConfig.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SGIEngine/AudioData.cpp" ex="false" tool="1" flavor2="0">

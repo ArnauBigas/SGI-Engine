@@ -18,7 +18,7 @@ bool AudioObject::generateSamples(float* stream, size_t streamLength){
     audioPos = audioData->generateSamples(stream, streamLength, audioPos, sampleInfo);
     if(audioPos == (size_t)-1){
         audioPos = 0;
-        return true;
+        return !sampleInfo.loop;
     } else {
         return false;
     }

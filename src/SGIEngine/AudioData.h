@@ -13,10 +13,17 @@
 #include <string>
 
 class AudioData {
-public:
-    AudioData(SDL_AudioSpec spec, Uint8* start, Uint32 length);
+public:    
+    virtual size_t generateSamples(float* stream, size_t streamLength, size_t audioPos, SampleInfo sampleInfo) = 0;
     
-    virtual ~AudioData();
+    virtual size_t getAudioLength() = 0;
+};
+
+class WAVAudioData : public AudioData  {
+    public:
+    WAVAudioData(SDL_AudioSpec spec, Uint8* start, Uint32 length);
+    
+    virtual ~WAVAudioData();
     
     size_t generateSamples(float* stream, size_t streamLength, size_t audioPos, SampleInfo sampleInfo);
     

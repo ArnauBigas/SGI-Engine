@@ -20,6 +20,7 @@
 #include "definitions.h"
 #include "RenderEngine.h"
 #include "Texture.h"
+#include "Game.h"
 
 unsigned int sendToOpengl(std::vector<float> data, std::vector<unsigned int> indices) {
     //Generate OpenGL buffers
@@ -297,6 +298,13 @@ bool Model::loadCollada(std::string filename){
 }
 
 void Model::render(glm::mat4 transform) {
+    std::vector<Animation*>::iterator it = animationUpdates.begin();
+    while(it != animationUpdates.end()){
+        meshes.at((*it)->mesh).first = interpolateAnimation(**it, Game::lastTickTime());
+        if((*it)->finished){
+            animationUpdates.erase(it);
+        }
+    }
     for(std::pair<std::string, std::pair<glm::mat4, Mesh>> p : meshes){
         RenderEngine::setModelMatrix(transform * p.second.first);
         RenderEngine::updateMatrices();
@@ -309,4 +317,10 @@ void Model::render(glm::mat4 transform) {
 
 Mesh& Model::getMesh(std::string name){
     return meshes.at(name).second;
+}
+
+void Model::playAnimation(std::string animation){
+    Animation& anim = animations.at(animation);
+    anim.finished = false;
+    animationUpdates.push_back(&anim);
 }

@@ -12,6 +12,7 @@ struct SampleInfo{
     double volume = 1.0;
     double pitch = 1.0;
     double panning = 0.0;
+    bool loop = false;
 };
 
 #endif	/* SAMPLEINFO_H */

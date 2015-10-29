@@ -14,6 +14,7 @@
 #include <mat4x4.hpp>
 
 #include "Mesh.h"
+#include "Animation.h"
 
 class Model {
 public:    
@@ -26,8 +27,12 @@ public:
     void render(glm::mat4 transform);
 
     Mesh& getMesh(std::string name);
+    
+    void playAnimation(std::string animation);
 private:
     std::map<std::string, std::pair<glm::mat4, Mesh>> meshes;
+    std::map<std::string, Animation> animations;
+    std::vector<Animation*> animationUpdates;
 };
 
 #endif	/* MODEL_H */

@@ -33,6 +33,8 @@ namespace AudioEngine {
     glm::vec3 getListenerOrientation();
     
     void generateSamples(void*, Uint8* stream, int streamLength);
+    
+    SDL_AudioSpec& getAudioSpec();
 };
 
 #endif	/* AUDIOENGINE_H */

@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/SGIEngine/Animation.o \
 	${OBJECTDIR}/src/SGIEngine/AudioData.o \
 	${OBJECTDIR}/src/SGIEngine/AudioEngine.o \
 	${OBJECTDIR}/src/SGIEngine/AudioObject.o \
@@ -100,6 +101,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a: ${OBJECTFILES}
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsgiengine.a
+
+${OBJECTDIR}/src/SGIEngine/Animation.o: src/SGIEngine/Animation.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Animation.o src/SGIEngine/Animation.cpp
 
 ${OBJECTDIR}/src/SGIEngine/AudioData.o: src/SGIEngine/AudioData.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine

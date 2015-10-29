@@ -18,6 +18,12 @@ std::vector<AudioObject*> playingAudio;
 glm::vec3 listenerPosition(0.0f, 0.0f, 0.0f);
 glm::vec3 listenerOrientation(0.0f, 0.0f, 0.0f);
 
+SDL_AudioSpec spec;
+
+SDL_AudioSpec& AudioEngine::getAudioSpec(){
+    return spec;
+}
+
 void AudioEngine::setListenerPosition(glm::vec3 position){
     listenerPosition = position;
 }
@@ -46,9 +52,7 @@ bool removeAudio(AudioObject& audio){
     return false;
 }
 
-bool AudioEngine::init(){
-    SDL_AudioSpec spec;
-    
+bool AudioEngine::init(){    
     SDL_zero(spec);
     spec.freq = 44800;
     spec.format = AUDIO_S16SYS;

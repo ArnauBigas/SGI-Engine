@@ -11,6 +11,7 @@
 #include <iostream>
 #include <geometric.hpp>
 
+//TODO: select audio channel as source for that sample (output mono samples)
 bool PositionalAudioObject::generateSamples(float* stream, size_t streamLength){
     SampleInfo adjustedInfo = sampleInfo;
     glm::vec3 direction = position - AudioEngine::getListenerPosition();
@@ -23,7 +24,7 @@ bool PositionalAudioObject::generateSamples(float* stream, size_t streamLength){
     audioPos = audioData->generateSamples(stream, streamLength, audioPos, adjustedInfo);
     if(audioPos == (size_t)-1){
         audioPos = 0;
-        return true;
+        return !sampleInfo.loop;
     } else {
         return false;
     }
