@@ -70,6 +70,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SGIEngine/Terrain.o \
 	${OBJECTDIR}/src/SGIEngine/Texture.o \
 	${OBJECTDIR}/src/SGIEngine/TexturedGuiQuad.o \
+	${OBJECTDIR}/src/SGIEngine/Timer.o \
 	${OBJECTDIR}/src/SGIEngine/Utility.o \
 	${OBJECTDIR}/src/SGIEngine/Wall.o \
 	${OBJECTDIR}/src/SGIEngine/World.o \
@@ -277,6 +278,11 @@ ${OBJECTDIR}/src/SGIEngine/TexturedGuiQuad.o: src/SGIEngine/TexturedGuiQuad.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Iinclude -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/TexturedGuiQuad.o src/SGIEngine/TexturedGuiQuad.cpp
+
+${OBJECTDIR}/src/SGIEngine/Timer.o: src/SGIEngine/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Iinclude -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SGIEngine/Timer.o src/SGIEngine/Timer.cpp
 
 ${OBJECTDIR}/src/SGIEngine/Utility.o: src/SGIEngine/Utility.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/SGIEngine
