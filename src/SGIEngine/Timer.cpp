@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-#include "src/SGIEngine/definitions.h"
+#include "definitions.h"
 #include <time.h>
 
 long getMS() {
