@@ -14,6 +14,7 @@
 #include <vec4.hpp>
 #include <document.h>
 #include <rapidxml.hpp>
+#include <mat4x4.hpp>
 
 std::vector<std::string> getSubDirectories(std::string baseDir);
 
@@ -30,6 +31,8 @@ rapidxml::xml_node<>* searchByAttribute(rapidxml::xml_node<> *node, const char* 
 void split(std::string s, std::string delimiter, std::vector<std::string> *container);
 
 bool readJsonFile(std::string dir, rapidjson::Document& doc);
+
+glm::mat4 convertToRightHandedCoords(glm::mat4 matrix);
 
 #endif	/* UTILITY_H */
 

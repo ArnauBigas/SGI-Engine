@@ -15,6 +15,7 @@
 #include <GL/glew.h>
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <document.h>
 
 #include "Utility.h"
 #include "definitions.h"
@@ -245,12 +246,12 @@ bool Model::loadCollada(std::string filename){
             //Generate vertices
             for(unsigned int i = 0; i < poly.elements; i++){
                 openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride));
-                openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+1));
                 openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+2));
+                openglData.push_back(-vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+1));
 
                 openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride));
-                openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+1));
                 openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+2));
+                openglData.push_back(-normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+1));
 
                 openglData.push_back(uvData.at(colladaIndices.at(i*3+uvOffset)*uvStride));
                 //collada stores the uv data the other way around. how silly.
@@ -278,13 +279,32 @@ bool Model::loadCollada(std::string filename){
             if(node->first_node("instance_geometry") != 0){
                 std::vector<float> matrix;
                 std::vector<std::string> tempContainer;
-                split(node->first_node("matrix")->value(), " ", &tempContainer);
-                for(std::string s : tempContainer){
-                    matrix.push_back(std::stof(s));
-                }
-                glm::mat4 mat4 = glm::make_mat4(matrix.data());
-                if(std::string(doc.first_node()->first_node("asset")->first_node("up_axis")->value()) == "Z_UP"){
-                    mat4 = glm::rotate(mat4, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+                glm::mat4 mat4 = glm::mat4(1.0f);
+                if(node->first_node("matrix") == 0){
+                    split(node->first_node("translate")->value(), " ", &tempContainer);
+                    mat4 = glm::translate(mat4, glm::vec3(std::stof(tempContainer[0]), std::stof(tempContainer[2]), -std::stof(tempContainer[1])));
+                    tempContainer.clear();
+                    split(searchByAttribute(node, "sid", "rotationX", "rotate")->value(), " ", &tempContainer);
+                    mat4 = glm::rotate(mat4, glm::radians(std::stof(tempContainer[3])), glm::vec3(1.0f, 0.0f, 0.0f));
+                    tempContainer.clear();
+                    split(searchByAttribute(node, "sid", "rotationZ", "rotate")->value(), " ", &tempContainer);
+                    mat4 = glm::rotate(mat4, glm::radians(std::stof(tempContainer[3])), glm::vec3(0.0f, 1.0f, 0.0f));
+                    tempContainer.clear();
+                    split(searchByAttribute(node, "sid", "rotationY", "rotate")->value(), " ", &tempContainer);
+                    mat4 = glm::rotate(mat4, glm::radians(std::stof(tempContainer[3])), glm::vec3(0.0f, 0.0f, -1.0f));
+                    tempContainer.clear();
+                    split(node->first_node("scale")->value(), " ", &tempContainer);
+                    mat4 = glm::scale(mat4, glm::vec3(std::stof(tempContainer[0]), std::stof(tempContainer[2]), std::stof(tempContainer[1])));
+                    //mat4 = glm::mat4(1.0f);
+                } else {
+                    split(node->first_node("matrix")->value(), " ", &tempContainer);
+                    for(std::string s : tempContainer){
+                        matrix.push_back(std::stof(s));
+                    }
+                    glm::mat4 mat4 = glm::make_mat4(matrix.data());
+                    if(std::string(doc.first_node()->first_node("asset")->first_node("up_axis")->value()) == "Z_UP"){
+                        mat4 = convertToRightHandedCoords(mat4);
+                    }
                 }
                 this->meshes.insert(std::pair<std::string,std::pair<glm::mat4, Mesh>>(
                         node->first_attribute("id")->value(),
@@ -293,7 +313,11 @@ bool Model::loadCollada(std::string filename){
                             meshes.at(std::string(node->first_node("instance_geometry")->first_attribute("url")->value()).substr(1)))));
             }
         }
-    }    
+    }
+    rapidjson::Document animDoc;
+    if(readJsonFile(filename.substr(0, filename.find_last_of("/")) + "animation.json", animDoc)){
+        
+    }
     return true;
 }
 

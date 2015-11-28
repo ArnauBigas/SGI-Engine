@@ -49,6 +49,7 @@ void Wall::initFromJson(World* world, rapidjson::Value& json){
         //float x = atan2(dir.y, dir.z);
         float x = 0;
         float y = atan2(dir.x, dir.z);
+        //float y = 0;
         //float z = atan2(dir.y, dir.x);
         float z = 0;
         for(int j = 0; j < segments; j++){
