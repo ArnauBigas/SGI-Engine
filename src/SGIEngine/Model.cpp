@@ -16,6 +16,7 @@
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <document.h>
+#include <map>
 
 #include "Utility.h"
 #include "definitions.h"
@@ -267,7 +268,7 @@ bool Model::loadCollada(std::string filename){
         meshes.insert(std::pair<std::string, Mesh>(geometry->first_attribute("id")->value(), mesh));
         //this->meshes.insert(std::pair<std::string, std::pair<glm::mat4, Mesh>>(std::string(geometry->first_attribute("id")->value()).substr(1), std::pair<glm::mat4, Mesh>(glm::mat4(1.0f), mesh)));
     }
-    
+
     //Load scene
     rapidxml::xml_node<> *scenes = doc.first_node()->first_node("library_visual_scenes");
     if(scenes->first_node("visual_scene") == 0){
