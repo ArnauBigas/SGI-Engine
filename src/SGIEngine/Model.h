@@ -9,9 +9,9 @@
 #define	MODEL_H
 
 #include <string>
-#include <vector>
 #include <map>
 #include <mat4x4.hpp>
+#include <list>
 
 #include "Mesh.h"
 #include "Animation.h"
@@ -32,7 +32,7 @@ public:
 private:
     std::map<std::string, std::pair<glm::mat4, Mesh>> meshes;
     std::map<std::string, Animation> animations;
-    std::vector<Animation*> animationUpdates;
+    std::list<Animation*> animationUpdates;
 };
 
 #endif	/* MODEL_H */

@@ -9,23 +9,26 @@
 
 #include <gtx/matrix_interpolation.hpp>
 
-glm::mat4 interpolateAnimation(Animation& anim, float deltaTime){
-    anim.time += deltaTime;
-    std::pair<float, glm::mat4> keyframe = anim.keyframes.at(anim.current);
-    if(anim.time < keyframe.first){
-        std::pair<float, glm::mat4> nextKeyframe = anim.keyframes.at(anim.current+1);
-        return glm::interpolate(keyframe.second,
+glm::mat4 interpolateAnimation(Animation* anim, float deltaTime){
+    glm::mat4 ret;
+    std::pair<float, glm::mat4> keyframe = anim->keyframes.at(anim->current);
+    if(anim->time < anim->keyframes.at(anim->current+1).first){
+        std::pair<float, glm::mat4> nextKeyframe = anim->keyframes.at(anim->current+1);
+        ret =  glm::interpolate(keyframe.second,
                 nextKeyframe.second,
-                (anim.time - keyframe.first)/(nextKeyframe.first - keyframe.first));
+                (anim->time - keyframe.first)/(nextKeyframe.first - keyframe.first));
     } else {
-       anim.current++;
-       if(anim.current == anim.keyframes.size()-1){
-           anim.current = 0;
-           anim.finished = true;
-           return anim.keyframes.at(anim.current).second;
+       anim->current++;
+       if(anim->current == anim->keyframes.size()-1){
+           anim->current = 0;
+           anim->time = 0.0f;
+           anim->finished = true;
+           ret = anim->keyframes.at(anim->current).second;
        } else {
-           return interpolateAnimation(anim, 0);
+           ret = interpolateAnimation(anim, 0);
        }
     }
+    anim->time += deltaTime;
+    return ret;
 }
 

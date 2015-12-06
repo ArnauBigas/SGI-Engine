@@ -48,8 +48,14 @@ void World::integratePhysics() {
 }
 
 void World::logicUpdate(){
+    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+    bool shouldInteract = keystate[SDL_SCANCODE_E];
     for(WorldObject* o : objects){
         o->update();
+        //TODO: raytracing'n'stuff
+        if(shouldInteract && glm::length(player->position - o->position) < 1.0f){
+            o->interact();
+        }
     }
     player->update();
 }

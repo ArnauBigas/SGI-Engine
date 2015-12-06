@@ -74,6 +74,7 @@ bool Model::loadCollada(std::string filename){
     rapidxml::xml_document<> doc;
     doc.parse<0>(xmlFile.data());
     
+    bool zup = std::string(doc.first_node()->first_node("asset")->first_node("up_axis")->value()) == "Z_UP";
     
     //Load textures
     rapidxml::xml_node<> *images = doc.first_node()->first_node("library_images");
@@ -246,12 +247,22 @@ bool Model::loadCollada(std::string filename){
             //Generate vertices
             for(unsigned int i = 0; i < poly.elements; i++){
                 openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride));
-                openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+2));
-                openglData.push_back(-vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+1));
+                if(zup){
+                    openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+2));
+                    openglData.push_back(-vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+1));
+                } else {
+                    openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+1));
+                    openglData.push_back(vertexData.at(colladaIndices.at(i*3+vertexOffset)*vertexStride+2));
+                }
 
                 openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride));
-                openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+2));
-                openglData.push_back(-normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+1));
+                if(zup){
+                    openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+2));
+                    openglData.push_back(-normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+1));
+                } else {
+                    openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+1));
+                    openglData.push_back(normalData.at(colladaIndices.at(i*3+normalOffset)*normalStride+2));
+                }
 
                 openglData.push_back(uvData.at(colladaIndices.at(i*3+uvOffset)*uvStride));
                 //collada stores the uv data the other way around. how silly.
@@ -315,18 +326,114 @@ bool Model::loadCollada(std::string filename){
         }
     }
     rapidjson::Document animDoc;
-    if(readJsonFile(filename.substr(0, filename.find_last_of("/")) + "animation.json", animDoc)){
-        
+    if(readJsonFile(filename.substr(0, filename.find_last_of("/")+1) + "animation.json", animDoc)){
+        rapidxml::xml_node<> *animations = doc.first_node()->first_node("library_animations");
+        if(animations->first_node("animation") != 0){
+            std::map<std::string, std::vector< std::pair<float, glm::vec3> > > locationKeyframes;
+            std::map<std::string, std::vector< std::pair<float, glm::vec3> > > rotationKeyframes;
+            for(rapidxml::xml_node<> *animNode = animations->first_node("animation"); animNode != 0; animNode = animNode->next_sibling("animation")){
+                std::vector<float> inputContainer;
+                readData(&inputContainer, searchByAttribute(
+                        animNode,
+                        "id",
+                        std::string(searchByAttribute(
+                            animNode->first_node("sampler"),
+                            "semantic",
+                            "INPUT",
+                            "input"
+                        )->first_attribute("source")->value()).substr(1),
+                        "source"));
+                std::vector<float> outputContainer;
+                readData(&outputContainer, searchByAttribute(
+                        animNode,
+                        "id",
+                        std::string(searchByAttribute(
+                            animNode->first_node("sampler"),
+                            "semantic",
+                            "OUTPUT",
+                            "input"
+                        )->first_attribute("source")->value()).substr(1),
+                        "source"));/*
+                std::vector< std::pair<float, glm::vec3> > keyframes;
+                for(int i = 0; i < inputContainer.size(); i++){
+                    keyframes.push_back(std::pair<float, glm::vec3>(inputContainer.at(i), outputContainer.at(i)));
+                }*/
+                std::string target = animNode->first_node("channel")->first_attribute("target")->value();
+                std::string meshName = target.substr(0, target.find_first_of("/"));
+                if(target.substr(target.find_first_of("/")+1, target.find_first_of(".")-target.find_first_of("/")-2) == "rotation"){
+                    if(!rotationKeyframes.count(meshName)){
+                        rotationKeyframes.insert(std::pair<std::string, std::vector< std::pair<float, glm::vec3> > >(meshName, std::vector< std::pair<float, glm::vec3> >()));
+                    }
+                    for(int i = 0; i < inputContainer.size(); i++){
+                        if(rotationKeyframes.at(meshName).size() <= i){
+                            rotationKeyframes.at(meshName).push_back(std::pair<float, glm::vec3>(inputContainer.at(i), glm::vec3(0.0f, 0.0f, 0.0f)));
+                        }
+                        if(target.substr(target.find_first_of("/")+1, target.find_first_of(".")-target.find_first_of("/")-1) == "rotationX"){
+                            rotationKeyframes.at(meshName).at(i).second.x = outputContainer.at(i);
+                        } else if(target.substr(target.find_first_of("/")+1, target.find_first_of(".")-target.find_first_of("/")-1) == "rotationY"){
+                            rotationKeyframes.at(meshName).at(i).second.y = outputContainer.at(i);
+                        } else if(target.substr(target.find_first_of("/")+1, target.find_first_of(".")-target.find_first_of("/")-1) == "rotationZ"){
+                            rotationKeyframes.at(meshName).at(i).second.z = outputContainer.at(i);
+                        }
+                    }
+                } else if(target.substr(target.find_first_of("/")+1, target.find_first_of(".")) == "location"){
+                    if(locationKeyframes.count(meshName)){
+                        locationKeyframes.insert(std::pair<std::string, std::vector< std::pair<float, glm::vec3> > >(meshName, std::vector< std::pair<float, glm::vec3> >()));
+                    }
+                    for(int i = 0; i < inputContainer.size(); i++){
+                        if(locationKeyframes.at(meshName).size() <= i){
+                            locationKeyframes.at(meshName).push_back(std::pair<float, glm::vec3>(inputContainer.at(i), glm::vec3(0.0f, 0.0f, 0.0f)));
+                        }
+                        if(target.substr(target.find_first_of(".")+1) == "X"){
+                            locationKeyframes.at(meshName).at(i).second.x = outputContainer.at(i);
+                        } else if(target.substr(target.find_first_of(".")+1) == "Y"){
+                            locationKeyframes.at(meshName).at(i).second.y = outputContainer.at(i);
+                        } else if(target.substr(target.find_first_of(".")+1) == "Z"){
+                            locationKeyframes.at(meshName).at(i).second.z = outputContainer.at(i);
+                        }
+                    }
+                } else {
+                    std::cout << "unknown animation target: " << target << endl;
+                }
+            }
+            for (rapidjson::SizeType i = 0; i < animDoc.Size(); i++) {
+                Animation animation;
+                rapidjson::Value& animjson = animDoc[i];
+                animation.mesh = animjson["mesh"].GetString();
+                int start = animjson["startKeyframe"].GetInt();
+                int end = animjson["endKeyframe"].GetInt();
+                for(int j = start; j <= end; j++){
+                    glm::mat4 mat4 = this->meshes.at(animation.mesh).first;
+                    glm::vec3 rotation = rotationKeyframes.count(animation.mesh) ? rotationKeyframes.at(animation.mesh).at(j).second : glm::vec3(0.0f, 0.0f, 0.0f);
+                    glm::vec3 translation = locationKeyframes.count(animation.mesh) ? locationKeyframes.at(animation.mesh).at(j).second : glm::vec3(0.0f, 0.0f, 0.0f);
+                    if(zup){
+                        mat4 = glm::translate(mat4, glm::vec3(translation.x, translation.z, -translation.y));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.z), glm::vec3(0.0f, 1.0f, 0.0f));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.y), glm::vec3(0.0f, 0.0f, -1.0f));
+                    } else {
+                        mat4 = glm::translate(mat4, glm::vec3(translation.x, translation.y, translation.z));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+                        mat4 = glm::rotate(mat4, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+                    }
+                    animation.keyframes.push_back(std::make_pair(rotationKeyframes.at(animation.mesh).at(j).first, mat4));
+                }
+                this->animations.insert(std::make_pair(animjson["name"].GetString(), animation));
+            }
+        }
     }
     return true;
 }
 
 void Model::render(glm::mat4 transform) {
-    std::vector<Animation*>::iterator it = animationUpdates.begin();
+    std::list<Animation*>::iterator it = animationUpdates.begin();
     while(it != animationUpdates.end()){
-        meshes.at((*it)->mesh).first = interpolateAnimation(**it, Game::lastTickTime());
+        meshes.at((*it)->mesh).first = interpolateAnimation(*it, Game::lastTickTime() / 1000000.0f);
         if((*it)->finished){
-            animationUpdates.erase(it);
+            animationUpdates.erase(it++);
+        } else {
+            ++it;
         }
     }
     for(std::pair<std::string, std::pair<glm::mat4, Mesh>> p : meshes){
@@ -344,7 +451,16 @@ Mesh& Model::getMesh(std::string name){
 }
 
 void Model::playAnimation(std::string animation){
-    Animation& anim = animations.at(animation);
-    anim.finished = false;
-    animationUpdates.push_back(&anim);
+    if(animations.count(animation)){
+        Animation& anim = animations.at(animation);
+        if(anim.finished){
+            std::cout << "Playing animation " << animation << std::endl;
+            anim.finished = false;
+            animationUpdates.push_back(&anim);
+        } else {
+            std::cout << "Animation " << animation << " is already playing." << std::endl;
+        }
+    } else {
+        std::cerr << "Animation " << animation << " doesn't exist!" << std::endl;
+    }
 }

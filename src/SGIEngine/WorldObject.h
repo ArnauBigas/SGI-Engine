@@ -67,6 +67,7 @@ protected:
     std::vector<ObjectModule*> modules;
     Collider* collider = 0;
     std::string shader;
+    World* world;
 };
 
 template<class Derived>

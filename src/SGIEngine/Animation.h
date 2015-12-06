@@ -22,7 +22,8 @@ struct Animation{
     std::vector<std::pair<float, glm::mat4>> keyframes;
 };
 
-glm::mat4 interpolateAnimation(Animation& anim, float deltaTime);
+//TODO: enable scale interpolation
+glm::mat4 interpolateAnimation(Animation* anim, float deltaTime);
 
 #endif	/* ANIMATION_H */
 

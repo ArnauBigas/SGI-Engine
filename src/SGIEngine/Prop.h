@@ -27,6 +27,8 @@ public:
 
     virtual void render();
     
+    virtual void interact();
+    
     Model* model;    
 };
 
