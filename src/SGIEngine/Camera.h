@@ -10,11 +10,11 @@
 
 #include <mat4x4.hpp>
 #include <vec3.hpp>
-#include <functional>
 
 class Camera {
 public:
     Camera(unsigned int target, unsigned int clearBuffers);
+    ~Camera();
     virtual void enable();
     virtual void disable(){};
     
