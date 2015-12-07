@@ -138,9 +138,9 @@ bool Model::loadCollada(std::string filename){
                 std::cerr << "Couldn't load model: material doesn't use the phong technique." << std::endl;
                 return false;
             }
-            if(profile->first_node("extra") != 0 && profile->first_node("extra")->first_node("technique")->first_node("bump") != 0){
+            if(technique->first_node("extra") != 0 && technique->first_node("extra")->first_node("technique")->first_node("bump") != 0){
                 mat.bumpmapTexture = textures.at(searchByAttribute(profile, "sid", 
-                                searchByAttribute(profile, "sid", profile->first_node("extra")->first_node("technique")->first_node("bump")->first_node("texture")->first_attribute("texture")->value(), "newparam")
+                                searchByAttribute(profile, "sid", technique->first_node("extra")->first_node("technique")->first_node("bump")->first_node("texture")->first_attribute("texture")->value(), "newparam")
                                 ->first_node("sampler2D")->first_node("source")->value()
                                 , "newparam")->first_node("surface")->first_node("init_from")->value());
             }
@@ -173,7 +173,6 @@ bool Model::loadCollada(std::string filename){
         return false;
     }
     for(rapidxml::xml_node<> *geometry = geometries->first_node("geometry"); geometry != 0; geometry = geometry->next_sibling("geometry")){
-        std::cout << "Loading geometry with id: " << geometry->first_attribute("id")->value() << std::endl;
         Mesh mesh;        
         rapidxml::xml_node<> *meshNode = geometry->first_node("mesh");
         if(meshNode == 0){
