@@ -29,7 +29,12 @@ Prop::Prop(std::string dir) {
 Prop::Prop(const Prop& other) : BaseWorldObject(other) {
         this->model = other.model;
 }
+
 void Prop::render() {
     BaseWorldObject::render();
     model->render(getModelMatrix());
+}
+
+void Prop::interact(){
+    model->playAnimation("on"); //debug thing please ignore
 }

@@ -1,5 +1,5 @@
 build/
 dist/
-nbproject/private/*
+nbproject/
 .dep.inc
 lib/

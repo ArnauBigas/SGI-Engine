@@ -1,3 +1,4 @@
+
 /* 
  * File:   FirstPersonCamera.cpp
  * Author: arnau
@@ -23,4 +24,3 @@ void FirstPersonCamera::enable(){
     this->position = glm::vec3(player->position.x, player->position.y + player->getEyeLevel(), player->position.z);
     Camera::enable();
 }
-

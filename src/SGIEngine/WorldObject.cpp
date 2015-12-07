@@ -44,6 +44,7 @@ void WorldObject::interact(){
 void WorldObject::initFromJson(World* world, rapidjson::Value& json){
     position = getVec3(json["position"]);
     rotation = getVec3(json["rotation"]);
+    this->world = world;
     for(ObjectModule* m : modules){
         m->loadModule(this, world, json["modules"][m->getName().c_str()]);
     }

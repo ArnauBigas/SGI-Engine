@@ -15,21 +15,21 @@ CND_PACKAGE_DIR_Debug_32=dist/Debug_32/MinGW64-Windows/package
 CND_PACKAGE_NAME_Debug_32=SGIEngine.tar
 CND_PACKAGE_PATH_Debug_32=dist/Debug_32/MinGW64-Windows/package/SGIEngine.tar
 # Release configuration
-CND_PLATFORM_Release=MinGW64-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW64-Windows
+CND_PLATFORM_Release=MinGW-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
 CND_ARTIFACT_NAME_Release=libsgiengine.a
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW64-Windows/libsgiengine.a
-CND_PACKAGE_DIR_Release=dist/Release/MinGW64-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/libsgiengine.a
+CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
 CND_PACKAGE_NAME_Release=SGIEngine.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW64-Windows/package/SGIEngine.tar
+CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/SGIEngine.tar
 # Debug_64 configuration
-CND_PLATFORM_Debug_64=MinGW-Windows
-CND_ARTIFACT_DIR_Debug_64=dist/Debug_64/MinGW-Windows
+CND_PLATFORM_Debug_64=GNU-Linux
+CND_ARTIFACT_DIR_Debug_64=dist/Debug_64/GNU-Linux
 CND_ARTIFACT_NAME_Debug_64=libsgiengine.a
-CND_ARTIFACT_PATH_Debug_64=dist/Debug_64/MinGW-Windows/libsgiengine.a
-CND_PACKAGE_DIR_Debug_64=dist/Debug_64/MinGW-Windows/package
+CND_ARTIFACT_PATH_Debug_64=dist/Debug_64/GNU-Linux/libsgiengine.a
+CND_PACKAGE_DIR_Debug_64=dist/Debug_64/GNU-Linux/package
 CND_PACKAGE_NAME_Debug_64=SGIEngine.tar
-CND_PACKAGE_PATH_Debug_64=dist/Debug_64/MinGW-Windows/package/SGIEngine.tar
+CND_PACKAGE_PATH_Debug_64=dist/Debug_64/GNU-Linux/package/SGIEngine.tar
 #
 # include compiler specific variables
 #
