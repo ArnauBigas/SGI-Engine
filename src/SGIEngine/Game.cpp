@@ -50,19 +50,19 @@ void saveConfig() {
 bool loadConfig() {
     std::cout << "Loading configuration file." << std::endl;
     rapidjson::Document doc;
-    if(readJsonFile("config.json", doc)){
+    if (readJsonFile("config.json", doc)) {
         Config::deserialize(&doc);
         return true;
     } else {
         return false;
-    }    
+    }
 }
 
 bool Game::init(std::string title) {
     std::cout << "Starting SGI Engine..." << std::endl;
 
     title = title;
-    
+
     std::cout << "Initializing SDL..." << std::endl;
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -89,29 +89,29 @@ bool Game::init(std::string title) {
         std::cerr << "Couldn't start game." << std::endl;
         return false;
     }
-    
+
     std::cout << "Initializing Audio Engine..." << std::endl;
-    if(!AudioEngine::init()){
+    if (!AudioEngine::init()) {
         std::cerr << "Couldn't start game." << std::endl;
         return false;
     }
-    
+
     std::cout << "Initializing Logic Engine..." << std::endl;
-    if(!LogicEngine::init()){
+    if (!LogicEngine::init()) {
         std::cerr << "Couldn't start game." << std::endl;
         return false;
     }
-    
+
     return true;
 }
 
 void Game::start() {
     startTime = std::chrono::high_resolution_clock::now();
     SDL_Event event;
-    while (run) {        
+    while (run) {
         while (SDL_PollEvent(& event)) {
             //std::cout << "game event" << std::endl;
-            if(!states[currentState]->processSDLEvent(event)){
+            if (!states[currentState]->processSDLEvent(event)) {
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT) {
                     Game::stop();
                 }

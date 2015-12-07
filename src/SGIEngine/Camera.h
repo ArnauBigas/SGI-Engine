@@ -10,12 +10,16 @@
 
 #include <mat4x4.hpp>
 #include <vec3.hpp>
+#include <functional>
 
 class Camera {
 public:
     Camera(unsigned int target, unsigned int clearBuffers);
     virtual void enable();
     virtual void disable(){};
+    
+    void resize(int w, int h);
+    void setViewport(float x, float y, float w, float h);
     
     void setProjectionMatrix(glm::mat4 matrix);
     glm::vec3 position = glm::vec3(0, 0, 0);
@@ -28,6 +32,11 @@ private:
     glm::mat4 projectionMatrix;
     unsigned int target;
     unsigned int clearBuffers;
+    
+    struct Viewport {
+        float x, y, w, h;
+    } viewport;
+    int w, h;
 };
 
 #endif	/* CAMERA_H */

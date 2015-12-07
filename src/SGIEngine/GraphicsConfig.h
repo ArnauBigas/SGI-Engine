@@ -17,6 +17,7 @@ struct GraphicsConfig {
     double fov = 90;
     bool vsync = true;
     bool borderless = false;
+    bool resizeable = true;
     double renderDistance = 200;
     std::string shader2D = "gui";
     int antialiasing = 16; //Not implemented

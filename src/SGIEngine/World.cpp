@@ -59,6 +59,11 @@ void World::addLightSource(PointLight light){
 }
 
 bool World::processEvent(SDL_Event event) {
+    if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
+        for (Camera *camera : cameras) {
+            camera->resize(event.window.data1, event.window.data2);
+        }
+    }
     return player->processSDLEvent(event);
 }
 

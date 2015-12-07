@@ -53,6 +53,7 @@ void serializeGraphics(rapidjson::Document* doc) {
         g.AddMember("fov", Config::graphics.fov, doc->GetAllocator());
         g.AddMember("vsync", Config::graphics.vsync, doc->GetAllocator());
         g.AddMember("borderless", Config::graphics.borderless, doc->GetAllocator());
+        g.AddMember("resizable", Config::graphics.resizeable, doc->GetAllocator());
         g.AddMember("nearPlaneClipping", Config::graphics.nearPlaneClipping, doc->GetAllocator());
         g.AddMember("renderDistance", Config::graphics.renderDistance, doc->GetAllocator());
         rapidjson::Value valObjectString(rapidjson::kStringType);
@@ -85,6 +86,7 @@ void deserializeGraphics(rapidjson::Value& g) {
     setDouble(Config::graphics.fov, g, "fov");
     setBool(Config::graphics.vsync, g, "vsync");
     setBool(Config::graphics.borderless, g, "borderless");
+    setBool(Config::graphics.resizeable, g, "resizeable");
     setDouble(Config::graphics.nearPlaneClipping, g, "nearPlaneClipping");
     setDouble(Config::graphics.renderDistance, g, "renderDistance");
     setString(Config::graphics.shader2D, g, "shader2D");

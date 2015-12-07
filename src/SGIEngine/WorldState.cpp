@@ -31,7 +31,7 @@ void WorldState::onEnter() {
 void WorldState::run() {
     world->integratePhysics();
     world->logicUpdate();
-    world->renderWorld();
+    world->render();
     GuiState::run();
 }
 

@@ -76,6 +76,9 @@ bool RenderEngine::initGL() {
     if (Config::graphics.borderless) {
         flags |= SDL_WINDOW_BORDERLESS;
     }
+    if (Config::graphics.resizeable) {
+        flags |= SDL_WINDOW_RESIZABLE;
+    }
 
     window = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Config::graphics.width, Config::graphics.height, flags);
     if (window == NULL) {

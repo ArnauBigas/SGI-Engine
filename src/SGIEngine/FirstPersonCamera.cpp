@@ -13,7 +13,7 @@
 
 FirstPersonCamera::FirstPersonCamera(World* world, unsigned int target, unsigned int clearBuffers) : Camera(target, clearBuffers){
     this->world = world;
-    setProjectionMatrix(glm::perspectiveFov(glm::radians((float) Config::graphics.fov), (float) Config::graphics.width, (float) Config::graphics.height, (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance));
+//    setProjectionMatrix(glm::perspective(glm::radians((float) Config::graphics.fov), (float) Config::graphics.width / (float) Config::graphics.height, (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance));
 }
 
 void FirstPersonCamera::enable(){
