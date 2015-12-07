@@ -21,7 +21,8 @@ public:
 
     virtual void onEnter();
 
-    virtual void run();
+    virtual void render();
+    virtual void update();
 
 private:
     std::string stateName;

@@ -22,7 +22,9 @@ public:
 
     virtual void onEnter();
 
-    void run();
+    virtual void render();
+    
+    virtual void update();
 
     virtual bool processSDLEvent(SDL_Event& event);
 

@@ -17,7 +17,7 @@
 GuiState::GuiState() {
 }
 
-void GuiState::run() {
+void GuiState::render() {
     if(gui != 0){
         RenderEngine::set2D();
     
@@ -26,6 +26,10 @@ void GuiState::run() {
         gui->draw();
     }
     RenderEngine::swapBuffers();
+}
+
+void GuiState::update(){
+    //don't care m8
 }
 
 bool GuiState::processSDLEvent(SDL_Event& event) {

@@ -37,9 +37,14 @@ public:
     }
 
     /**
-     * Called each tick or frame to run state-specific code.
+     * Called each frame to run state-specific rendering code.
      */
-    virtual void run() = 0;
+    virtual void render() = 0;
+    
+    /**
+     * Called each tick to run state-specific logic code.
+     */
+    virtual void update() = 0;
 };
 
 #endif	/* STATE_H */

@@ -18,7 +18,8 @@ public:
     GuiState();
     GuiState(const GuiState& orig);
     virtual ~GuiState();
-    virtual void run();
+    virtual void render();
+    virtual void update();
     virtual bool processSDLEvent(SDL_Event& event);
 
     void setGui(Gui* gui) {

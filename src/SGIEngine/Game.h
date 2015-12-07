@@ -23,7 +23,7 @@ namespace Game {
      * 
      * @return true if the game has been initialized successfully
      */
-    bool init(std::string title);
+    bool init(std::string title, bool client);
 
     /**
      * Starts the main game loop, will only return after the game is closed.
@@ -72,10 +72,16 @@ namespace Game {
     void stop();
 
     /**
-     * Returns the ammount of time the last tick took.
+     * Returns the amount of time the last tick took.
      * @return The duration in microseconds.
      */
     long lastTickTime();
+    
+    /**
+     * Returns whether the game is a client instance or a server instance.
+     * @return ditto.
+     */
+    bool isClient();
 };
 
 #endif	/* GAME_H */

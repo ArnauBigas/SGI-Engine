@@ -28,11 +28,15 @@ void WorldState::onEnter() {
     SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
-void WorldState::run() {
+void WorldState::render() {
+    world->renderWorld();
+    GuiState::render();
+}
+
+void WorldState::update(){
     world->integratePhysics();
     world->logicUpdate();
-    world->renderWorld();
-    GuiState::run();
+    GuiState::update();
 }
 
 bool WorldState::processSDLEvent(SDL_Event& event) {

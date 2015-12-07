@@ -18,7 +18,7 @@
 void LoadingState::onEnter() {
 }
 
-void LoadingState::run() {
+void LoadingState::render() {
     loadShaders();
 
     RenderEngine::set2D();
@@ -45,4 +45,8 @@ void LoadingState::run() {
     
     glEnable(GL_DEPTH_TEST);
     Game::enterState(stateName);
+}
+
+void LoadingState::update(){
+    
 }

@@ -15,6 +15,7 @@
 
 GraphicsConfig Config::graphics;
 PhysicsConfig Config::physics;
+LogicConfig Config::logic;
 
 void setInt(int& i, rapidjson::Value& val, const char* name) {
     if (val.HasMember(name) && val[name].IsInt()) {
@@ -79,6 +80,14 @@ void serializePhysics(rapidjson::Document* doc) {
     doc->AddMember("physics", p, doc->GetAllocator());
 }
 
+void serializeLogic(rapidjson::Document* doc){
+    rapidjson::Value l(rapidjson::kObjectType);
+    {
+        l.AddMember("updatesPerSecond", Config::logic.updatesPerSecond, doc->GetAllocator());
+    }
+    doc->AddMember("logic", l, doc->GetAllocator());
+}
+
 void deserializeGraphics(rapidjson::Value& g) {
     setInt(Config::graphics.width, g, "width");
     setInt(Config::graphics.height, g, "height");
@@ -104,10 +113,15 @@ void deserializePhysics(rapidjson::Value& p) {
     setDouble(Config::physics.scale, p, "scale");
 }
 
+void deserializeLogic(rapidjson::Value& l) {
+    setInt(Config::logic.updatesPerSecond, l, "updatesPerSecond");
+}
+
 void Config::serialize(rapidjson::Document* doc) {
     doc->SetObject();
     serializeGraphics(doc);
     serializePhysics(doc);
+    serializeLogic(doc);
 }
 
 void Config::deserialize(rapidjson::Document* doc) {
@@ -116,5 +130,8 @@ void Config::deserialize(rapidjson::Document* doc) {
     }
     if (doc->HasMember("physics")) {
         deserializePhysics((*doc)["physics"]);
+    }
+    if(doc->HasMember("logic")){
+        deserializeLogic((*doc)["logic"]);
     }
 }

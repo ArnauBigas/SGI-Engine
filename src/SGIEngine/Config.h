@@ -12,6 +12,7 @@
 
 #include "GraphicsConfig.h"
 #include "PhysicsConfig.h"
+#include "LogicConfig.h"
 
 namespace Config {
 
@@ -45,6 +46,11 @@ namespace Config {
      * The struct containing physics configurations.
      */
     extern PhysicsConfig physics;
+    
+    /**
+     * The struct containing logic configurations.
+     */
+    extern LogicConfig logic;
 };
 
 #endif	/* CONFIG_H */
