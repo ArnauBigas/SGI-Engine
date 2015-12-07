@@ -53,7 +53,7 @@ void World::logicUpdate(){
     for(WorldObject* o : objects){
         o->update();
         //TODO: raytracing'n'stuff
-        if(shouldInteract && glm::length(player->position - o->position) < 1.0f){
+        if(shouldInteract && glm::length(player->position+glm::vec3(0, player->getEyeLevel(), 0) - o->position) < 1.0f){
             o->interact();
         }
     }
