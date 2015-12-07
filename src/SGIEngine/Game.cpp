@@ -27,6 +27,7 @@
 #include "LogicEngine.h"
 #include "AudioEngine.h"
 #include "Utility.h"
+#include "Timer.h"
 
 bool run = true;
 bool _client;
@@ -35,6 +36,13 @@ std::string currentState;
 std::map<std::string, State*> states;
 std::chrono::high_resolution_clock::time_point startTime;
 long long microseconds = 0;
+
+struct PerformanceData {
+    long long frames;
+    long long ticks;
+    int fps;
+    int tps;
+} pData;
 
 void saveConfig() {
     std::cout << "Saving config file..." << std::endl;
@@ -115,6 +123,9 @@ bool Game::init(std::string title, bool client) {
 void Game::start() {
     startTime = std::chrono::high_resolution_clock::now();
     long long updateMicroseconds = 0;
+    Timer secondTimer;
+    secondTimer.reset();
+    secondTimer.start();
     SDL_Event event;
     while (run) {
         while (SDL_PollEvent(& event)) {
@@ -133,10 +144,21 @@ void Game::start() {
         while(updateMicroseconds >= 1000000 / (float) Config::logic.updatesPerSecond){
             updateMicroseconds -= 1000000 / (float) Config::logic.updatesPerSecond;
             states[currentState]->update();
+            
+            pData.ticks++;
+            pData.tps++;
         }
         states[currentState]->render();
+        pData.frames++;
+        pData.fps++;
         microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime).count();
         startTime = std::chrono::high_resolution_clock::now();
+        
+        if (secondTimer.getTime() >= 1000) {
+            std::cout << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
+            secondTimer.reset();
+            pData.fps = pData.tps = 0;
+        }
     }
     saveConfig();
     RenderEngine::kill();
