@@ -12,8 +12,10 @@
 #include <SDL_ttf.h>
 #include <mat4x4.hpp>
 #include <vec2.hpp>
-
+#include <vector>
 #include "Shader.h"
+
+class Camera;
 
 namespace RenderEngine {
 
@@ -130,6 +132,26 @@ namespace RenderEngine {
      * Safely stops the engine, making sure to safely dispose of everything.
      */
     void kill();
+
+    /**
+     * Registers a camera
+     * Shouldn't really have a reason to call. Automagically called by Camera.
+     * @param camera
+     */
+    void registerCamera(Camera *camera);
+    
+    /**
+     * Unregisters a camera
+     * Shouldn't really have a reason to call. Automagically called by Camera.
+     * @param camera
+     */
+    void unregisterCamera(Camera *camera);
+    
+    /**
+     * Returns a vector of all registered cameras
+     * @return a vector of all registered cameras
+     */
+    std::vector<Camera *> getCameras();
 };
 
 #endif	/* RENDERENGINE_H */

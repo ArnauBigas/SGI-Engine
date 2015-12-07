@@ -18,6 +18,7 @@
 #include <map>
 #include <chrono>
 
+#include "Camera.h"
 #include "definitions.h"
 #include "Config.h"
 #include "RenderEngine.h"
@@ -114,6 +115,11 @@ void Game::start() {
             if (!states[currentState]->processSDLEvent(event)) {
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT) {
                     Game::stop();
+                }
+            }
+            if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                for (Camera *camera : RenderEngine::getCameras()) {
+                    camera->resize(event.window.data1, event.window.data2);
                 }
             }
         }

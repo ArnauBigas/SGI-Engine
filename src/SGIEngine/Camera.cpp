@@ -12,6 +12,12 @@ Camera::Camera(unsigned int target, unsigned int clearBuffers){
     this->clearBuffers = clearBuffers;
     resize(Config::graphics.width, Config::graphics.height);
     viewport = {0, 0, 1, 1};
+    
+    RenderEngine::registerCamera(this);
+}
+
+Camera::~Camera() {
+    RenderEngine::unregisterCamera(this);
 }
 
 void Camera::enable(){

@@ -15,6 +15,7 @@
 #include <gtx/transform.hpp>
 #include <SDL_image.h>
 #include <map>
+#include <algorithm>
 
 #include "definitions.h"
 #include "Config.h"
@@ -39,6 +40,8 @@ TTF_Font* font;
 unsigned int glyphTextureMap;
 unsigned int stringVao;
 unsigned int stringVbo;
+
+std::vector<Camera *> cams;
 
 bool RenderEngine::init(string title) {
     windowTitle = title;
@@ -322,3 +325,11 @@ void RenderEngine::kill() {
     IMG_Quit();
 }
 
+void RenderEngine::registerCamera(Camera* camera) {
+    cams.push_back(camera);
+}
+
+void RenderEngine::unregisterCamera(Camera* camera) {
+    cams.erase(std::remove(cams.begin(), cams.end(), camera), cams.end());
+}
+std::vector<Camera *> RenderEngine::getCameras() { return cams; }
