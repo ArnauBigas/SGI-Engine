@@ -25,7 +25,6 @@ void GuiState::render() {
 
         gui->draw();
     }
-    RenderEngine::swapBuffers();
 }
 
 void GuiState::update(){

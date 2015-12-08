@@ -128,6 +128,7 @@ bool RenderEngine::initGL() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
+    glEnable(GL_SCISSOR_TEST);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -185,7 +186,6 @@ bool RenderEngine::initGL() {
 
 void RenderEngine::swapBuffers() {
     SDL_GL_SwapWindow(window);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void RenderEngine::setProjectionMatrix(glm::mat4 matrix) {
