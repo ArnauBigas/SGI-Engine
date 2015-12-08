@@ -27,6 +27,7 @@ void Camera::enable(){
     //TODO 2d support
     //TODO non screen cameras
     glViewport(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
+//    glScissor(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     glBindFramebuffer(GL_FRAMEBUFFER, target);
     glClear(clearBuffers);
 }

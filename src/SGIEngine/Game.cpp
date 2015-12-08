@@ -140,6 +140,10 @@ void Game::start() {
                 }
             }
         }
+        microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime).count();
+        microseconds = microseconds > 0 ? microseconds : 0;
+        startTime = std::chrono::high_resolution_clock::now();
+        
         updateMicroseconds += microseconds;
         while(updateMicroseconds >= 1000000 / (float) Config::logic.updatesPerSecond){
             updateMicroseconds -= 1000000 / (float) Config::logic.updatesPerSecond;
@@ -149,10 +153,9 @@ void Game::start() {
             pData.tps++;
         }
         states[currentState]->render();
+        RenderEngine::swapBuffers();
         pData.frames++;
         pData.fps++;
-        microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime).count();
-        startTime = std::chrono::high_resolution_clock::now();
         
         if (secondTimer.getTime() >= 1000) {
             std::cout << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
@@ -167,7 +170,7 @@ void Game::start() {
 }
 
 long Game::lastTickTime() {
-    return microseconds > 0 ? microseconds : 1;
+    return microseconds;
 }
 
 bool Game::enterState(std::string name) {
