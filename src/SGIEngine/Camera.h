@@ -11,12 +11,15 @@
 #include <mat4x4.hpp>
 #include <vec3.hpp>
 
+#include "RenderingTechnique.h"
+
 class Camera {
 public:
-    Camera(unsigned int target, unsigned int clearBuffers);
+    Camera(RenderingTechnique* technique);
     ~Camera();
     virtual void enable();
-    virtual void disable(){};
+    virtual void disable();
+    RenderingTechnique* getRenderingTechnique();
     
     void resize(int w, int h);
     void setViewport(float x, float y, float w, float h);
@@ -32,6 +35,7 @@ private:
     glm::mat4 projectionMatrix;
     unsigned int target;
     unsigned int clearBuffers;
+    RenderingTechnique* technique;
     
     struct Viewport {
         float x, y, w, h;

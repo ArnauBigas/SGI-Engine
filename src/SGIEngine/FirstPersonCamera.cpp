@@ -12,15 +12,14 @@
 
 #include "Config.h"
 
-FirstPersonCamera::FirstPersonCamera(World* world, unsigned int target, unsigned int clearBuffers) : Camera(target, clearBuffers){
+FirstPersonCamera::FirstPersonCamera(World* world, RenderingTechnique* technique) : Camera(technique){
     this->world = world;
-//    setProjectionMatrix(glm::perspective(glm::radians((float) Config::graphics.fov), (float) Config::graphics.width / (float) Config::graphics.height, (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance));
 }
 
 void FirstPersonCamera::enable(){
-    ControllableEntity* player = world->getPlayer();
-    this->pitch = player->getCameraPitch();
-    this->yaw = player->getCameraYaw();
-    this->position = glm::vec3(player->position.x, player->position.y + player->getEyeLevel(), player->position.z);
+    ControllableEntity* entity = world->getPlayer();
+    this->pitch = entity->getCameraPitch();
+    this->yaw = entity->getCameraYaw();
+    this->position = glm::vec3(entity->position.x, entity->position.y + entity->getEyeLevel(), entity->position.z);
     Camera::enable();
 }

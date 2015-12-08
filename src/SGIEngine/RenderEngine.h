@@ -70,6 +70,10 @@ namespace RenderEngine {
      */
     void setModelMatrix(glm::mat4 matrix);
     
+    glm::mat4 getProjectionMatrix();
+    
+    glm::mat4 getViewMatrix();
+    
     /**
      * Multiplies the matrices and sends the MVP matrix to the shader.
      */

@@ -14,7 +14,7 @@
 
 class FirstPersonCamera : public Camera {
 public:
-    FirstPersonCamera(World* world, unsigned int target, unsigned int clearBuffers);
+    FirstPersonCamera(World* world, RenderingTechnique* technique);
     
     virtual void enable();
 protected:

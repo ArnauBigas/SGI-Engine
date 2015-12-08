@@ -33,5 +33,12 @@
 
 #define BUFFER_OFFSET(i) ((void*)(i))
 
+#define DIFFUSEID 0
+#define NORMALID  1
+#define SPECULARID 2
+#define GBUFFER 5
+#define NBUFFER 6
+#define ZBUFFER 7
+
 #endif	/* DEFINITIONS_H */
 

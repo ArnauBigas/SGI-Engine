@@ -7,9 +7,8 @@
 #include "RenderEngine.h"
 #include "Config.h"
 
-Camera::Camera(unsigned int target, unsigned int clearBuffers){
-    this->target = target;
-    this->clearBuffers = clearBuffers;
+Camera::Camera(RenderingTechnique* technique){
+    this->technique = technique;
     resize(Config::graphics.width, Config::graphics.height);
     viewport = {0, 0, 1, 1};
     
@@ -27,13 +26,17 @@ void Camera::enable(){
     //TODO 2d support
     //TODO non screen cameras
     glViewport(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
-    glBindFramebuffer(GL_FRAMEBUFFER, target);
-    glClear(clearBuffers);
+    technique->enable();
+}
+
+void Camera::disable(){
+    technique->disable();
 }
 
 void Camera::resize(int w, int h) {
     this->w = w;
     this->h = h;
+    technique->targetResized(w, h);
 }
 
 void Camera::setViewport(float x, float y, float w, float h) {
@@ -55,4 +58,8 @@ glm::mat4 Camera::getViewMatrix(){
 
 void Camera::setProjectionMatrix(glm::mat4 matrix){
     projectionMatrix = matrix;
+}
+
+RenderingTechnique* Camera::getRenderingTechnique(){
+    return technique;
 }

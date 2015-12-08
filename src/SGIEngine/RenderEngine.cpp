@@ -200,6 +200,14 @@ void RenderEngine::setModelMatrix(glm::mat4 matrix) {
     model = matrix;
 }
 
+glm::mat4  RenderEngine::getProjectionMatrix(){
+    return projection;
+}
+
+glm::mat4  RenderEngine::getViewMatrix(){
+    return view;
+}
+
 void RenderEngine::updateMatrices(){
     glm::mat4 mvp = projection * view * model;
     glUniformMatrix4fv(shaderCurrent->getUniform("MVP"), 1, GL_FALSE, &mvp[0][0]);
