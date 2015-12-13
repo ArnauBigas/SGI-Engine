@@ -13,9 +13,12 @@
 
 #include "RenderingTechnique.h"
 
+class World;
+
 class Camera {
+    friend class RenderingTechnique;
 public:
-    Camera(RenderingTechnique* technique);
+    Camera(World* world, RenderingTechnique* technique);
     ~Camera();
     virtual void enable();
     virtual void disable();
@@ -29,8 +32,9 @@ public:
     float pitch = 0;
     float yaw = 0;
     float roll = 0;
+    World* world;    
 protected:
-    virtual glm::mat4 getViewMatrix();    
+    virtual glm::mat4 getViewMatrix();
 private:
     glm::mat4 projectionMatrix;
     unsigned int target;

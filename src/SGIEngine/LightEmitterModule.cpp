@@ -25,6 +25,6 @@ void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::
         light.linearAttenuation = (float) json["linearAttenuation"].GetDouble();
         light.exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
         light.position = prop->position;
-        world->addLightSource(light);
+        world->addPointLightSource(light);
     }
 }

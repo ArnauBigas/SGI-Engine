@@ -219,7 +219,7 @@ void RenderEngine::set3D(){
 
 void RenderEngine::set2D(){
     if(shader2D == 0){
-        shader2D = getShader(Config::graphics.shader2D);
+        shader2D = getShader(GUISHADER);
     }
     if(shaderCurrent != shader2D){
         setCurrentShader(shader2D);

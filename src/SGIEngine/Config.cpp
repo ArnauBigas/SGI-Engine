@@ -57,9 +57,6 @@ void serializeGraphics(rapidjson::Document* doc) {
         g.AddMember("resizable", Config::graphics.resizeable, doc->GetAllocator());
         g.AddMember("nearPlaneClipping", Config::graphics.nearPlaneClipping, doc->GetAllocator());
         g.AddMember("renderDistance", Config::graphics.renderDistance, doc->GetAllocator());
-        rapidjson::Value valObjectString(rapidjson::kStringType);
-        valObjectString.SetString(Config::graphics.shader2D.c_str(), Config::graphics.shader2D.length());
-        g.AddMember("shader2D", valObjectString, doc->GetAllocator());
         g.AddMember("antialiasing", Config::graphics.antialiasing, doc->GetAllocator());
         g.AddMember("bobbing", Config::graphics.bobbing, doc->GetAllocator());
         g.AddMember("modelDetail", Config::graphics.modelDetail, doc->GetAllocator());
@@ -98,7 +95,6 @@ void deserializeGraphics(rapidjson::Value& g) {
     setBool(Config::graphics.resizeable, g, "resizeable");
     setDouble(Config::graphics.nearPlaneClipping, g, "nearPlaneClipping");
     setDouble(Config::graphics.renderDistance, g, "renderDistance");
-    setString(Config::graphics.shader2D, g, "shader2D");
     setInt(Config::graphics.antialiasing, g, "antialiasing");
     setBool(Config::graphics.bobbing, g, "bobbing");
     setInt(Config::graphics.modelDetail, g, "modelDetail");

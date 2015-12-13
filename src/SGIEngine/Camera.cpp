@@ -7,8 +7,9 @@
 #include "RenderEngine.h"
 #include "Config.h"
 
-Camera::Camera(RenderingTechnique* technique){
+Camera::Camera(World* world, RenderingTechnique* technique){
     this->technique = technique;
+    this->world = world;
     resize(Config::graphics.width, Config::graphics.height);
     viewport = {0, 0, 1, 1};
     
@@ -27,11 +28,11 @@ void Camera::enable(){
     //TODO non screen cameras
     glViewport(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     glScissor(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
-    technique->enable();
+    technique->enable(this);
 }
 
 void Camera::disable(){
-    technique->disable();
+    technique->disable(this);
 }
 
 void Camera::resize(int w, int h) {

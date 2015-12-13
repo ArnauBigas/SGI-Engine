@@ -19,6 +19,11 @@ public:
 
     bool hasUniform(std::string name);
 
+    /**
+     * Doesn't actually check if it's a valid uniform, use hasUniform() for that.
+     * @param name The name of the uniform you want the id of.
+     * @return the id of the uniform (to be used with opengl methods)
+     */
     int getUniform(std::string name);
 
     unsigned int getProgramID() {

@@ -38,7 +38,13 @@
 #define SPECULARID 2
 #define GBUFFER 5
 #define NBUFFER 6
-#define ZBUFFER 7
+#define MBUFFER 7
+#define ZBUFFER 8
+
+#define GUISHADER "gui"
+#define POINTLIGHTSHADER "pointlight"
+#define SPOTLIGHTSHADER "spotlight"
+#define AMBIENTSHADER "ambient"
 
 #endif	/* DEFINITIONS_H */
 

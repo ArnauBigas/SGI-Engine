@@ -104,7 +104,7 @@ void ShaderProgram::link() {
 }
 
 int ShaderProgram::getUniform(std::string name) {
-    return uniforms.at(name);
+    return uniforms[name];
 }
 
 bool ShaderProgram::hasUniform(std::string name){

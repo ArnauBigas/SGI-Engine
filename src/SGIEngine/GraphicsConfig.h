@@ -19,7 +19,6 @@ struct GraphicsConfig {
     bool borderless = false;
     bool resizeable = true;
     double renderDistance = 200;
-    std::string shader2D = "gui";
     int antialiasing = 16; //Not implemented
     bool bobbing = false; //Not implemented
     int modelDetail = 4; //Not implemented

@@ -15,15 +15,18 @@
 #define RENDERINGTECHNIQUE_H
 
 #include <string>
+#include "Shader.h"
 
 #define FORWARD_RENDERING 0
 #define DEFERRED_RENDERING 1
 
+class Camera;
+
 class RenderingTechnique {
 public:
     RenderingTechnique(unsigned int target, std::string shader);
-    virtual void enable() = 0;
-    virtual void disable() = 0;
+    virtual void enable(Camera* cam) = 0;
+    virtual void disable(Camera* cam) = 0;
     virtual int getType() = 0;
     virtual void targetResized(int width, int height) = 0;
 protected:
@@ -34,14 +37,16 @@ protected:
 class DeferredRendering : public RenderingTechnique {
 public:
     DeferredRendering(unsigned int target, std::string shader);
-    virtual void enable();
-    virtual void disable();
+    virtual void enable(Camera* cam);
+    virtual void disable(Camera* cam);
     virtual int getType();
     virtual void targetResized(int width, int height);
 private:
+    void uploadBuffers(ShaderProgram* shaderptr, Camera* cam);
     unsigned int diffuseTexture;
     unsigned int depthTexture;
     unsigned int normalTexture;
+    unsigned int materialsTexture;
     unsigned int framebuffer;
     unsigned int quadVBO;
 };

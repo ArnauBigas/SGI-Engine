@@ -12,8 +12,7 @@
 
 #include "Config.h"
 
-FirstPersonCamera::FirstPersonCamera(World* world, RenderingTechnique* technique) : Camera(technique){
-    this->world = world;
+FirstPersonCamera::FirstPersonCamera(World* world, RenderingTechnique* technique) : Camera(world, technique){
 }
 
 void FirstPersonCamera::enable(){

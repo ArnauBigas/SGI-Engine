@@ -17,8 +17,6 @@ public:
     FirstPersonCamera(World* world, RenderingTechnique* technique);
     
     virtual void enable();
-protected:
-    World* world;
 };
 
 #endif	/* FIRSTPERSONCAMERA_H */
