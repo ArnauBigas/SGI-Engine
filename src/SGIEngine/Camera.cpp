@@ -18,6 +18,7 @@ Camera::Camera(World* world, RenderingTechnique* technique){
 
 Camera::~Camera() {
     RenderEngine::unregisterCamera(this);
+    delete technique;
 }
 
 void Camera::enable(){
