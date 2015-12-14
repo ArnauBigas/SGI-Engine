@@ -93,29 +93,6 @@ bool World::loadFromFile(std::string filename){
         }
         player = new ControllableEntity((float) doc["player"]["speed"].GetDouble());
         player->initFromJson(this, doc["player"]);
-        //test
-        PointLight light;
-        light.position = glm::vec3(10.0f, 2.5f, 10.0f);
-        light.color = glm::vec3(1.0f, 0.0f, 0.0f);
-        light.constantAttenuation = 0.1f;
-        light.linearAttenuation = 0.05f;
-        light.exponentialAttenuation = 0.05f;
-        addPointLightSource(light);
-        light.position = glm::vec3(0.0f, 2.5f, 10.0f);
-        light.color = glm::vec3(0.0f, 1.0f, 0.0f);
-        addPointLightSource(light);
-        light.position = glm::vec3(10.0f, 2.5f, 0.0f);
-        light.color = glm::vec3(0.0f, 0.0f, 1.0f);
-        addPointLightSource(light);
-        SpotLight spot;
-        spot.position = glm::vec3(15.0f, 1.5f, 3.0f);
-        spot.direction = glm::vec3(-1.0f, 0.0f, 0.0f);
-        spot.color = glm::vec3(1.0f, 1.0f, 1.0f);
-        spot.coneAngle = 0.9f;
-        spot.constantAttenuation = 0.1f;
-        spot.linearAttenuation = 0.01f;
-        spot.exponentialAttenuation = 0.01f;
-        addSpotLightSource(spot);
         std::cout << "Level loaded" << std::endl;
     }
 }

@@ -11,15 +11,20 @@
 #include "ObjectModule.h"
 
 #include "Light.h"
-
+#include <vec4.hpp>
+#include "Mesh.h"
 
 class LightEmitterModule : public BaseObjectModule<LightEmitterModule>{
 public:    
-    virtual void loadConfig(rapidjson::Value& json);
-    virtual void loadModule(WorldObject* obj, World* world, rapidjson::Value& json);
+    void loadConfig(WorldObject* obj, rapidjson::Value& json);
+    void loadModule(WorldObject* obj, World* world, rapidjson::Value& json);
+    void onRender();
     virtual std::string getName(){return "lightEmitter";};
 private:
     std::string type;
+    glm::vec3 dir;
+    glm::vec4 color;
+    PolyGroup* polyGroup = 0;
 };
 
 #endif	/* LIGHTEMITTERMODULE_H */
