@@ -29,8 +29,10 @@ Camera::~Camera() {
 
 void Camera::enable(){
     if (mode == CAMERA_3D) {
+        RenderEngine::set3D();
         RenderEngine::setProjectionMatrix(glm::perspective((float)glm::radians(fov), (w*viewport.w)/(h*viewport.h), near, far));
     } else {
+        RenderEngine::set2D();
         RenderEngine::setProjectionMatrix(glm::ortho(0, w, 0, h));
     }
     RenderEngine::setViewMatrix(getViewMatrix());
