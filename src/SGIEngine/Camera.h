@@ -15,32 +15,37 @@
 
 class World;
 
+enum CameraMode {
+    CAMERA_2D, CAMERA_3D
+};
+
 class Camera {
     friend class RenderingTechnique;
 public:
-    Camera(World* world, RenderingTechnique* technique);
+    Camera(World* world, RenderingTechnique* technique, bool screen = true);
     ~Camera();
     virtual void enable();
     virtual void disable();
     RenderingTechnique* getRenderingTechnique();
-    
+
     void resize(int w, int h);
     void setViewport(float x, float y, float w, float h);
-    
-    void setProjectionMatrix(glm::mat4 matrix);
+
     glm::vec3 position = glm::vec3(0, 0, 0);
     float pitch = 0;
     float yaw = 0;
     float roll = 0;
-    World* world;    
+    World* world;
+
+    CameraMode mode;
+    float fov, far, near;
 protected:
     virtual glm::mat4 getViewMatrix();
 private:
-    glm::mat4 projectionMatrix;
     unsigned int target;
     unsigned int clearBuffers;
     RenderingTechnique* technique;
-    
+
     struct Viewport {
         float x, y, w, h;
     } viewport;

@@ -7,13 +7,19 @@
 #include "RenderEngine.h"
 #include "Config.h"
 
-Camera::Camera(World* world, RenderingTechnique* technique){
+Camera::Camera(World* world, RenderingTechnique* technique, bool screen){
     this->technique = technique;
     this->world = world;
     resize(Config::graphics.width, Config::graphics.height);
     viewport = {0, 0, 1, 1};
     
-    RenderEngine::registerCamera(this);
+    this->mode = CAMERA_3D;
+    this->fov = Config::graphics.fov;
+    this->near = Config::graphics.nearPlaneClipping;
+    this->far = Config::graphics.renderDistance;
+    if (screen) {
+        RenderEngine::registerCamera(this);
+    }
 }
 
 Camera::~Camera() {
@@ -22,11 +28,12 @@ Camera::~Camera() {
 }
 
 void Camera::enable(){
-    RenderEngine::setProjectionMatrix(projectionMatrix);
+    if (mode == CAMERA_3D) {
+        RenderEngine::setProjectionMatrix(glm::perspective((float)glm::radians(fov), (w*viewport.w)/(h*viewport.h), near, far));
+    } else {
+        RenderEngine::setProjectionMatrix(glm::ortho(0, w, 0, h));
+    }
     RenderEngine::setViewMatrix(getViewMatrix());
-    setProjectionMatrix(glm::perspective((float)glm::radians(Config::graphics.fov), (w*viewport.w)/(h*viewport.h), (float) Config::graphics.nearPlaneClipping, (float) Config::graphics.renderDistance));
-    //TODO 2d support
-    //TODO non screen cameras
     glViewport(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     glScissor(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     technique->enable(this);
@@ -57,10 +64,6 @@ glm::mat4 Camera::getViewMatrix(){
             cos(glm::radians(pitch)) * sin(glm::radians(yaw))
             ),
             glm::vec3(sin(glm::radians(roll)),cos(glm::radians(roll)),0));
-}
-
-void Camera::setProjectionMatrix(glm::mat4 matrix){
-    projectionMatrix = matrix;
 }
 
 RenderingTechnique* Camera::getRenderingTechnique(){
