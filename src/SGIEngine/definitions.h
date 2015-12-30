@@ -40,11 +40,13 @@
 #define NBUFFER 6
 #define MBUFFER 7
 #define ZBUFFER 8
+#define SHADOWMAP 3
 
 #define GUISHADER "gui"
 #define POINTLIGHTSHADER "pointlight"
 #define SPOTLIGHTSHADER "spotlight"
 #define AMBIENTSHADER "ambient"
+#define SHADOWMAPPINGSHADER "shadowmap"
 
 #endif	/* DEFINITIONS_H */
 

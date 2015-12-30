@@ -94,6 +94,10 @@ namespace RenderEngine {
      */
     ShaderProgram* getCurrentShader();
     
+    Camera* getCurrentCamera();
+    
+    void setCurrentCamera(Camera* cam);
+    
     /**
      * Sets the current shader that's going to be used
      */

@@ -29,7 +29,7 @@ public:
     virtual void addObject(WorldObject* object);
     virtual void addCamera(Camera* camera);
     virtual void addPointLightSource(PointLight light);
-    virtual void addSpotLightSource(SpotLight light);
+    virtual Camera* addSpotLightSource(SpotLight light, float fov);
     virtual std::vector<PointLight>& getPointLights();
     virtual std::vector<SpotLight>& getSpotLights();
     virtual ControllableEntity* getPlayer();

@@ -42,6 +42,7 @@ unsigned int stringVao;
 unsigned int stringVbo;
 
 std::vector<Camera *> cams;
+Camera* currentCamera = 0;
 
 bool RenderEngine::init(string title) {
     windowTitle = title;
@@ -233,6 +234,14 @@ void RenderEngine::set2D(){
 
 ShaderProgram* RenderEngine::getCurrentShader(){
     return shaderCurrent;
+}
+
+Camera* RenderEngine::getCurrentCamera(){
+    return currentCamera;
+}
+    
+void RenderEngine::setCurrentCamera(Camera* cam){
+    currentCamera = cam;
 }
 
 void RenderEngine::setCurrentShader(ShaderProgram* shader){

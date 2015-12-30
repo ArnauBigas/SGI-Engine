@@ -19,6 +19,7 @@
 
 #define FORWARD_RENDERING 0
 #define DEFERRED_RENDERING 1
+#define SHADOW_MAPPING 2
 
 class Camera;
 

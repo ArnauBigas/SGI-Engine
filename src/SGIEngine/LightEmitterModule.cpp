@@ -48,7 +48,7 @@ void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::
         SpotLight light;
         color = glm::vec4(getVec3(json["color"]), 1.0f);
         light.color = glm::vec3(color);
-        light.coneAngle = json["coneAngle"].GetDouble();
+        light.coneAngle = cos(glm::radians(json["coneAngle"].GetDouble()/2.0f));
         glm::mat4 rot = glm::mat4(1.0f);
         rot = glm::rotate(rot, glm::radians(prop->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
         rot = glm::rotate(rot, glm::radians(prop->rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -58,7 +58,7 @@ void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::
         light.linearAttenuation = (float) json["linearAttenuation"].GetDouble();
         light.exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
         light.position = prop->position;
-        world->addSpotLightSource(light);
+        world->addSpotLightSource(light, json["coneAngle"].GetDouble());
         
     }
 }

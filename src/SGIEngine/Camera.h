@@ -32,6 +32,8 @@ public:
     void setViewport(float x, float y, float w, float h);
 
     glm::vec3 position = glm::vec3(0, 0, 0);
+    glm::vec3 direction = glm::vec3(0, 0, 0);
+    bool useDirection = false;
     float pitch = 0;
     float yaw = 0;
     float roll = 0;
@@ -39,8 +41,8 @@ public:
 
     CameraMode mode;
     float fov, far, near;
-protected:
     virtual glm::mat4 getViewMatrix();
+    glm::mat4 getProjectionMatrix();
 private:
     unsigned int target;
     unsigned int clearBuffers;

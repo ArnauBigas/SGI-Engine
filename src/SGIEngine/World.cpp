@@ -17,18 +17,27 @@
 #include "Shader.h"
 #include "AudioEngine.h"
 #include "AudioConfig.h"
+#include "definitions.h"
+#include "Config.h"
 
 void World::renderWorld() {
     glGetError();
     RenderEngine::set3D();
     for(Camera* camera : cameras){
+        RenderEngine::setCurrentCamera(camera);
         camera->enable();
-        for(std::pair<ShaderProgram*, std::vector<WorldObject*>> p : renderMap){
-            RenderEngine::setCurrentShader(p.first);
-            if(p.first->hasUniform("cameraPosition")){
-                glUniform3fv(p.first->getUniform("cameraPosition"), 1, glm::value_ptr(camera->position));
+        if(camera->getRenderingTechnique()->getType() != SHADOW_MAPPING){
+            for(std::pair<ShaderProgram*, std::vector<WorldObject*>> p : renderMap){
+                RenderEngine::setCurrentShader(p.first);
+                if(p.first->hasUniform("cameraPosition")){
+                    glUniform3fv(p.first->getUniform("cameraPosition"), 1, glm::value_ptr(camera->position));
+                }
+                for(WorldObject* o : p.second){
+                    o->render();
+                }
             }
-            for(WorldObject* o : p.second){
+        } else {
+            for(WorldObject* o : objects){
                 o->render();
             }
         }
@@ -68,7 +77,20 @@ std::vector<PointLight>& World::getPointLights(){
     return pointlights;
 }
 
-void World::addSpotLightSource(SpotLight light){
+Camera* World::addSpotLightSource(SpotLight light, float fov){
+    Camera* cam = new Camera(this, new ShadowMapping(light.shadowMap, SHADOWMAPPINGSHADER), false);
+    cam->fov = fov;
+    cam->position = light.position;
+    cam->useDirection = true;
+    cam->direction = light.direction;
+    cam->resize(Config::graphics.shadowmapResolution, Config::graphics.shadowmapResolution);
+    light.depthBiasVP = glm::mat4(
+ 0.5f, 0.0f, 0.0f, 0.0f,
+ 0.0f, 0.5f, 0.0f, 0.0f,
+ 0.0f, 0.0f, 0.5f, 0.0f,
+ 0.5f, 0.5f, 0.5f, 1.0f
+ ) * cam->getProjectionMatrix() * cam->getViewMatrix();
+    addCamera(cam);
     spotlights.push_back(light);
 }
 

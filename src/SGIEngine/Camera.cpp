@@ -30,15 +30,18 @@ Camera::~Camera() {
 void Camera::enable(){
     if (mode == CAMERA_3D) {
         RenderEngine::set3D();
-        RenderEngine::setProjectionMatrix(glm::perspective((float)glm::radians(fov), (w*viewport.w)/(h*viewport.h), near, far));
     } else {
         RenderEngine::set2D();
-        RenderEngine::setProjectionMatrix(glm::ortho(0, w, 0, h));
     }
+    RenderEngine::setProjectionMatrix(getProjectionMatrix());
     RenderEngine::setViewMatrix(getViewMatrix());
     glViewport(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     glScissor(viewport.x*w, viewport.y*h, viewport.w*w, viewport.h*h);
     technique->enable(this);
+}
+
+glm::mat4 Camera::getProjectionMatrix(){
+    return mode == CAMERA_3D ? glm::perspective((float)glm::radians(fov), (w*viewport.w)/(h*viewport.h), near, far) : glm::ortho(0.0f, (float)w, 0.0f, (float)h);
 }
 
 void Camera::disable(){
@@ -59,13 +62,21 @@ void Camera::setViewport(float x, float y, float w, float h) {
 }
 
 glm::mat4 Camera::getViewMatrix(){
-    return glm::lookAt(position,
+    glm::mat4 view;
+    if(useDirection){
+        view = glm::lookAt(position,
+            position + direction,
+            glm::vec3(sin(glm::radians(roll)),cos(glm::radians(roll)),0));
+    } else {
+        view = glm::lookAt(position,
             position + glm::vec3(
             cos(glm::radians(pitch)) * cos(glm::radians(yaw)),
             sin(glm::radians(pitch)),
             cos(glm::radians(pitch)) * sin(glm::radians(yaw))
             ),
             glm::vec3(sin(glm::radians(roll)),cos(glm::radians(roll)),0));
+    }
+    return view;
 }
 
 RenderingTechnique* Camera::getRenderingTechnique(){
