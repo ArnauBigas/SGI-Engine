@@ -6,6 +6,7 @@
  */
 
 #include "Mesh.h"
+#include "RenderEngine.h"
 
 #include <GL/glew.h>
 
@@ -19,4 +20,12 @@ void Mesh::render(){
         glBindVertexArray(poly.vaoid);
         glDrawElements(GL_TRIANGLES, poly.elements, GL_UNSIGNED_INT, 0);
     }
+}
+
+glm::mat4 Mesh::getTransformMatrix() {
+    return tmat;
+}
+
+void Mesh::setTransformMatrix(glm::mat4 tmat) {
+    this->tmat = tmat;
 }

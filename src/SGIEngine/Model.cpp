@@ -436,10 +436,10 @@ void Model::render(glm::mat4 transform) {
         }
     }
     for(std::pair<std::string, std::pair<glm::mat4, Mesh>> p : meshes){
-        RenderEngine::setModelMatrix(transform * p.second.first);
+        RenderEngine::setModelMatrix(transform * p.second.first * p.second.second.getTransformMatrix());
         RenderEngine::updateMatrices();
         if(RenderEngine::getCurrentShader()->hasUniform("Model")){
-            glUniformMatrix4fv(RenderEngine::getCurrentShader()->getUniform("Model"), 1, GL_FALSE, &(transform * p.second.first)[0][0]);
+            glUniformMatrix4fv(RenderEngine::getCurrentShader()->getUniform("Model"), 1, GL_FALSE, &(transform * p.second.first * p.second.second.getTransformMatrix())[0][0]);
         }
         p.second.second.render();
     }
