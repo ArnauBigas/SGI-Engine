@@ -18,7 +18,6 @@ long getMS() {
 
 void Timer::start() {
     running = true;
-    startms = getMS();
 }
 
 void Timer::stop() {

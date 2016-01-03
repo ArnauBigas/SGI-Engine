@@ -28,6 +28,7 @@
 #include "AudioEngine.h"
 #include "Utility.h"
 #include "Timer.h"
+#include "Profiler.h"
 
 bool run = true;
 bool _client;
@@ -69,12 +70,14 @@ bool loadConfig() {
 }
 
 bool Game::init(std::string title, bool client) {
+    Profiler::init();
+
     std::cout << "Starting SGI Engine..." << std::endl;
 
     _title = title;
     _client = client;
 
-    if(client){
+    if (client) {
         std::cout << "Initializing SDL..." << std::endl;
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -90,8 +93,8 @@ bool Game::init(std::string title, bool client) {
         std::cerr << "Couldn't start game." << std::endl;
         return false;
     }
-    
-    if(client){
+
+    if (client) {
         std::cout << "Initializing Rendering Engine..." << std::endl;
         if (!RenderEngine::init(title)) {
             std::cerr << "Couldn't start game." << std::endl;
@@ -110,7 +113,7 @@ bool Game::init(std::string title, bool client) {
             return false;
         }
     }
-    
+
     std::cout << "Initializing Logic Engine..." << std::endl;
     if (!LogicEngine::init()) {
         std::cerr << "Couldn't start game." << std::endl;
@@ -128,6 +131,7 @@ void Game::start() {
     secondTimer.start();
     SDL_Event event;
     while (run) {
+        Profiler::reset();
         while (SDL_PollEvent(& event)) {
             if (!states[currentState]->processSDLEvent(event)) {
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT) {
@@ -143,26 +147,38 @@ void Game::start() {
         microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime).count();
         microseconds = microseconds > 0 ? microseconds : 0;
         startTime = std::chrono::high_resolution_clock::now();
-        
+
         updateMicroseconds += microseconds;
-        while(updateMicroseconds >= 1000000 / (float) Config::logic.updatesPerSecond){
+        while (updateMicroseconds >= 1000000 / (float) Config::logic.updatesPerSecond) {
             updateMicroseconds -= 1000000 / (float) Config::logic.updatesPerSecond;
+            Profiler::start("update");
             states[currentState]->update();
-            
+            Profiler::stop();
+
             pData.ticks++;
             pData.tps++;
         }
+
+        Profiler::start("render");
         states[currentState]->render();
+        Profiler::start("swap");
         RenderEngine::swapBuffers();
+        Profiler::stop();
+        Profiler::stop();
+
         pData.frames++;
         pData.fps++;
-        
+
         if (secondTimer.getTime() >= 1000) {
             std::cout << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
             secondTimer.reset();
             pData.fps = pData.tps = 0;
+
+            std::cout << std::endl << "Update: " << +Profiler::get("update")->timer.getTime() << std::endl << "Render: " << +Profiler::get("render")->timer.getTime() << std::endl;
+            std::cout << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
         }
     }
+    Profiler::cleanup();
     saveConfig();
     RenderEngine::kill();
     AudioEngine::kill();
@@ -198,6 +214,6 @@ void Game::addState(std::string name, State* state) {
     states.insert(std::pair<std::string, State*>(name, state));
 }
 
-bool Game::isClient(){
+bool Game::isClient() {
     return _client;
 }
