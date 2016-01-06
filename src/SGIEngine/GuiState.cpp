@@ -13,6 +13,8 @@
 #include "RenderEngine.h"
 #include "Game.h"
 #include "Shader.h"
+#include "definitions.h"
+#include "Config.h"
 
 GuiState::GuiState() {
 }
@@ -20,8 +22,13 @@ GuiState::GuiState() {
 void GuiState::render() {
     if(gui != 0){
         RenderEngine::set2D();
-    
-        glProgramUniform1i(RenderEngine::getCurrentShader()->getProgramID(), RenderEngine::getCurrentShader()->getUniform("sampler"), 0);
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, Config::graphics.width, Config::graphics.height);
+        glScissor(0, 0, Config::graphics.width, Config::graphics.height);
+        
+        glActiveTexture(GL_TEXTURE0 + GUITEXTUREUNIT);        
+        glProgramUniform1i(RenderEngine::getCurrentShader()->getProgramID(), RenderEngine::getCurrentShader()->getUniform("sampler"), GUITEXTUREUNIT);
 
         gui->draw();
     }

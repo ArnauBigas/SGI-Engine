@@ -96,27 +96,27 @@ void DeferredRendering::enable(Camera* cam){
 
 void DeferredRendering::uploadBuffers(ShaderProgram* shaderptr, Camera* cam){
     if(shaderptr->hasUniform("diffuseTexture")){
-        glActiveTexture(GL_TEXTURE0 + GBUFFER);
+        glActiveTexture(GL_TEXTURE0 + DIFFUSEBUFFERTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, diffuseTexture);
-        glUniform1i(shaderptr->getUniform("diffuseTexture"), GBUFFER);
+        glUniform1i(shaderptr->getUniform("diffuseTexture"), DIFFUSEBUFFERTEXTUREUNIT);
     }
     
     if(shaderptr->hasUniform("normalTexture")){
-        glActiveTexture(GL_TEXTURE0 + NBUFFER);
+        glActiveTexture(GL_TEXTURE0 + NORMALBUFFERTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, normalTexture);
-        glUniform1i(shaderptr->getUniform("normalTexture"), NBUFFER);
+        glUniform1i(shaderptr->getUniform("normalTexture"), NORMALBUFFERTEXTUREUNIT);
     }
     
     if(shaderptr->hasUniform("materialsTexture")){
-        glActiveTexture(GL_TEXTURE0 + MBUFFER);
+        glActiveTexture(GL_TEXTURE0 + MATERIALBUFFERTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, materialsTexture);
-        glUniform1i(shaderptr->getUniform("materialsTexture"), MBUFFER);
+        glUniform1i(shaderptr->getUniform("materialsTexture"), MATERIALBUFFERTEXTUREUNIT);
     }
     
     if(shaderptr->hasUniform("depthTexture")){
-        glActiveTexture(GL_TEXTURE0 + ZBUFFER);
+        glActiveTexture(GL_TEXTURE0 + DEPTHBUFFERTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, depthTexture);
-        glUniform1i(shaderptr->getUniform("depthTexture"), ZBUFFER);
+        glUniform1i(shaderptr->getUniform("depthTexture"), DEPTHBUFFERTEXTUREUNIT);
     }
     
     if(shaderptr->hasUniform("invrVP")){

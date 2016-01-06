@@ -33,18 +33,18 @@ void uploadMaterialData(Material mat){
         glUniform1f(shader->getUniform("shininess"), mat.shininess);
     }
     if(shader->hasUniform("diffuseTexture")){
-        glActiveTexture(GL_TEXTURE0 + DIFFUSEID);
+        glActiveTexture(GL_TEXTURE0 + DIFFUSETEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.diffuseTexture);
-        glUniform1i(shader->getUniform("diffuseTexture"), 0);
+        glUniform1i(shader->getUniform("diffuseTexture"), DIFFUSETEXTUREUNIT);
     }
     if(shader->hasUniform("bumpmapTexture")){
-        glActiveTexture(GL_TEXTURE0 + NORMALID);
+        glActiveTexture(GL_TEXTURE0 + NORMALMAPTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.bumpmapTexture);
-        glUniform1i(shader->getUniform("bumpmapTexture"), 1);
+        glUniform1i(shader->getUniform("bumpmapTexture"), NORMALMAPTEXTUREUNIT);
     }
     if(shader->hasUniform("specularTexture")){
-        glActiveTexture(GL_TEXTURE0 + SPECULARID);
+        glActiveTexture(GL_TEXTURE0 + SPECULARMAPTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.specularTexture);
-        glUniform1i(shader->getUniform("specularTexture"), 2);
+        glUniform1i(shader->getUniform("specularTexture"), SPECULARMAPTEXTUREUNIT);
     }
 }
