@@ -21,6 +21,7 @@
 #include "Config.h"
 #include "Texture.h"
 #include "Model.h"
+#include "Text.h"
 
 std::string windowTitle;
 SDL_Window* window;
@@ -265,9 +266,43 @@ void RenderEngine::drawString(string s, int x, int y) {
     vector<float> data;
     int lastpos = 0;
 
+    int mod = -1;
+    int mType = -1;
+    
+    unsigned char r = 0, g = 0, b = 0;
+    
     string temptext;
     glm::vec2 uv;
     for (char& c : s) {
+        if (mod > -1) {
+            if (mType == 0) { //Color
+                switch (mod) {
+                    case 1:
+                        r = c;
+                        break;
+                    case 2:
+                        g = c;
+                        break;
+                    case 3:
+                        b = c;
+                        mType = -1;
+                        mod = -2;
+                        break;
+                }
+            } else if (mType == 1) { //Style
+                //TODO styles
+            } else { //Not set
+                mType = c-1;
+            }
+            mod++;
+            continue;
+        }
+        if (c == T_SUB[0]) {
+            mod = 0;
+            continue;
+        }
+        glUniform4f(getShader(GUISHADER)->getUniform("modColor"), r/255.f, g/255.f, b/255.f, 1);
+        
         int h;
         int w = lastpos;
         temptext += c;
