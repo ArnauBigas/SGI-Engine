@@ -3,7 +3,7 @@
 #include "definitions.h"
 
 #include <GL/glew.h>
-#include <iostream>
+#include "Logger.h"
 #include "RenderEngine.h"
 
 ShadowMapping::ShadowMapping(unsigned int &target, std::string shader) : RenderingTechnique(target, shader){
@@ -22,7 +22,7 @@ ShadowMapping::ShadowMapping(unsigned int &target, std::string shader) : Renderi
     
     // Check framebuffer
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-        std::cerr << "There was an error while creating the framebuffer" << std::endl;
+        Logger::error << "There was an error while creating the framebuffer" << std::endl;
     }
 }
 

@@ -22,6 +22,7 @@
 #include "Texture.h"
 #include "Model.h"
 #include "Text.h"
+#include "Logger.h"
 
 std::string windowTitle;
 SDL_Window* window;
@@ -45,7 +46,7 @@ unsigned int stringVbo;
 std::vector<Camera *> cams;
 Camera* currentCamera = 0;
 
-bool RenderEngine::init(string title) {
+bool RenderEngine::init(std::string title) {
     windowTitle = title;
 
     //Initialize the TTF SDL helper library
@@ -138,8 +139,8 @@ bool RenderEngine::initGL() {
     
     err = glGetError();
     if (err != GL_NO_ERROR) {
-        cout << "there was an error while initializing OpenGL:" << endl;
-        cout << err << endl;
+        Logger::error << "there was an error while initializing OpenGL:" << std::endl;
+        Logger::error << err << std::endl;
         return false;
     }
 
@@ -147,8 +148,8 @@ bool RenderEngine::initGL() {
 
     SDL_Color color = {255, 255, 255};
 
-    string text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?'=<>+-,.;:\"\\#$·%&/()* ";
-    string temptext;
+    std::string text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?'=<>+-,.;:\"\\#$·%&/()* ";
+    std::string temptext;
     int lastPos = 0;
     for (char& c : text) {
         int xStart = lastPos;
@@ -159,7 +160,7 @@ bool RenderEngine::initGL() {
 
     SDL_Surface* img = TTF_RenderText_Blended(font, text.c_str(), color);
 
-    cout << "GlyphMap texture resolution is " << img->w << "x" << img->h << endl;
+    Logger::info << "GlyphMap texture resolution is " << img->w << "x" << img->h << std::endl;
 
     for (char c = 0; unsigned(c) < 256; c++) {
         uvCoords[c].x /= img->w;
@@ -175,8 +176,8 @@ bool RenderEngine::initGL() {
 
     err = glGetError();
     if (err != GL_NO_ERROR) {
-        cout << "there was an error while creating the glyph map:" << endl;
-        cout << err << endl;
+        Logger::error << "there was an error while creating the glyph map:" << std::endl;
+        Logger::error << err << std::endl;
         return false;
     }
     
@@ -262,8 +263,8 @@ glm::vec2 RenderEngine::getGlyphPos(char c) {
     return uvCoords.at(c);
 }
 
-void RenderEngine::drawString(string s, int x, int y) {
-    vector<float> data;
+void RenderEngine::drawString(std::string s, int x, int y) {
+    std::vector<float> data;
     int lastpos = 0;
 
     int mod = -1;
@@ -271,7 +272,7 @@ void RenderEngine::drawString(string s, int x, int y) {
     
     unsigned char r = 0, g = 0, b = 0;
     
-    string temptext;
+    std::string temptext;
     glm::vec2 uv;
     for (char& c : s) {
         if (mod > -1) {

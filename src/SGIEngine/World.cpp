@@ -10,7 +10,6 @@
 #include <rapidjson.h>
 #include <document.h>
 #include <GL/glew.h>
-#include <iostream>
 #include <gtc/type_ptr.hpp>
 
 #include "RenderEngine.h"
@@ -19,6 +18,7 @@
 #include "AudioConfig.h"
 #include "definitions.h"
 #include "Config.h"
+#include "Logger.h"
 
 void World::renderWorld() {
     glGetError();
@@ -46,8 +46,8 @@ void World::renderWorld() {
 
     GLint err = glGetError();
     if (err != GL_NO_ERROR) {
-        std::cout << "GL ERROR (world render): " << err << std::endl;
-        std::cout << gluErrorString(err) << std::endl;
+        Logger::info << "GL ERROR (world render): " << err << std::endl;
+        Logger::info << gluErrorString(err) << std::endl;
     }
 }
 
@@ -107,15 +107,15 @@ bool World::loadFromFile(std::string filename){
     if(readJsonFile(filename, doc)){
         rapidjson::Value& objects = doc["objects"];
         for (rapidjson::SizeType i = 0; i < objects.Size(); i++) {
-            //std::cout << "loading object of type " << objects[i]["type"].GetString() << std::endl;
+            //Logger::info << "loading object of type " << objects[i]["type"].GetString() << std::endl;
             WorldObject* o = getWorldObject(objects[i]["type"].GetString())->clone();
             o->initFromJson(this, objects[i]);
             addObject(o);
-            //std::cout << "object loaded" << std::endl;
+            //Logger::info << "object loaded" << std::endl;
         }
         player = new ControllableEntity((float) doc["player"]["speed"].GetDouble());
         player->initFromJson(this, doc["player"]);
-        std::cout << "Level loaded" << std::endl;
+        Logger::info << "Level loaded" << std::endl;
     }
 }
 

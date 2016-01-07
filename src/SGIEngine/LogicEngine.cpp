@@ -22,7 +22,7 @@ bool LogicEngine::init() {
     /*lua_State* state = luaL_newstate();
     luaL_openlibs(state);
     if (luaL_loadfile(state, "test.lua") != 0) {
-        std::cout << "couldn't load test file" << std::endl;
+        Logger::info << "couldn't load test file" << std::endl;
     }
     lua_call(state, 0, 0);
     lua_close(state);*/

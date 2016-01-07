@@ -6,7 +6,7 @@
  */
 
 #include "AudioData.h"
-#include <iostream>
+#include "Logger.h"
 #include <map>
 
 WAVAudioData::WAVAudioData(SDL_AudioSpec spec, Uint8* start, Uint32 length){
@@ -65,7 +65,7 @@ AudioData* loadAudioFromWAV(std::string filename){
     Uint8* wavStart;
     Uint32 wavLength;
     if(SDL_LoadWAV(filename.c_str(), &spec, &wavStart, &wavLength) == NULL){
-        std::cerr << "Couldn't load wav file: " << filename << "Error: " << SDL_GetError() << std::endl;
+        Logger::error << "Couldn't load wav file: " << filename << "Error: " << SDL_GetError() << std::endl;
         return 0;
     }
     return new WAVAudioData(spec, wavStart, wavLength);

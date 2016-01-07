@@ -8,7 +8,7 @@
 #include "Wall.h"
 
 #include "Texture.h"
-#include <iostream>
+#include "Logger.h"
 #include <document.h>
 #include <GL/glew.h>
 #include <gtx/rotate_vector.hpp>
@@ -21,7 +21,7 @@ Wall::Wall(std::string dir) {
         modelLength = doc["modelLength"].GetDouble();
         model = new Model();
         if(!model->loadCollada(dir + "model.dae")){
-            std::cout << "Couldn't load model for this prop!" << std::endl;
+            Logger::info << "Couldn't load model for this prop!" << std::endl;
         }        
     }
 }

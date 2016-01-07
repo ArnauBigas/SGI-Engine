@@ -7,9 +7,9 @@
 
 #include "AudioEngine.h"
 #include "PositionalAudioObject.h"
+#include "Logger.h"
 
 #include <vector>
-#include <iostream>
 
 SDL_AudioDeviceID device;
 std::vector<float> stream;
@@ -62,7 +62,7 @@ bool AudioEngine::init(){
     
     device = SDL_OpenAudioDevice(NULL, 0, &spec, NULL, 0);
     if(device == 0){
-        std::cerr << "Couldn't get audio device: " << SDL_GetError() << std::endl;
+        Logger::error << "Couldn't get audio device: " << SDL_GetError() << std::endl;
         return false;
     }
     SDL_PauseAudioDevice(device, 0);

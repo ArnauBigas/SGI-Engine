@@ -2,12 +2,12 @@
 
 #include <GL/glew.h>
 #include <vector>
-#include <iostream>
 #include <fstream>
 #include <document.h>
 
 #include "Utility.h"
 #include "definitions.h"
+#include "Logger.h"
 
 std::string* getSource(const char* path) {
     std::string* source = new std::string();
@@ -119,7 +119,7 @@ void addShader(std::string name, ShaderProgram* program) {
 
 ShaderProgram* getShader(std::string name) {
     if(programs.find(name) == programs.end()){
-        std::cout << "Couldn't find shader program " << name << std::endl;
+        Logger::info << "Couldn't find shader program " << name << std::endl;
         return 0;
     }
     return programs.at(name);

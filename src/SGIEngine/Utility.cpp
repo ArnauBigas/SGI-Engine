@@ -3,7 +3,7 @@
 #include "definitions.h"
 
 #include <assert.h>
-#include <iostream>
+#include "Logger.h"
 #include <fstream>
 #include <regex>
 
@@ -33,7 +33,7 @@ std::vector<std::string> LINUXgetDirectoryContents(std::string baseDir, bool dir
         
         struct stat st;
         if (fstatat(dirfd(dStream), str.c_str(), &st, 0) < 0) {
-            std::cout << "Error (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+            Logger::info << "Error (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
             break;
         }
         
