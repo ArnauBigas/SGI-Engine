@@ -9,18 +9,18 @@
 
 #include <map>
 #include <GL/glew.h>
-#include <iostream>
 #include <document.h>
 
 #include "Utility.h"
 #include "Texture.h"
+#include "Logger.h"
 
 Prop::Prop(std::string dir) {
     rapidjson::Document doc;
     if(readJsonFile(dir + "prop.json", doc)){        
         model = new Model();
         if(!model->loadCollada(dir + "model.dae")){
-            std::cout << "Couldn't load model for this prop!" << std::endl;
+            Logger::info << "Couldn't load model for this prop!" << std::endl;
         }
         loadFromJson(doc);
     }

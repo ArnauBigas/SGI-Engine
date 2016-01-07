@@ -22,7 +22,7 @@ GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageF
     return id;
 }
 
-GLuint loadTextureFromPNG(string filename) {
+GLuint loadTextureFromPNG(std::string filename) {
     SDL_Surface* img = IMG_Load(filename.c_str());
     GLuint id = generateTexture(GL_RGBA, img->w, img->h, getSurfaceFormat(img), img->pixels, GL_UNSIGNED_BYTE, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR);
     SDL_FreeSurface(img);

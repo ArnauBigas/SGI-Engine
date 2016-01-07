@@ -12,11 +12,9 @@
 #include <string>
 #include <SDL_surface.h>
 
-using namespace std;
-
 GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageFormat, void* data, GLenum type, GLint mag_filter, GLint min_filter);
 
-GLuint loadTextureFromPNG(string filename);
+GLuint loadTextureFromPNG(std::string filename);
 
 GLuint getSurfaceFormat(SDL_Surface* surface);
 

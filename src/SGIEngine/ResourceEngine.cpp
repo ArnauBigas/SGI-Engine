@@ -8,7 +8,6 @@
 #include "ResourceEngine.h"
 
 #include <vector>
-#include <iostream>
 #include <SDL_audio.h>
 
 #include "Utility.h"
@@ -18,6 +17,7 @@
 #include "Texture.h"
 #include "AudioData.h"
 #include "Wall.h"
+#include "Logger.h"
 
 std::string loadingStatus;
 
@@ -29,7 +29,7 @@ std::string getLoadingStatus() {
 
 void updateStatus(std::string status) {
     loadingStatus = status;
-    std::cout << status << std::endl;
+    Logger::info << status << std::endl;
 }
 
 bool loaded() {

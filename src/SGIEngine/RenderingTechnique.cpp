@@ -16,7 +16,7 @@
 #include "RenderEngine.h"
 #include "definitions.h"
 #include "detail/func_matrix.hpp"
-#include <iostream>
+#include "Logger.h"
 #include "Camera.h"
 #include "Config.h"
 #include "Light.h"
@@ -40,7 +40,7 @@ DeferredRendering::DeferredRendering(unsigned int target, std::string shader) : 
     glGenTextures(1, &materialsTexture);
     glGenTextures(1, &depthTexture);
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-        std::cerr << "There was an error while creating the framebuffer" << std::endl;
+        Logger::error << "There was an error while creating the framebuffer" << std::endl;
     }
 }
 
@@ -84,7 +84,7 @@ void DeferredRendering::targetResized(int width, int height){
     glDrawBuffers(3, windowBuffClear);
     
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-        std::cerr << "There was an error while resizing the framebuffer" << std::endl;
+        Logger::error << "There was an error while resizing the framebuffer" << std::endl;
     }
 }
 

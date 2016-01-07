@@ -14,7 +14,7 @@
 #include <queue>
 #include <SDL_thread.h>
 #include <SDL_cpuinfo.h>
-#include <iostream>
+#include "Logger.h"
 
 std::queue<Task*> tasks;
 std::vector<SDL_Thread*> threads;
@@ -23,7 +23,7 @@ SDL_cond* taskAvailable;
 SDL_mutex* threadLock;
 
 void handleSignal(int signum) {
-    std::cout << "Interrupt signal (" << signum << ") received.\n";
+    Logger::info << "Interrupt signal (" << signum << ") received.\n";
 
     // cleanup and close up stuff here
     // terminate program
@@ -52,7 +52,7 @@ int routine(void *data) {
 void TaskEngine::init() {
     taskAvailable = SDL_CreateCond();
     threadLock = SDL_CreateMutex();
-    std::cout << "Spawning " << SDL_GetCPUCount() << " threads" << std::endl;
+    Logger::info << "Spawning " << SDL_GetCPUCount() << " threads" << std::endl;
     for (int i = 0; i < SDL_GetCPUCount(); i++) {
         threads.push_back(SDL_CreateThread(routine, "Worker Thread", NULL));
     }

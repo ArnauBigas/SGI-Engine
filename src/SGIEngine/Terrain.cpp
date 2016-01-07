@@ -9,19 +9,19 @@
 
 #include <SDL_image.h>
 #include <SDL_surface.h>
-#include <iostream>
 #include <vec3.hpp>
 #include <geometric.hpp>
 
 #include "Model.h"
 #include "definitions.h"
+#include "Logger.h"
 
 Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
-    std::cout << "loading terrain" << std::endl;
+    Logger::info << "loading terrain" << std::endl;
 
     SDL_Surface* img = IMG_Load((FMAPS"world/"+file).c_str());
 
-    std::cout << "bits per pixel: " << unsigned(img->format->BitsPerPixel) << std::endl;
+    Logger::info << "bits per pixel: " << unsigned(img->format->BitsPerPixel) << std::endl;
 
     std::vector<float> data;
     std::vector<unsigned int> indices;
@@ -45,7 +45,7 @@ Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
         }
     }
     
-    std::cout << "loading height data" << std::endl;
+    Logger::info << "loading height data" << std::endl;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             vertices[x][y] = glm::vec3(x / scaleX, getPixel(img, x, y) / scaleY, y / scaleZ);
@@ -54,7 +54,7 @@ Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
 
     SDL_FreeSurface(img);
 
-    std::cout << "calculating face normals" << std::endl;
+    Logger::info << "calculating face normals" << std::endl;
     for (int y = 0; y < height - 1; y++) {
         for (int x = 0; x < width - 1; x++) {
             glm::vec3 trig0[3] = {
@@ -77,7 +77,7 @@ Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
         }
     }
 
-    std::cout << "calculating vertex normals and uploading data" << std::endl;
+    Logger::info << "calculating vertex normals and uploading data" << std::endl;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             glm::vec3 normal(0, 0, 0);
@@ -128,7 +128,7 @@ Terrain::Terrain(std::string file, int sizeX, int sizeY, int sizeZ) {
     delete[] trigNormals;
     delete[] vertices;
 
-    std::cout << "terrain loaded (" << indices.size() << " indices)" << std::endl;
+    Logger::info << "terrain loaded (" << indices.size() << " indices)" << std::endl;
 
     //TODO: fix this
     //model = new Model(data, indices);

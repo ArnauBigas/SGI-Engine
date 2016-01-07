@@ -7,7 +7,6 @@
 
 #include "Model.h"
 
-#include <iostream>
 #include <rapidxml_utils.hpp>
 #include <rapidxml.hpp>
 #include <string>
@@ -22,6 +21,7 @@
 #include "RenderEngine.h"
 #include "Texture.h"
 #include "Game.h"
+#include "Logger.h"
 
 unsigned int sendToOpengl(std::vector<float> data, std::vector<unsigned int> indices) {
     //Generate OpenGL buffers
@@ -63,7 +63,7 @@ GLenum readData(std::vector<float> *container, rapidxml::xml_node<> *node){
         }
         return GL_FLOAT;
     } else {
-        std::cerr << "Source data type not currently supported by the loader! Sorry, working on it D:" << std::endl;
+        Logger::error << "Source data type not currently supported by the loader! Sorry, working on it D:" << std::endl;
     }
     return GL_NONE;
 }
@@ -79,7 +79,7 @@ bool Model::loadCollada(std::string filename){
     //Load textures
     rapidxml::xml_node<> *images = doc.first_node()->first_node("library_images");
     if(images->first_node("image") == 0){
-        std::cerr << "Couldn't load model: file contains no texture data." << std::endl;
+        Logger::error << "Couldn't load model: file contains no texture data." << std::endl;
         return false;
     }
     std::map<std::string, unsigned int> textures;
@@ -92,7 +92,7 @@ bool Model::loadCollada(std::string filename){
     //TODO: only supports common profiles using phong techniques
     rapidxml::xml_node<> *effectsNode = doc.first_node()->first_node("library_effects");
     if(effectsNode->first_node("effect") == 0){
-        std::cerr << "Couldn't load model: file contains no effects data." << std::endl;
+        Logger::error << "Couldn't load model: file contains no effects data." << std::endl;
         return false;
     }
     std::map<std::string, Material> effects;
@@ -135,7 +135,7 @@ bool Model::loadCollada(std::string filename){
                     mat.shininess = std::stof(phong->first_node("shininess")->first_node("float")->value());
                 }
             } else {
-                std::cerr << "Couldn't load model: material doesn't use the phong technique." << std::endl;
+                Logger::error << "Couldn't load model: material doesn't use the phong technique." << std::endl;
                 return false;
             }
             if(technique->first_node("extra") != 0 && technique->first_node("extra")->first_node("technique")->first_node("bump") != 0){
@@ -146,7 +146,7 @@ bool Model::loadCollada(std::string filename){
             }
             effects.insert(std::pair<std::string, Material>(effect->first_attribute("id")->value(), mat));
         } else {
-            std::cerr << "Couldn't load model: material doesn't have a profile_COMMON tag." << std::endl;
+            Logger::error << "Couldn't load model: material doesn't have a profile_COMMON tag." << std::endl;
             return false;
         }
     }
@@ -156,7 +156,7 @@ bool Model::loadCollada(std::string filename){
     //TODO: make them overridable (collada spec))
     rapidxml::xml_node<> *materialsNode = doc.first_node()->first_node("library_materials");
     if(materialsNode->first_node("material") == 0){
-        std::cerr << "Couldn't load model: file contains no material data." << std::endl;
+        Logger::error << "Couldn't load model: file contains no material data." << std::endl;
         return false;
     }
     std::map<std::string, Material> materials;
@@ -169,18 +169,18 @@ bool Model::loadCollada(std::string filename){
     std::map<std::string, Mesh> meshes;
     rapidxml::xml_node<> *geometries = doc.first_node()->first_node("library_geometries");
     if(geometries->first_node("geometry") == 0){
-        std::cerr << "Couldn't load model: file contains no geometry data." << std::endl;
+        Logger::error << "Couldn't load model: file contains no geometry data." << std::endl;
         return false;
     }
     for(rapidxml::xml_node<> *geometry = geometries->first_node("geometry"); geometry != 0; geometry = geometry->next_sibling("geometry")){
         Mesh mesh;        
         rapidxml::xml_node<> *meshNode = geometry->first_node("mesh");
         if(meshNode == 0){
-            std::cerr << "Couldn't load model: The loader can only load geometry of type \"mesh\" (geometry with name: " << geometry->first_attribute("name")->value() << ")." << std::endl;
+            Logger::error << "Couldn't load model: The loader can only load geometry of type \"mesh\" (geometry with name: " << geometry->first_attribute("name")->value() << ")." << std::endl;
             return false;
         }
         if(meshNode->first_node("polylist") == 0){
-            std::cerr << "Couldn't load model: The loader can only load meshes that use polylists. (geometry with name: " << geometry->first_attribute("name")->value() << ")." << std::endl;
+            Logger::error << "Couldn't load model: The loader can only load meshes that use polylists. (geometry with name: " << geometry->first_attribute("name")->value() << ")." << std::endl;
             return false;
         }
         
@@ -236,7 +236,7 @@ bool Model::loadCollada(std::string filename){
                     uvOffset = std::stoi(input->first_attribute("offset")->value());
                     uvStride = pair.first;
                 } else {
-                    std::cerr << "Unknown input semantic: " << semantic << std::endl;
+                    Logger::error << "Unknown input semantic: " << semantic << std::endl;
                     return 0;
                 }
             }            
@@ -281,7 +281,7 @@ bool Model::loadCollada(std::string filename){
     //Load scene
     rapidxml::xml_node<> *scenes = doc.first_node()->first_node("library_visual_scenes");
     if(scenes->first_node("visual_scene") == 0){
-        std::cerr << "Couldn't load model: file contains no scene data." << std::endl;
+        Logger::error << "Couldn't load model: file contains no scene data." << std::endl;
         return false;
     } else {
         rapidxml::xml_node<> *scene = scenes->first_node("visual_scene");
@@ -392,7 +392,7 @@ bool Model::loadCollada(std::string filename){
                         }
                     }
                 } else {
-                    std::cout << "unknown animation target: " << target << endl;
+                    Logger::info << "unknown animation target: " << target << std::endl;
                 }
             }
             for (rapidjson::SizeType i = 0; i < animDoc.Size(); i++) {
@@ -453,13 +453,13 @@ void Model::playAnimation(std::string animation){
     if(animations.count(animation)){
         Animation& anim = animations.at(animation);
         if(anim.finished){
-            std::cout << "Playing animation " << animation << std::endl;
+            Logger::info << "Playing animation " << animation << std::endl;
             anim.finished = false;
             animationUpdates.push_back(&anim);
         } else {
-            std::cout << "Animation " << animation << " is already playing." << std::endl;
+            Logger::info << "Animation " << animation << " is already playing." << std::endl;
         }
     } else {
-        std::cerr << "Animation " << animation << " doesn't exist!" << std::endl;
+        Logger::error << "Animation " << animation << " doesn't exist!" << std::endl;
     }
 }

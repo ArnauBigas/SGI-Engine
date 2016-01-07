@@ -13,7 +13,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <stdio.h>
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <chrono>
@@ -29,6 +28,7 @@
 #include "Utility.h"
 #include "Timer.h"
 #include "Profiler.h"
+#include "Logger.h"
 
 bool run = true;
 bool _client;
@@ -46,7 +46,7 @@ struct PerformanceData {
 } pData;
 
 void saveConfig() {
-    std::cout << "Saving config file..." << std::endl;
+    Logger::info << "Saving config file..." << std::endl;
     FILE* file = fopen("config.json", "w");
     rapidjson::StringBuffer buffer;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
@@ -55,11 +55,11 @@ void saveConfig() {
     doc.Accept(writer);
     fwrite(buffer.GetString(), buffer.GetSize(), 1, file);
     fclose(file);
-    std::cout << "Saved config file." << std::endl;
+    Logger::info << "Saved config file." << std::endl;
 }
 
 bool loadConfig() {
-    std::cout << "Loading configuration file." << std::endl;
+    Logger::info << "Loading configuration file." << std::endl;
     rapidjson::Document doc;
     if (readJsonFile("config.json", doc)) {
         Config::deserialize(&doc);
@@ -72,51 +72,51 @@ bool loadConfig() {
 bool Game::init(std::string title, bool client) {
     Profiler::init();
 
-    std::cout << "Starting SGI Engine..." << std::endl;
+    Logger::info << "Starting SGI Engine..." << std::endl;
 
     _title = title;
     _client = client;
 
     if (client) {
-        std::cout << "Initializing SDL..." << std::endl;
+        Logger::info << "Initializing SDL..." << std::endl;
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-            std::cerr << "Couldn't start game." << std::endl;
+            Logger::error << "Couldn't start game." << std::endl;
             return false;
         }
     }
 
-    std::cout << "Initializing Task Engine..." << std::endl;
+    Logger::info << "Initializing Task Engine..." << std::endl;
     TaskEngine::init();
 
     if (!loadConfig()) {
-        std::cerr << "Couldn't start game." << std::endl;
+        Logger::error << "Couldn't start game." << std::endl;
         return false;
     }
 
     if (client) {
-        std::cout << "Initializing Rendering Engine..." << std::endl;
+        Logger::info << "Initializing Rendering Engine..." << std::endl;
         if (!RenderEngine::init(title)) {
-            std::cerr << "Couldn't start game." << std::endl;
+            Logger::error << "Couldn't start game." << std::endl;
             return false;
         }
 
-        std::cout << "Initializing OpenGL..." << std::endl;
+        Logger::info << "Initializing OpenGL..." << std::endl;
         if (!RenderEngine::initGL()) {
-            std::cerr << "Couldn't start game." << std::endl;
+            Logger::error << "Couldn't start game." << std::endl;
             return false;
         }
 
-        std::cout << "Initializing Audio Engine..." << std::endl;
+        Logger::info << "Initializing Audio Engine..." << std::endl;
         if (!AudioEngine::init()) {
-            std::cerr << "Couldn't start game." << std::endl;
+            Logger::error << "Couldn't start game." << std::endl;
             return false;
         }
     }
 
-    std::cout << "Initializing Logic Engine..." << std::endl;
+    Logger::info << "Initializing Logic Engine..." << std::endl;
     if (!LogicEngine::init()) {
-        std::cerr << "Couldn't start game." << std::endl;
+        Logger::error << "Couldn't start game." << std::endl;
         return false;
     }
 
@@ -170,12 +170,13 @@ void Game::start() {
         pData.fps++;
 
         if (secondTimer.getTime() >= 1000) {
-            std::cout << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
+            Logger::info << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
             secondTimer.reset();
             pData.fps = pData.tps = 0;
 
-            std::cout << std::endl << "Update: " << +Profiler::get("update")->timer.getTime() << std::endl << "Render: " << +Profiler::get("render")->timer.getTime() << std::endl;
-            std::cout << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
+            Logger::info << "Update: " << +Profiler::get("update")->timer.getTime() << std::endl;
+            Logger::info << "Render: " << +Profiler::get("render")->timer.getTime() << std::endl;
+            Logger::info << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
         }
     }
     Profiler::cleanup();
@@ -197,7 +198,7 @@ bool Game::enterState(std::string name) {
         states[currentState]->onExit();
     }
     currentState = name;
-    std::cout << "Entering state " << name << std::endl;
+    Logger::info << "Entering state " << name << std::endl;
     states[currentState]->onEnter();
     return true;
 }

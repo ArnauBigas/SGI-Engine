@@ -1,6 +1,6 @@
 #include "Profiler.h"
 #include "Timer.h"
-#include <iostream>
+#include "Logger.h"
 
 Profiler::Profile *base;
 Profiler::Profile *cProf = NULL;
@@ -25,7 +25,7 @@ Profiler::Profile::~Profile() {
     for (Profile *p : children) {
         delete p;
     }
-    std::cout << "Profile destructed" << std::endl;
+    Logger::info << "Profile destructed" << std::endl;
 }
 
 void Profiler::init() {
