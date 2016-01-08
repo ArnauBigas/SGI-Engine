@@ -43,9 +43,13 @@ namespace Logger {
         
         template <typename T>
         std::ostream& operator<<(const T& data){
-            time_t t = std::time(nullptr);
+            time_t now = time(0);
+            struct tm tstruct = *localtime(&now);
+            char buf[9];
+            strftime(buf, sizeof(buf), "%X", &tstruct);
+            
             std::ostringstream buffer;
-            buffer << "[" << std::put_time(std::localtime(&t), "%T") << "][" << severity << "]: " << data;
+            buffer << "[" << buf << "][" << severity << "]: " << data;
             static_cast<std::ostream&>(*this) << buffer.str();
             return *this;
         }
