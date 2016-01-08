@@ -29,6 +29,7 @@
 #include "Timer.h"
 #include "Profiler.h"
 #include "Logger.h"
+#include "CrashHandler.h"
 
 bool run = true;
 bool _client;
@@ -76,6 +77,9 @@ bool Game::init(std::string title, bool client) {
 
     _title = title;
     _client = client;
+    
+    //wonder what would happen if the game crashed while initializing the crash handler
+    CrashHandler::init();
 
     if (client) {
         Logger::info << "Initializing SDL..." << std::endl;

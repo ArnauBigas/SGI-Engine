@@ -8,7 +8,6 @@
 #include "TaskEngine.h"
 
 #include <assert.h>
-#include <csignal>
 #include <stdio.h>
 #include <vector>
 #include <queue>
@@ -22,21 +21,7 @@ std::vector<SDL_Thread*> threads;
 SDL_cond* taskAvailable;
 SDL_mutex* threadLock;
 
-void handleSignal(int signum) {
-    Logger::info << "Interrupt signal (" << signum << ") received.\n";
-
-    // cleanup and close up stuff here
-    // terminate program
-    //game->~Game();
-
-    exit(signum);
-}
-
 int routine(void *data) {
-    signal(SIGABRT, handleSignal);
-    signal(SIGSEGV, handleSignal);
-    signal(SIGILL, handleSignal);
-    signal(SIGFPE, handleSignal);
     while (true) {
         SDL_LockMutex(threadLock);
         SDL_CondWait(taskAvailable, threadLock);

@@ -160,6 +160,12 @@ namespace RenderEngine {
      * @return a vector of all registered cameras
      */
     std::vector<Camera *> getCameras();
+    
+    /**
+     * Returns the current window the game is drawing to.
+     * @return a SDL_Window pointer
+     */
+    SDL_Window* getWindow();
 };
 
 #endif	/* RENDERENGINE_H */

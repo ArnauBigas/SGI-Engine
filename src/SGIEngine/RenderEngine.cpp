@@ -386,3 +386,7 @@ void RenderEngine::unregisterCamera(Camera* camera) {
     cams.erase(std::remove(cams.begin(), cams.end(), camera), cams.end());
 }
 std::vector<Camera *> RenderEngine::getCameras() { return cams; }
+
+SDL_Window* RenderEngine::getWindow(){
+    return window;
+}
