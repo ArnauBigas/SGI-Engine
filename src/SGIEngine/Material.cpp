@@ -13,8 +13,6 @@
 #include "RenderEngine.h"
 #include "definitions.h"
 
-
-//TODO: Shader uniform optimization, don't reupload them.
 void uploadMaterialData(Material mat){
     ShaderProgram* shader = RenderEngine::getCurrentShader();
     if(shader->hasUniform("matEmission")){
@@ -32,19 +30,17 @@ void uploadMaterialData(Material mat){
     if(shader->hasUniform("shininess")){
         glUniform1f(shader->getUniform("shininess"), mat.shininess);
     }
-    if(shader->hasUniform("diffuseTexture")){
+    //not sure if this is a good idea, leaving it uncommented for now
+    //if(shader->hasUniform("diffuseTexture")){
         glActiveTexture(GL_TEXTURE0 + DIFFUSETEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.diffuseTexture);
-        glUniform1i(shader->getUniform("diffuseTexture"), DIFFUSETEXTUREUNIT);
-    }
-    if(shader->hasUniform("bumpmapTexture")){
+    //}
+    //if(shader->hasUniform("bumpmapTexture")){
         glActiveTexture(GL_TEXTURE0 + NORMALMAPTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.bumpmapTexture);
-        glUniform1i(shader->getUniform("bumpmapTexture"), NORMALMAPTEXTUREUNIT);
-    }
-    if(shader->hasUniform("specularTexture")){
+    //}
+    //if(shader->hasUniform("specularTexture")){
         glActiveTexture(GL_TEXTURE0 + SPECULARMAPTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, mat.specularTexture);
-        glUniform1i(shader->getUniform("specularTexture"), SPECULARMAPTEXTUREUNIT);
-    }
+    //}
 }

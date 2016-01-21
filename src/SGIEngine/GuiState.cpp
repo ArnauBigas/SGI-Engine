@@ -27,9 +27,7 @@ void GuiState::render() {
         glViewport(0, 0, Config::graphics.width, Config::graphics.height);
         glScissor(0, 0, Config::graphics.width, Config::graphics.height);
         
-        glActiveTexture(GL_TEXTURE0 + GUITEXTUREUNIT);        
-        glProgramUniform1i(RenderEngine::getCurrentShader()->getProgramID(), RenderEngine::getCurrentShader()->getUniform("sampler"), GUITEXTUREUNIT);
-
+        glActiveTexture(GL_TEXTURE0 + GUITEXTUREUNIT);
         gui->draw();
     }
 }

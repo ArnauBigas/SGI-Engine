@@ -50,8 +50,5 @@ void uploadSpotLight(SpotLight light, ShaderProgram* shader){
     glUniform1f(shader->getUniform("spotlight.exponentialAttenuation"), light.exponentialAttenuation);
     glActiveTexture(GL_TEXTURE0 + SHADOWMAPTEXTUREUNIT);
     glBindTexture(GL_TEXTURE_2D, light.shadowMap);
-    glUniform1i(shader->getUniform("shadowmap"), SHADOWMAPTEXTUREUNIT);
-    if(shader->hasUniform("depthBiasVP")){
-        glUniformMatrix4fv(shader->getUniform("depthBiasVP"), 1, GL_FALSE, &(light.depthBiasVP)[0][0]);
-    }
+    glUniformMatrix4fv(shader->getUniform("depthBiasVP"), 1, GL_FALSE, &(light.depthBiasVP)[0][0]);
 }

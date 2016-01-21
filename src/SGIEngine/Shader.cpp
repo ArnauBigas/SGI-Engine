@@ -94,7 +94,28 @@ ShaderProgram::ShaderProgram(std::string file) {
         link();
         rapidjson::Value& uniforms = doc["uniforms"];
         for (rapidjson::SizeType i = 0; i < uniforms.Size(); i++) {
-            this->uniforms.insert(std::make_pair(uniforms[i].GetString(), glGetUniformLocation(programID, uniforms[i].GetString())));
+            std::string uniform = uniforms[i].GetString();
+            int location = glGetUniformLocation(programID, uniform.c_str());
+            this->uniforms.insert(std::make_pair(uniform, location));
+            if(uniform == "diffuseBuffer"){
+                glUniform1i(location, DIFFUSEBUFFERTEXTUREUNIT);
+            } else if(uniform == "normalBuffer"){
+                glUniform1i(location, NORMALBUFFERTEXTUREUNIT);
+            } else if(uniform == "materialBuffer"){
+                glUniform1i(location, MATERIALBUFFERTEXTUREUNIT);
+            } else if(uniform == "depthBuffer"){
+                glUniform1i(location, DEPTHBUFFERTEXTUREUNIT);
+            } else if(uniform == "diffuseTexture"){
+                glUniform1i(location, DIFFUSETEXTUREUNIT);
+            } else if(uniform == "normalTexture"){
+                glUniform1i(location, NORMALMAPTEXTUREUNIT);
+            } else if(uniform == "specularTexture"){
+                glUniform1i(location, SPECULARMAPTEXTUREUNIT);
+            } else if(uniform == "shadowmapTexture"){
+                glUniform1i(location, SHADOWMAPTEXTUREUNIT);
+            } else if(uniform == "guiTexture"){
+                glUniform1i(location, GUITEXTUREUNIT);
+            }
         }
     }
 }
