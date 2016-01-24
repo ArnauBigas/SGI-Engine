@@ -33,6 +33,7 @@ public:
     virtual std::vector<PointLight>& getPointLights();
     virtual std::vector<SpotLight>& getSpotLights();
     virtual ControllableEntity* getPlayer();
+    virtual void registerPlayer(ControllableEntity *entity);
 protected:
     std::map<ShaderProgram*, std::vector<WorldObject*> > renderMap;
     std::vector<WorldObject*> objects;
@@ -40,6 +41,7 @@ protected:
     std::vector<PointLight> pointlights;
     std::vector<SpotLight> spotlights;
     ControllableEntity* player;
+    rapidjson::Value& playerData;
 };
 
 #endif	/* WORLD_H */

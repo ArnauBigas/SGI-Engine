@@ -178,9 +178,9 @@ void Game::start() {
             secondTimer.reset();
             pData.fps = pData.tps = 0;
 
-            Logger::info << "Update: " << +Profiler::get("update")->timer.getTime() << std::endl;
-            Logger::info << "Render: " << +Profiler::get("render")->timer.getTime() << std::endl;
-            Logger::info << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
+//            Logger::info << "Update: " << +Profiler::get("update")->timer.getTime() << std::endl;
+//            Logger::info << "Render: " << +Profiler::get("render")->timer.getTime() << std::endl;
+//            Logger::info << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
         }
     }
     Profiler::cleanup();

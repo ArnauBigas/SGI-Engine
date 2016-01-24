@@ -10,18 +10,16 @@
 ControllableEntity::ControllableEntity(float speed) {
     this->speed = speed;
 }
-
-
 //TODO: Mappable controls
 
 bool ControllableEntity::processSDLEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEMOTION) {
         cameraYaw += (event.motion.xrel) * 0.1f;
         cameraPitch += (event.motion.yrel) * -0.1f;
-        if (cameraPitch > 89.0f)
-            cameraPitch = 89.0f;
-        else if (cameraPitch < -89.0f)
-            cameraPitch = -89.0f;
+        if (cameraPitch > 89.9f)
+            cameraPitch = 89.9f;
+        else if (cameraPitch < -89.9f)
+            cameraPitch = -89.9f;
         if (cameraYaw > 360)
             cameraYaw = 0;
         else if (cameraYaw < 0)

@@ -113,10 +113,12 @@ bool World::loadFromFile(std::string filename){
             addObject(o);
             //Logger::info << "object loaded" << std::endl;
         }
-        player = new ControllableEntity((float) doc["player"]["speed"].GetDouble());
-        player->initFromJson(this, doc["player"]);
         Logger::info << "Level loaded" << std::endl;
     }
+}
+
+void World::registerPlayer(ControllableEntity *entity) {
+    player = entity;
 }
 
 ControllableEntity* World::getPlayer(){
