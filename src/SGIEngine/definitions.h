@@ -42,12 +42,15 @@
 #define NORMALBUFFERTEXTUREUNIT     6
 #define MATERIALBUFFERTEXTUREUNIT   7
 #define DEPTHBUFFERTEXTUREUNIT      8
+#define RANDOMNOISETEXTUREUNIT      9
+#define SSAOTEXTUREUNIT             10
 
-#define GUISHADER "gui"
-#define POINTLIGHTSHADER "pointlight"
-#define SPOTLIGHTSHADER "spotlight"
-#define AMBIENTSHADER "ambient"
+#define GUISHADER           "gui"
+#define POINTLIGHTSHADER    "pointlight"
+#define SPOTLIGHTSHADER     "spotlight"
+#define AMBIENTSHADER       "ambient"
 #define SHADOWMAPPINGSHADER "shadowmap"
+#define SSAOSHADER          "ssao"
 
 #endif	/* DEFINITIONS_H */
 

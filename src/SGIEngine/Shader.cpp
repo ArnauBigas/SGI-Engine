@@ -115,6 +115,10 @@ ShaderProgram::ShaderProgram(std::string file) {
                 glUniform1i(location, SHADOWMAPTEXTUREUNIT);
             } else if(uniform == "guiTexture"){
                 glUniform1i(location, GUITEXTUREUNIT);
+            } else if(uniform == "noiseTexture"){
+                glUniform1i(location, RANDOMNOISETEXTUREUNIT);
+            } else if(uniform == "ssaoTexture"){
+                glUniform1i(location, SSAOTEXTUREUNIT);
             }
         }
     }

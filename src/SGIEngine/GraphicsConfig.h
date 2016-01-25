@@ -29,6 +29,7 @@ struct GraphicsConfig {
     int depthBufferPrecision = 24;
     bool doubleBuffering = true; //Probably not implemented. Actually it's forced.
     double nearPlaneClipping = 0.1f;
+    bool ssao = true;
 };
 
 #endif	/* GRAPHICSCONFIG_H */

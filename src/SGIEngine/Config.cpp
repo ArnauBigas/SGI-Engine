@@ -65,6 +65,7 @@ void serializeGraphics(rapidjson::Document* doc) {
         g.AddMember("anisotropicFiltering", Config::graphics.anisotropicFiltering, doc->GetAllocator());
         g.AddMember("shadowmapResolution", Config::graphics.shadowmapResolution, doc->GetAllocator());
         g.AddMember("depthBufferPrecission", Config::graphics.depthBufferPrecision, doc->GetAllocator());
+        g.AddMember("ssao", Config::graphics.ssao, doc->GetAllocator());
     }
     doc->AddMember("graphics", g, doc->GetAllocator());
 }
@@ -103,6 +104,7 @@ void deserializeGraphics(rapidjson::Value& g) {
     setInt(Config::graphics.anisotropicFiltering, g, "anisotropicFiltering");
     setInt(Config::graphics.shadowmapResolution, g, "shadowmapResolution");
     setInt(Config::graphics.depthBufferPrecision, g, "depthBufferPrecission");
+    setBool(Config::graphics.ssao, g, "ssao");
 }
 
 void deserializePhysics(rapidjson::Value& p) {

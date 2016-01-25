@@ -48,8 +48,12 @@ private:
     unsigned int depthTexture;
     unsigned int normalTexture;
     unsigned int materialsTexture;
+    unsigned int ssaoTexture;
+    unsigned int ssaoFramebuffer;
     unsigned int framebuffer;
     unsigned int quadVBO;
+    int lastWidth;
+    int lastHeight;
 };
 
 #endif /* RENDERINGTECHNIQUE_H */

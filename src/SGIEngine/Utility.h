@@ -34,5 +34,15 @@ bool readJsonFile(std::string dir, rapidjson::Document& doc);
 
 glm::mat4 convertToRightHandedCoords(glm::mat4 matrix);
 
+template <typename T>
+inline T random(T min, T max){
+    return min + (((T) rand() / (T) RAND_MAX) * (max-min));
+}
+
+template <typename T>
+inline T lerp(T v0, T v1, T t) {
+    return fma(t, v1, fma(-t, v0, v0));
+}
+
 #endif	/* UTILITY_H */
 
