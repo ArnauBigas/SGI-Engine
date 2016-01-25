@@ -25,7 +25,7 @@
 
 #define KERNELSIZE 16
 #define NOISESIZE 16
-#define NOSIEWIDTH 4
+#define NOISEWIDTH 4
 
 RenderingTechnique::RenderingTechnique(unsigned int target, std::string shader){
     this->target = target;
@@ -143,9 +143,6 @@ void DeferredRendering::targetResized(int width, int height){
     }
 }
 
-//TODO: event-driven system
-bool ssaouploaded = false;
-
 void DeferredRendering::enable(Camera* cam){
     //Enable drawing to the framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -153,8 +150,7 @@ void DeferredRendering::enable(Camera* cam){
     if(!ssaouploaded){
         ssaouploaded = true;
         //SSAO
-        ShaderProgram* shaderptr = getShader(SSAOSHADER);      
-        Logger::info << "Uploading ssao data" << std::endl;
+        ShaderProgram* shaderptr = getShader(SSAOSHADER);
         glm::vec3 kernel[KERNELSIZE];
         for (int i = 0; i < KERNELSIZE; ++i) {
             kernel[i] = glm::normalize(glm::vec3(
@@ -168,7 +164,6 @@ void DeferredRendering::enable(Camera* cam){
         shaderptr->link();
         glUniform3fv(shaderptr->getUniform("kernel"), KERNELSIZE, glm::value_ptr(kernel[0]));
         glUniform1i(shaderptr->getUniform("kernelSize"), KERNELSIZE);
-        glUniform2f(shaderptr->getUniform("noiseScale"), (float) lastWidth / (float) NOSIEWIDTH, (float) lastHeight / (float) NOSIEWIDTH);
         GLenum err = glGetError();
         if(err != GL_NONE){
             Logger::error << err << std::endl;
@@ -211,6 +206,7 @@ void DeferredRendering::disable(Camera* cam){
         glBindTexture(GL_TEXTURE_2D, ssaoTexture);
         glClear(GL_COLOR_BUFFER_BIT);
         uploadBuffers(shaderptr, cam);
+        glUniform2f(shaderptr->getUniform("noiseScale"), (float) lastWidth / (float) NOISEWIDTH, (float) lastHeight / (float) NOISEWIDTH);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
     

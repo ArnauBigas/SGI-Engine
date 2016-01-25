@@ -52,6 +52,7 @@ private:
     unsigned int ssaoFramebuffer;
     unsigned int framebuffer;
     unsigned int quadVBO;
+    bool ssaouploaded = false; //TODO: fancy way of doing this aka use events
     int lastWidth;
     int lastHeight;
 };
