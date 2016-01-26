@@ -41,7 +41,6 @@ protected:
     std::vector<PointLight> pointlights;
     std::vector<SpotLight> spotlights;
     ControllableEntity* player;
-    rapidjson::Value& playerData;
 };
 
 #endif	/* WORLD_H */
