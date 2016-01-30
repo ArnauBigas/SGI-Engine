@@ -230,7 +230,7 @@ void DeferredRendering::disable(Camera* cam){
     
     uploadBuffers(shaderptr, cam);
     
-    for(PointLight light : cam->world->getPointLights()){
+    for(PointLight *light : cam->world->getPointLights()){
         uploadPointLight(light, shaderptr);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }

@@ -36,13 +36,13 @@ void LightEmitterModule::onRender() {
 void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::Value& json){
     BaseObjectModule::loadModule(prop, world, json);
     if(type == "pointlight"){
-        PointLight light;
+        PointLight *light = new PointLight();
         color = glm::vec4(getVec3(json["color"]), 1.0f);
-        light.color = glm::vec3(color);
-        light.constantAttenuation = (float) json["constantAttenuation"].GetDouble();
-        light.linearAttenuation = (float) json["linearAttenuation"].GetDouble();
-        light.exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
-        light.position = prop->position;
+        light->color = glm::vec3(color);
+        light->constantAttenuation = (float) json["constantAttenuation"].GetDouble();
+        light->linearAttenuation = (float) json["linearAttenuation"].GetDouble();
+        light->exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
+        light->position = prop->position;
         world->addPointLightSource(light);
     } else if(type == "spotlight"){
         SpotLight light;

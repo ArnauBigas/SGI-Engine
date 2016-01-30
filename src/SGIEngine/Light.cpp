@@ -32,12 +32,12 @@ void ShadowMapping::enable(Camera* cam){
     RenderEngine::setCurrentShader(getShader(shader));
 }
 
-void uploadPointLight(PointLight light, ShaderProgram* shader){
-    glUniform3f(shader->getUniform("pointlight.position"), light.position.x, light.position.y, light.position.z);
-    glUniform3f(shader->getUniform("pointlight.color"), light.color.r, light.color.g, light.color.b);
-    glUniform1f(shader->getUniform("pointlight.constantAttenuation"), light.constantAttenuation);
-    glUniform1f(shader->getUniform("pointlight.linearAttenuation"), light.linearAttenuation);
-    glUniform1f(shader->getUniform("pointlight.exponentialAttenuation"), light.exponentialAttenuation);
+void uploadPointLight(PointLight *light, ShaderProgram* shader){
+    glUniform3f(shader->getUniform("pointlight.position"), light->position.x, light->position.y, light->position.z);
+    glUniform3f(shader->getUniform("pointlight.color"), light->color.r, light->color.g, light->color.b);
+    glUniform1f(shader->getUniform("pointlight.constantAttenuation"), light->constantAttenuation);
+    glUniform1f(shader->getUniform("pointlight.linearAttenuation"), light->linearAttenuation);
+    glUniform1f(shader->getUniform("pointlight.exponentialAttenuation"), light->exponentialAttenuation);
 }
 
 void uploadSpotLight(SpotLight light, ShaderProgram* shader){

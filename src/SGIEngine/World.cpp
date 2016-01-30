@@ -11,6 +11,7 @@
 #include <document.h>
 #include <GL/glew.h>
 #include <gtc/type_ptr.hpp>
+#include <algorithm>
 
 #include "RenderEngine.h"
 #include "Shader.h"
@@ -32,7 +33,7 @@ void World::renderWorld() {
                 if(p.first->hasUniform("cameraPosition")){
                     glUniform3fv(p.first->getUniform("cameraPosition"), 1, glm::value_ptr(camera->position));
                 }
-                for(WorldObject* o : p.second){
+                for(WorldObject* o : p.second) {
                     o->render();
                 }
             }
@@ -59,21 +60,33 @@ void World::integratePhysics() {
 void World::logicUpdate(){
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);
     bool shouldInteract = keystate[SDL_SCANCODE_E];
+    std::vector<WorldObject *> toRemove;
     for(WorldObject* o : objects){
         o->update();
         //TODO: raytracing'n'stuff
         if(shouldInteract && glm::length(player->position+glm::vec3(0, player->getEyeLevel(), 0) - o->position) < 1.0f){
             o->interact();
         }
+        
+        if (o->shouldRemove()) {
+            toRemove.push_back(o);
+        }
     }
     player->update();
+    for (WorldObject *o : toRemove) {
+        std::vector<WorldObject *> *objs = &renderMap[getShader(o->getShaderRequired())];
+        objs->erase(std::remove_if(objs->begin(), objs->end(), [o](WorldObject *obj) { return o == obj; }), objs->end());
+        objects.erase(std::remove(objects.begin(), objects.end(), o), objects.end());
+        delete o;
+        o = NULL;
+    }
 }
 
-void World::addPointLightSource(PointLight light){
+void World::addPointLightSource(PointLight *light){
     pointlights.push_back(light);
 }
 
-std::vector<PointLight>& World::getPointLights(){
+std::vector<PointLight *>& World::getPointLights(){
     return pointlights;
 }
 

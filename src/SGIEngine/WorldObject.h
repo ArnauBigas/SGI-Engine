@@ -56,6 +56,8 @@ public:
     virtual bool shouldIntegrate() {return true;}
     
     std::string getShaderRequired() {return shader;}
+    
+    bool shouldRemove() {return remove;}
 
     glm::vec3 position;
     glm::vec3 velocity;
@@ -68,6 +70,7 @@ protected:
     Collider* collider = 0;
     std::string shader;
     World* world;
+    bool remove = false;
 };
 
 template<class Derived>

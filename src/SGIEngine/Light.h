@@ -56,7 +56,7 @@ private:
     unsigned int framebuffer;
 };
 
-void uploadPointLight(PointLight light, ShaderProgram* shader);
+void uploadPointLight(PointLight *light, ShaderProgram* shader);
 
 void uploadSpotLight(SpotLight light, ShaderProgram* shader);
 
