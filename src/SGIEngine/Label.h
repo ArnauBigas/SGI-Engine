@@ -23,6 +23,9 @@ public:
     virtual bool processSDLEvent(SDL_Event event) {
         return false;
     }
+    
+    void setText(std::string text);
+    std::string getText();
 
 protected:
     std::string text;

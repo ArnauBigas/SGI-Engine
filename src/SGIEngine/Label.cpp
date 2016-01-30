@@ -32,3 +32,10 @@ Label::Label(const Label& orig) {
 Label::~Label() {
 }
 
+void Label::setText(std::string text) {
+    this->text = text;
+}
+
+std::string Label::getText() {
+    return text;
+}

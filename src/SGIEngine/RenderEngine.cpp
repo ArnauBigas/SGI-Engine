@@ -264,109 +264,128 @@ glm::vec2 RenderEngine::getGlyphPos(char c) {
 }
 
 void RenderEngine::drawString(std::string s, int x, int y) {
-    std::vector<float> data;
-    int lastpos = 0;
-
-    int mod = -1;
-    int mType = -1;
-    
-    unsigned char r = 0, g = 0, b = 0;
-    
-    std::string temptext;
-    glm::vec2 uv;
-    for (char& c : s) {
-        if (mod > -1) {
-            if (mType == 0) { //Color
-                switch (mod) {
-                    case 1:
-                        r = c;
-                        break;
-                    case 2:
-                        g = c;
-                        break;
-                    case 3:
-                        b = c;
-                        mType = -1;
-                        mod = -2;
-                        break;
-                }
-            } else if (mType == 1) { //Style
-                //TODO styles
-            } else { //Not set
-                mType = c-1;
-            }
-            mod++;
-            continue;
-        }
-        if (c == T_SUB[0]) {
-            mod = 0;
-            continue;
-        }
-        glUniform4f(getShader(GUISHADER)->getUniform("modColor"), r/255.f, g/255.f, b/255.f, 1);
-        
-        int h;
-        int w = lastpos;
-        temptext += c;
-        TTF_SizeText(RenderEngine::getFont(), temptext.c_str(), &lastpos, &h);
-        uv = RenderEngine::getGlyphPos(c);
-
-        data.push_back((float) x + w);
-        data.push_back((float) y);
-        data.push_back(0);
-
-        data.push_back(uv.s);
-        data.push_back(0);
-
-
-        data.push_back((float) x + w);
-        data.push_back((float) (y + h));
-        data.push_back(0);
-
-        data.push_back(uv.s);
-        data.push_back(1);
-
-
-        data.push_back((float) x + lastpos);
-        data.push_back((float) (y + h));
-        data.push_back(0);
-
-        data.push_back(uv.t);
-        data.push_back(1);
-
-        data.push_back((float) x + w);
-        data.push_back((float) y);
-        data.push_back(0);
-
-        data.push_back(uv.s);
-        data.push_back(0);
-
-        data.push_back((float) x + lastpos);
-        data.push_back((float) (y + h));
-        data.push_back(0);
-
-        data.push_back(uv.t);
-        data.push_back(1);
-
-        data.push_back((float) x + lastpos);
-        data.push_back((float) y);
-        data.push_back(0);
-
-        data.push_back(uv.t);
-        data.push_back(0);
+    if (!s.compare(0, 1, T_SUB)) {
+        s = C_WHITE + s;
     }
-    glBindVertexArray(stringVao);
+    std::stringstream ss(s);
+    std::string item;
+    std::vector<std::string> secs;
+    while (std::getline(ss, item, T_SUB[0])) {
+            secs.push_back(T_SUB + item);
+    }
+    
+    for (std::string sec : secs) {
+        std::vector<float> data;
+        int lastpos = 0;
 
-    glBindBuffer(GL_ARRAY_BUFFER, stringVbo); //Bind VBO
-    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof (float), &data[0], GL_DYNAMIC_DRAW); //Upload Vertex Data
+        int mod = -1;
+        int mType = -1;
 
-    //Setup attrib pointers
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
+        GLubyte r = 0, g = 0, b = 0;
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, BUFFER_OFFSET(12));
-    glBindTexture(GL_TEXTURE_2D, RenderEngine::getGlyphTextureMap());
-    glDrawArrays(GL_TRIANGLES, 0, s.length()*6); //Draw everything
+        std::string temptext;
+        glm::vec2 uv;
+        
+        int modXOffset = 0;
+        
+        for (char& c : sec) {
+            if (mod > -1) {
+                if (mType == 0) { //Color
+                    switch (mod) {
+                        case 1:
+                            r = c;
+                            break;
+                        case 2:
+                            g = c;
+                            break;
+                        case 3:
+                            b = c;
+                            mType = -1;
+                            mod = -2;
+                            break;
+                    }
+                } else if (mType == 1) { //Style
+                    //TODO styles
+                } else { //Not set
+                    mType = c-1;
+                }
+                mod++;
+                continue;
+            }
+            if (c == T_SUB[0]) {
+                mod = 0;
+                continue;
+            }
+            glUniform4f(getShader(GUISHADER)->getUniform("modColor"), r/255.f, g/255.f, b/255.f, 1);
+
+            int h;
+            int w = lastpos;
+            temptext += c;
+            TTF_SizeText(RenderEngine::getFont(), temptext.c_str(), &lastpos, &h);
+            uv = RenderEngine::getGlyphPos(c);
+            
+            modXOffset = lastpos;
+
+            data.push_back((float) x + w);
+            data.push_back((float) y);
+            data.push_back(0);
+
+            data.push_back(uv.s);
+            data.push_back(0);
+
+
+            data.push_back((float) x + w);
+            data.push_back((float) (y + h));
+            data.push_back(0);
+
+            data.push_back(uv.s);
+            data.push_back(1);
+
+
+            data.push_back((float) x + lastpos);
+            data.push_back((float) (y + h));
+            data.push_back(0);
+
+            data.push_back(uv.t);
+            data.push_back(1);
+
+            data.push_back((float) x + w);
+            data.push_back((float) y);
+            data.push_back(0);
+
+            data.push_back(uv.s);
+            data.push_back(0);
+
+            data.push_back((float) x + lastpos);
+            data.push_back((float) (y + h));
+            data.push_back(0);
+
+            data.push_back(uv.t);
+            data.push_back(1);
+
+            data.push_back((float) x + lastpos);
+            data.push_back((float) y);
+            data.push_back(0);
+
+            data.push_back(uv.t);
+            data.push_back(0);
+        }
+        x += modXOffset;
+        
+        glBindVertexArray(stringVao);
+
+        glBindBuffer(GL_ARRAY_BUFFER, stringVbo); //Bind VBO
+        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof (float), &data[0], GL_DYNAMIC_DRAW); //Upload Vertex Data
+
+        //Setup attrib pointers
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
+
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, BUFFER_OFFSET(12));
+        glBindTexture(GL_TEXTURE_2D, RenderEngine::getGlyphTextureMap());
+        glDrawArrays(GL_TRIANGLES, 0, sec.length()*6); //Draw everything
+    }
 }
 
 void RenderEngine::kill() {

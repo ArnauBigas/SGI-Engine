@@ -7,17 +7,25 @@
 
 #include "Gui.h"
 
-Gui::Gui() {
+std::map<std::string, Gui *> guis;
+
+Gui *GuiManager::getGui(std::string name) {
+    return guis[name];
 }
 
-Gui::Gui(Gui* parent) {
+Gui::Gui(std::string name) {
+    guis[name] = this;
+}
+
+Gui::Gui(std::string name, Gui* parent) {
     this->parent = parent;
     parent->child = this;
+    guis[name] = this;
 }
 
 Gui::~Gui() {
-    for (GuiElement* e : elements) {
-        delete e;
+    for (std::pair<std::string, GuiElement*> p : elements) {
+        delete p.second;
     }
     if (parent) {
         parent->child = 0;
@@ -28,8 +36,8 @@ bool Gui::processSDLEvent(SDL_Event event) {
     if (child) {
         return child->processSDLEvent(event);
     } else {
-        for (GuiElement* e : elements) {
-            if (e->processSDLEvent(event)) {
+        for (std::pair<std::string, GuiElement*> p : elements) {
+            if (p.second->processSDLEvent(event)) {
                 return true;
             }
         }
