@@ -16,38 +16,39 @@
 #include "definitions.h"
 #include "Shader.h"
 
-Button::Button(int x, int y, std::string text, std::function<void() > action) : label(x + 5, y + 5, text) {
+Button::Button(int x, int y, Clamp clamp, std::string text, std::function<void() > action) : label(x + 2, y + 2, clamp, text) {
     this->action = action;
-    min.x = x;
-    min.y = y;
-    max.x = label.getMax().x + 5;
-    max.y = label.getMax().y + 5;
-    float fx = (float) x;
-    float fy = (float) y;
+    loc.x = x;
+    loc.y = y;
+    size.x = label.getSize().x + 5;
+    size.y = label.getSize().y + 5;
+    this->clamp = clamp;
+    float fx = (float) getLoc().x;
+    float fy = (float) getLoc().y;
     float data[] = {
         fx, fy, 0, 0, 0,
-        fx, max.y, 0, 0, 1,
-        fx + 5, max.y, 0, 5.0f / 32.0f, 1,
+        fx, fy+getSize().y, 0, 0, 1,
+        fx + 5, fy+getSize().y, 0, 5.0f / 32.0f, 1,
 
         fx, fy, 0, 0, 0,
-        fx + 5, max.y, 0, 5.0f / 32.0f, 1,
+        fx + 5, fy+getSize().y, 0, 5.0f / 32.0f, 1,
         fx + 5, fy, 0, 5.0f / 32.0f, 0,
 
         fx + 5, fy, 0, 5.0f / 32.0f, 0,
-        fx + 5, max.y, 0, 5.0f / 32.0f, 1,
-        max.x - 5, max.y, 0, 27.0f / 32.0f, 1,
+        fx + 5, fy+getSize().y, 0, 5.0f / 32.0f, 1,
+        fx+getSize().x - 5, fy+getSize().y, 0, 27.0f / 32.0f, 1,
 
         fx + 5, fy, 0, 5.0f / 32.0f, 0,
-        max.x - 5, max.y, 0, 27.0f / 32.0f, 1,
-        max.x - 5, fy, 0, 27.0f / 32.0f, 0,
+        fx+getSize().x - 5, fy+getSize().y, 0, 27.0f / 32.0f, 1,
+        fx+getSize().x - 5, fy, 0, 27.0f / 32.0f, 0,
 
-        max.x - 5, fy, 0, 27.0f / 32.0f, 0,
-        max.x - 5, max.y, 0, 27.0f / 32.0f, 1,
-        max.x, max.y, 0, 1, 1,
+        fx+getSize().x - 5, fy, 0, 27.0f / 32.0f, 0,
+        fx+getSize().x - 5, fy+getSize().y, 0, 27.0f / 32.0f, 1,
+        fx+getSize().x, fy+getSize().y, 0, 1, 1,
 
-        max.x - 5, fy, 0, 27.0f / 32.0f, 0,
-        max.x, max.y, 0, 1, 1,
-        max.x, fy, 0, 1, 0
+        fx+getSize().x - 5, fy, 0, 27.0f / 32.0f, 0,
+        fx+getSize().x, fy+getSize().y, 0, 1, 1,
+        fx+getSize().x, fy, 0, 1, 0
     };
     //Generate OpenGL buffers
     glGenVertexArrays(1, &vaoid);
@@ -77,7 +78,7 @@ void Button::draw() {
 
 bool Button::processSDLEvent(SDL_Event event) {
     if (event.type == SDL_MOUSEBUTTONUP) {
-        if (event.button.x > min.x && event.button.x < max.x && event.button.y > min.y && event.button.y < max.y) {
+        if (event.button.x > getLoc().x && event.button.x < getLoc().x+getSize().x && event.button.y > getLoc().y && event.button.y < getLoc().y+getSize().y) {
             action();
         }
     }

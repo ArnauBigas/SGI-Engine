@@ -14,7 +14,7 @@
 
 class Label : public GuiElement {
 public:
-    Label(int x, int y, std::string text);
+    Label(int x, int y, Clamp clamp, std::string text);
     Label(const Label& orig);
     virtual ~Label();
 

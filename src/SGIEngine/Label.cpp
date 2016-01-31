@@ -12,18 +12,19 @@
 #include "RenderEngine.h"
 #include "definitions.h"
 
-Label::Label(int x, int y, std::string text) {
+Label::Label(int x, int y, Clamp clamp, std::string text) {
     this->text = text;
-    min.x = x;
-    min.y = y;
-    int x2, y2;
-    TTF_SizeText(RenderEngine::getFont(), text.c_str(), &x2, &y2);
-    max.x = x + x2;
-    max.y = y + y2;
+    loc.x = x;
+    loc.y = y;
+    int w, h;
+    TTF_SizeText(RenderEngine::getFont(), text.c_str(), &w, &h);
+    size.x = w;
+    size.y = h;
+    this->clamp = clamp;
 }
 
 void Label::draw() {
-    RenderEngine::drawString(text, min.x, min.y);
+    RenderEngine::drawString(text, getLoc().x, getLoc().y);
 }
 
 Label::Label(const Label& orig) {

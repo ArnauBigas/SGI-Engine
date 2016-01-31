@@ -15,7 +15,7 @@
 
 class Button : public GuiElement {
 public:
-    Button(int x, int y, std::string text, std::function<void() > action);
+    Button(int x, int y, Clamp clamp, std::string text, std::function<void() > action);
 
     virtual void draw();
 

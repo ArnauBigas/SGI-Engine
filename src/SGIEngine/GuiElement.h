@@ -11,6 +11,20 @@
 #include <vec2.hpp>
 #include <SDL_events.h>
 
+enum Clamp {//VH
+    TL, TR, BL, BR,
+    TC, CR, CL, BC,
+    CC
+};
+
+/*
+ * TL-TC-TR
+ * |  |  |
+ * CL-CC-CR
+ * |  |  |
+ * BL-BC-BR
+ */
+
 class GuiElement {
 public:
     GuiElement();
@@ -21,16 +35,14 @@ public:
 
     virtual bool processSDLEvent(SDL_Event event) = 0;
 
-    glm::vec2 getMin() {
-        return min;
-    }
-
-    glm::vec2 getMax() {
-        return max;
-    }
+    glm::vec2 getSize();
+    glm::vec2 getLoc();
+    
 protected:
-    glm::vec2 min;
-    glm::vec2 max;
+    glm::vec2 loc;
+    glm::vec2 size;
+    
+    Clamp clamp = TL;
 };
 
 #endif	/* GUIELEMENT_H */

@@ -264,7 +264,7 @@ glm::vec2 RenderEngine::getGlyphPos(char c) {
 }
 
 void RenderEngine::drawString(std::string s, int x, int y) {
-    if (!s.compare(0, 1, T_SUB)) {
+    if (s.find(T_SUB) == std::string::npos) {
         s = C_WHITE + s;
     }
     std::stringstream ss(s);
