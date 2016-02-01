@@ -16,7 +16,8 @@
 #include "definitions.h"
 #include "Shader.h"
 
-Button::Button(int x, int y, Clamp clamp, std::string text, std::function<void() > action) : label(x + 2, y + 2, clamp, text) {
+Button::Button(int x, int y, Clamp clamp, std::string text, std::function<void() > action, GuiElement *parent) : label(x + 2, y + 2, clamp, text) { //Remove parent, support for dynamic guis
+    this->parent = parent;
     this->action = action;
     loc.x = x;
     loc.y = y;

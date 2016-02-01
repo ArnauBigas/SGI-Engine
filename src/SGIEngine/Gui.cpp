@@ -33,6 +33,11 @@ Gui::~Gui() {
 }
 
 bool Gui::processSDLEvent(SDL_Event event) {
+    if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
+        size.x = event.window.data1;
+        size.y = event.window.data2;
+    }
+    
     if (child) {
         return child->processSDLEvent(event);
     } else {

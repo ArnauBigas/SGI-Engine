@@ -18,8 +18,9 @@ GuiElement::~GuiElement() {
 }
 
 glm::vec2 GuiElement::getLoc() {
-    int w = Config::graphics.width;
-    int h = Config::graphics.height;
+    if (parent == NULL) return glm::vec2(0, 0);
+    int w = parent->getSize().x;
+    int h = parent->getSize().y;
     switch (clamp) {
         case TL:
             return loc;
@@ -43,6 +44,6 @@ glm::vec2 GuiElement::getLoc() {
 }
 
 glm::vec2 GuiElement::getSize() {
-    return size;
+    return this->size;
 }
 

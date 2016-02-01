@@ -26,6 +26,7 @@ enum Clamp {//VH
  */
 
 class GuiElement {
+    friend class Gui;
 public:
     GuiElement();
     GuiElement(const GuiElement& orig);
@@ -40,9 +41,12 @@ public:
     
 protected:
     glm::vec2 loc;
-    glm::vec2 size;
+    glm::vec2 size = glm::vec2(0,0);
     
     Clamp clamp = TL;
+    
+    GuiElement *parent = NULL;
+    
 };
 
 #endif	/* GUIELEMENT_H */

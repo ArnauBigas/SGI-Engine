@@ -26,6 +26,7 @@ public:
 
     void addElement(GuiElement* element, std::string name) {
         elements[name] = element;
+        element->parent = this;
     }
     
     GuiElement *getElement(std::string name) {
