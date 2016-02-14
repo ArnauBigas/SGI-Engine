@@ -63,6 +63,8 @@ public:
     glm::vec3 velocity;
     glm::vec3 rotation;
     float mass;
+    
+    bool physics;
 protected:
     void loadFromJson(rapidjson::Value& json);
     

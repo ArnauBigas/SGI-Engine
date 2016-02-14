@@ -21,6 +21,7 @@ void WorldObject::loadFromJson(rapidjson::Value& json){
         collider = new SphereCollider(position, (float) json["collider"]["radius"].GetDouble());
     }
     shader = json["shader"].GetString();
+    physics = json["physics"].GetBool();
     rapidjson::Value& mdls = json["modules"];
     for (rapidjson::SizeType i = 0; i < mdls.Size(); i++) {
         ObjectModule* module = getObjectModule(mdls[i]["name"].GetString())->clone();
@@ -44,6 +45,7 @@ void WorldObject::interact(){
 void WorldObject::initFromJson(World* world, rapidjson::Value& json){
     position = getVec3(json["position"]);
     rotation = getVec3(json["rotation"]);
+    if (json.HasMember("physics")) physics = json["physics"].GetBool();
     this->world = world;
     for(ObjectModule* m : modules){
         m->loadModule(this, world, json["modules"][m->getName().c_str()]);
