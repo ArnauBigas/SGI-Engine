@@ -19,13 +19,17 @@ struct CollisionData {
     glm::vec3 direction;
 };
 
+class WorldObject;
+
 class Collider {
 public:
-    virtual Collider* copy() = 0;
+    virtual Collider* generate(WorldObject* object) = 0;
 
     virtual CollisionData collide(Collider* other) = 0;
 
     virtual ColliderType getType() = 0;
+protected:
+    WorldObject* obj = 0;
 };
 
 #endif	/* COLLIDER_H */

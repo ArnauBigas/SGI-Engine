@@ -13,16 +13,9 @@
 class SphereCollider : public Collider {
 public:
 
-    SphereCollider(glm::vec3& center, float radius) : center(center), radius(radius) {
-    };
+    SphereCollider(glm::vec3 offset, float radius) : offset(offset), radius(radius) { };
 
-    void update(glm::vec3 center) {
-        this->center = center;
-    }
-
-    virtual Collider* copy() {
-        return new SphereCollider(center, radius);
-    }
+    virtual Collider* generate(WorldObject* obj);
 
     virtual CollisionData collide(Collider* other);
 
@@ -30,16 +23,14 @@ public:
         return SPHERE;
     }
 
-    glm::vec3 getCenter() {
-        return center;
-    }
+    glm::vec3 getCenter();
 
     float getRadius() {
         return radius;
     }
-
+    
 private:
-    glm::vec3& center;
+    glm::vec3 offset;
     float radius;
 };
 

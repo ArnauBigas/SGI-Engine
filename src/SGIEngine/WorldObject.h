@@ -39,8 +39,7 @@ public:
     
     virtual void interact();
 
-    //TODO: get collider generation working properly
-    virtual Collider* getCollider() {};
+    virtual Collider* getCollider() { return collider;};
     
     virtual glm::mat4 getModelMatrix(){
         glm::mat4 modelMatrix(1.0f);
@@ -53,16 +52,26 @@ public:
     
     virtual WorldObject* clone() = 0; 
     
-    virtual bool shouldIntegrate() {return true;}
+    virtual bool shouldIntegrate() {return physics;}
     
     std::string getShaderRequired() {return shader;}
     
     bool shouldRemove() {return remove;}
+    
+    glm::vec3 getForce() {return acceleration * mass;}
+    
+    glm::vec3 getMomentum() {return velocity * mass;}
+    
+    void applyForce(glm::vec3 force) { acceleration += force / mass;}
+    
+    void applyMomentum(glm::vec3 momentum) { velocity += momentum / mass;}
 
     glm::vec3 position;
     glm::vec3 velocity;
+    glm::vec3 acceleration;
     glm::vec3 rotation;
     float mass;
+    float bounciness = 0.75f;
     
     bool physics;
 protected:
@@ -71,7 +80,7 @@ protected:
     std::vector<ObjectModule*> modules;
     Collider* collider = 0;
     std::string shader;
-    World* world;
+    World* world = 0;
     bool remove = false;
 };
 

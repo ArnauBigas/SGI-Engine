@@ -275,6 +275,10 @@ void RenderEngine::drawString(std::string s, int x, int y) {
     }
     
     for (std::string sec : secs) {
+        if (sec.size() <= 5) {
+            continue;
+        }
+        
         std::vector<float> data;
         int lastpos = 0;
 
@@ -380,7 +384,7 @@ void RenderEngine::drawString(std::string s, int x, int y) {
         //Setup attrib pointers
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
-
+        
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, BUFFER_OFFSET(12));
         glBindTexture(GL_TEXTURE_2D, RenderEngine::getGlyphTextureMap());

@@ -1,5 +1,6 @@
 #include "WorldObject.h"
 #include "SphereCollider.h"
+#include "Logger.h"
 
 #include <map>
 #include <iostream>
@@ -18,7 +19,7 @@ void WorldObject::loadFromJson(rapidjson::Value& json){
     mass = json["mass"].GetDouble();
     std::string colliderType = json["collider"]["type"].GetString();
     if (colliderType == "sphere") {
-        collider = new SphereCollider(position, (float) json["collider"]["radius"].GetDouble());
+        collider = new SphereCollider(getVec3(json["collider"]["position"]), (float) json["collider"]["radius"].GetDouble());
     }
     shader = json["shader"].GetString();
     physics = json["physics"].GetBool();
@@ -46,7 +47,15 @@ void WorldObject::initFromJson(World* world, rapidjson::Value& json){
     position = getVec3(json["position"]);
     rotation = getVec3(json["rotation"]);
     if (json.HasMember("physics")) physics = json["physics"].GetBool();
-    this->world = world;
+    if (physics){
+        if(collider != NULL){
+            collider = collider->generate(this);
+        } else {
+            Logger::warning << "WorldObject is missing a collider, disabling physics simulation" << std::endl;
+            physics = false;
+        }
+    }
+    this->world = world;    
     for(ObjectModule* m : modules){
         m->loadModule(this, world, json["modules"][m->getName().c_str()]);
     }

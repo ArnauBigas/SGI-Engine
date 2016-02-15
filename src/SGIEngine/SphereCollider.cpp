@@ -6,13 +6,27 @@
  */
 
 #include "SphereCollider.h"
+#include "WorldObject.h"
+
+Collider* SphereCollider::generate(WorldObject* obj) {
+    SphereCollider* result = new SphereCollider(offset, radius);
+    result->obj = obj;
+    return result;
+}
+
+glm::vec3 SphereCollider::getCenter() {
+    return obj->position + offset;
+}
 
 CollisionData SphereCollider::collide(Collider* other) {
-    if (other->getType() == SPHERE) {
-        CollisionData data;
+    CollisionData data;
+    if(other == NULL || ((SphereCollider*)other)->obj == NULL || obj == NULL){
+        data.collided = false;
+        return data;
+    }else if (other->getType() == SPHERE) {
         SphereCollider* sphere = (SphereCollider*) other;
         float radDistance = sphere->getRadius() + radius;
-        glm::vec3 dir = sphere->getCenter() - center;
+        glm::vec3 dir = sphere->getCenter() - getCenter();
         float posDistance = dir.length();
         dir /= posDistance;
         float distance = posDistance - radDistance;

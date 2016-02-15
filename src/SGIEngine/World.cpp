@@ -20,6 +20,7 @@
 #include "definitions.h"
 #include "Config.h"
 #include "Logger.h"
+#include "PhysicsEngine.h"
 
 void World::renderWorld() {
     glGetError();
@@ -55,6 +56,7 @@ void World::renderWorld() {
 void World::integratePhysics() {        
     AudioEngine::setListenerPosition(player->position);
     AudioEngine::setListenerOrientation(player->rotation);
+    PhysicsEngine::simulate(objects);
 }
 
 void World::logicUpdate(){
