@@ -7,6 +7,7 @@
 
 WorldObject::WorldObject(const WorldObject& other) {
     this->shader = other.shader;
+    this->physics = other.physics;
     if (other.collider != 0 && other.collider->getType() == SPHERE) {
         this->collider = new SphereCollider(position, ((SphereCollider*) other.collider)->getRadius());
     }
