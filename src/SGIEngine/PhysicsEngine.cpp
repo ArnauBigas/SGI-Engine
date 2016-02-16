@@ -58,9 +58,9 @@ namespace PhysicsEngine {
             glm::vec3 a;
             if(obj->shouldIntegrate()){
                 a = obj->acceleration + glm::vec3(0.f, -9.8f, 0.f);
-                obj->position += (obj->velocity * delta) + (0.5f * a * delta * delta);
-                obj->velocity += a;
             }
+            obj->position += (obj->velocity * delta) + (0.5f * a * delta * delta);
+            obj->velocity += a;
         }        
     }
 };
