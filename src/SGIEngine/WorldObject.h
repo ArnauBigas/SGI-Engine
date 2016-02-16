@@ -19,6 +19,7 @@
 #include "RenderEngine.h"
 #include "Utility.h"
 #include "ObjectModule.h"
+#include "Config.h"
 
 
 class WorldObject {

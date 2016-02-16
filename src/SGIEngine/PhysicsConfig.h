@@ -10,6 +10,7 @@
 
 struct PhysicsConfig {
     double scale = 1;
+    double gravity = 9.81;
 };
 
 #endif	/* PHYSICS_CONFIG_H */

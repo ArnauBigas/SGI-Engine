@@ -74,6 +74,7 @@ void serializePhysics(rapidjson::Document* doc) {
     rapidjson::Value p(rapidjson::kObjectType);
     {
         p.AddMember("scale", Config::physics.scale, doc->GetAllocator());
+        p.AddMember("gravity", Config::physics.gravity, doc->GetAllocator());
     }
     doc->AddMember("physics", p, doc->GetAllocator());
 }
@@ -109,6 +110,7 @@ void deserializeGraphics(rapidjson::Value& g) {
 
 void deserializePhysics(rapidjson::Value& p) {
     setDouble(Config::physics.scale, p, "scale");
+    setDouble(Config::physics.gravity, p, "gravity");
 }
 
 void deserializeLogic(rapidjson::Value& l) {

@@ -28,6 +28,8 @@ public:
     virtual CollisionData collide(Collider* other) = 0;
 
     virtual ColliderType getType() = 0;
+    
+    WorldObject* getObject() { return obj; }
 protected:
     WorldObject* obj = 0;
 };

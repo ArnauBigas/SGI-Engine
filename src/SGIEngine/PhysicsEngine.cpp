@@ -27,7 +27,6 @@ namespace PhysicsEngine {
         for(int i = 0; i < objects.size(); i++){
             WorldObject* objA = objects[i];
             if(objA->position.y <= 0){
-                objA->position.y = 0;
                 objA->applyForce(glm::vec3(0.f, -objA->getForce().y * objA->bounciness, 0.f));
                 objA->applyMomentum(glm::vec3(0.f, -objA->getMomentum().y * objA->bounciness, 0.f));
             }
@@ -45,7 +44,6 @@ namespace PhysicsEngine {
                     glm::vec3 bmomentum = objB->getMomentum() * data.direction;
                     objA->applyMomentum(bmomentum);
                     objB->applyMomentum(amomentum);
-                    Logger::info << "woo got a collision m8" << std::endl;
                 }
             }
         }
@@ -55,12 +53,14 @@ namespace PhysicsEngine {
         float delta = (Game::lastTickTime() / 1000000.f) * Config::physics.scale;
         for(WorldObject* obj : objects){
             //TODO: use r4k
-            glm::vec3 a;
             if(obj->shouldIntegrate()){
-                a = obj->acceleration + glm::vec3(0.f, -9.8f, 0.f);
+                obj->position += (obj->velocity * delta) + (0.5f * obj->acceleration * delta * delta);
+                obj->velocity += obj->acceleration;
+                obj->acceleration = glm::vec3(0.f, -Config::physics.gravity, 0.f);
+                if(obj->position.y <= 0){
+                    obj->position.y = 0;
+                }
             }
-            obj->position += (obj->velocity * delta) + (0.5f * a * delta * delta);
-            obj->velocity += a;
         }        
     }
 };

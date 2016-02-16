@@ -20,14 +20,14 @@ glm::vec3 SphereCollider::getCenter() {
 
 CollisionData SphereCollider::collide(Collider* other) {
     CollisionData data;
-    if(other == NULL || ((SphereCollider*)other)->obj == NULL || obj == NULL){
+    if(other == NULL || other->getObject() == NULL || obj == NULL){
         data.collided = false;
         return data;
     }else if (other->getType() == SPHERE) {
         SphereCollider* sphere = (SphereCollider*) other;
         float radDistance = sphere->getRadius() + radius;
         glm::vec3 dir = sphere->getCenter() - getCenter();
-        float posDistance = dir.length();
+        float posDistance = glm::length(dir);
         dir /= posDistance;
         float distance = posDistance - radDistance;
         data.collided = distance < 0;
