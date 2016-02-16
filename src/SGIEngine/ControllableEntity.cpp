@@ -46,12 +46,14 @@ void ControllableEntity::update() {
     if (keystate[SDL_SCANCODE_LSHIFT]) movSpeed *= 2;
     if (keystate[SDL_SCANCODE_LCTRL]) movSpeed /= 2;
 
-    glm::vec3 front;
-    front.x = cos(glm::radians(cameraPitch)) * cos(glm::radians(cameraYaw));
-    front.y = sin(glm::radians(cameraPitch));
-    front.z = cos(glm::radians(cameraPitch)) * sin(glm::radians(cameraYaw));
-    front = glm::normalize(front);
-    position += front * motionX * movSpeed;
-    position += glm::vec3(sin(glm::radians(-cameraYaw)), 0, cos(glm::radians(-cameraYaw))) * motionZ * movSpeed;
-    position += glm::vec3(0, 1, 0) * motionY * movSpeed;
+    glm::vec3 mov = glm::normalize(glm::vec3(
+            xTrig(motionX, motionZ, cameraYaw),
+
+            motionY,
+
+            zTrig(motionX, motionZ, cameraYaw))) * movSpeed;
+
+    if (glm::isnan(mov.x) || glm::isnan(mov.y) || glm::isnan(mov.z)) mov = glm::vec3(0.f, 0.f, 0.f);
+
+    position += mov;
 }
