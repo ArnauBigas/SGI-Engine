@@ -161,3 +161,9 @@ glm::mat4 convertToRightHandedCoords(glm::mat4 matrix){
     mat[3][2] = matrix[3][1];
     return mat;
 }
+
+std::string printVec3(glm::vec3 vec){
+    std::stringstream ss;
+    ss << vec.x << ", " << vec.y << ", " << vec.z;
+    return ss.str();
+}

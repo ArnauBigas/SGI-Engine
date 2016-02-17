@@ -11,6 +11,8 @@
 struct PhysicsConfig {
     double scale = 1;
     double gravity = 9.81;
+    double correctionThreshold = 0.01;
+    double correctionPercentage = 0.2;
 };
 
 #endif	/* PHYSICS_CONFIG_H */

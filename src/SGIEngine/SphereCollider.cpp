@@ -28,7 +28,11 @@ CollisionData SphereCollider::collide(Collider* other) {
         float radDistance = sphere->getRadius() + radius;
         glm::vec3 dir = sphere->getCenter() - getCenter();
         float posDistance = glm::length(dir);
-        dir /= posDistance;
+        if(posDistance == 0){
+            dir = glm::normalize(other->getObject()->velocity);
+        } else {
+            dir /= posDistance;
+        }
         float distance = posDistance - radDistance;
         data.collided = distance < 0;
         data.direction = dir * distance;

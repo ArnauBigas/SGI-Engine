@@ -75,6 +75,8 @@ void serializePhysics(rapidjson::Document* doc) {
     {
         p.AddMember("scale", Config::physics.scale, doc->GetAllocator());
         p.AddMember("gravity", Config::physics.gravity, doc->GetAllocator());
+        p.AddMember("correctionThreshold", Config::physics.correctionThreshold, doc->GetAllocator());
+        p.AddMember("correctionPercentage", Config::physics.correctionPercentage, doc->GetAllocator());
     }
     doc->AddMember("physics", p, doc->GetAllocator());
 }
@@ -111,6 +113,8 @@ void deserializeGraphics(rapidjson::Value& g) {
 void deserializePhysics(rapidjson::Value& p) {
     setDouble(Config::physics.scale, p, "scale");
     setDouble(Config::physics.gravity, p, "gravity");
+    setDouble(Config::physics.correctionPercentage, p, "correctionPercentage");
+    setDouble(Config::physics.correctionThreshold, p, "correctionThreshold");
 }
 
 void deserializeLogic(rapidjson::Value& l) {
