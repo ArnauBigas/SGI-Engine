@@ -38,10 +38,6 @@ namespace PhysicsEngine {
                 CollisionData data = objA->getCollider()->collide(objB->getCollider());
                 if(data.collided){
                     glm::vec3 normal = glm::normalize(data.direction);
-                    Logger::info << "============before=============" << std::endl;
-                    Logger::info << printVec3(normal) << std::endl;
-                    Logger::info << printVec3(objA->getForce()) << std::endl;
-                    Logger::info << printVec3(objB->getForce()) << std::endl;
                     glm::vec3 tangent = glm::cross(normal, glm::vec3(0.f, 1.f, 0.f));
                     glm::vec3 va = objA->velocity;
                     glm::vec3 vb = objB->velocity;
@@ -56,17 +52,13 @@ namespace PhysicsEngine {
                     glm::vec3 correction = (std::max(glm::length(data.direction)-((float) Config::physics.correctionThreshold), 0.0f)) * ((float) Config::physics.correctionPercentage) * normal;
                     objA->position += correction * objA->mass;
                     objB->position -= correction * objB->mass;
-                    Logger::info << "============after=============" << std::endl;
-                    Logger::info << printVec3(normal) << std::endl;
-                    Logger::info << printVec3(objA->getForce()) << std::endl;
-                    Logger::info << printVec3(objB->getForce()) << std::endl;
                 }
             }
         }
     }
     
     void integrate(std::vector<WorldObject*> &objects){
-        float delta = (Game::lastTickTime() / 1000000.f) * Config::physics.scale;
+        float delta = (1 / (float) Config::logic.updatesPerSecond) * Config::physics.scale;
         for(WorldObject* obj : objects){
             //TODO: use r4k
             if(obj->shouldIntegrate()){
