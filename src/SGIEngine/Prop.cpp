@@ -34,7 +34,3 @@ void Prop::render() {
     BaseWorldObject::render();
     model->render(getModelMatrix());
 }
-
-void Prop::interact(){
-    model->playAnimation("on"); //debug thing please ignore
-}

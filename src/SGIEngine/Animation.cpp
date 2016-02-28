@@ -14,9 +14,9 @@ glm::mat4 interpolateAnimation(Animation* anim, float deltaTime){
     std::pair<float, glm::mat4> keyframe = anim->keyframes.at(anim->current);
     if(anim->time < anim->keyframes.at(anim->current+1).first){
         std::pair<float, glm::mat4> nextKeyframe = anim->keyframes.at(anim->current+1);
-        ret =  glm::interpolate(keyframe.second,
-                nextKeyframe.second,
-                (anim->time - keyframe.first)/(nextKeyframe.first - keyframe.first));
+        ret = glm::interpolate(keyframe.second,
+              nextKeyframe.second,
+              (anim->time - keyframe.first)/(nextKeyframe.first - keyframe.first));
     } else {
        anim->current++;
        if(anim->current == anim->keyframes.size()-1){

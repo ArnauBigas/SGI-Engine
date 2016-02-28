@@ -40,8 +40,8 @@ void WorldObject::update(){
         mod->update();
     }
 }
-    
-void WorldObject::interact(){
+
+void WorldObject::interact() {
     for(ObjectModule* mod : modules){
         mod->onInteract();
     }
