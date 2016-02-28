@@ -204,7 +204,6 @@ void DeferredRendering::disable(Camera* cam){
         glBindFramebuffer(GL_FRAMEBUFFER, ssaoFramebuffer);
         glActiveTexture(GL_TEXTURE0 + SSAOTEXTUREUNIT);
         glBindTexture(GL_TEXTURE_2D, ssaoTexture);
-        glClear(GL_COLOR_BUFFER_BIT);
         uploadBuffers(shaderptr, cam);
         glUniform2f(shaderptr->getUniform("noiseScale"), (float) lastWidth / (float) NOISEWIDTH, (float) lastHeight / (float) NOISEWIDTH);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

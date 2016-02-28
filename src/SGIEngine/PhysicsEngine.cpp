@@ -38,11 +38,11 @@ namespace PhysicsEngine {
                 CollisionData data = objA->getCollider()->collide(objB->getCollider());
                 if(data.collided){
                     glm::vec3 normal = glm::normalize(data.direction);
-                    glm::vec3 tangent = glm::cross(normal, glm::vec3(0.f, 1.f, 0.f));
+                    glm::vec3 tan = tangent(normal);
                     glm::vec3 va = objA->velocity;
                     glm::vec3 vb = objB->velocity;
-                    objA->velocity = glm::reflect((va * (objA->mass - objB->mass) + 2 * objB->mass * vb) / (objA->mass + objB->mass), tangent);
-                    objB->velocity = glm::reflect((vb * (objB->mass - objA->mass) + 2 * objA->mass * va) / (objA->mass + objB->mass), tangent);
+                    objA->velocity = glm::reflect((va * (objA->mass - objB->mass) + 2 * objB->mass * vb) / (objA->mass + objB->mass), tan);
+                    objB->velocity = glm::reflect((vb * (objB->mass - objA->mass) + 2 * objA->mass * va) / (objA->mass + objB->mass), tan);
                     glm::vec3 fa = objA->getForce() * normal;
                     glm::vec3 fb = objB->getForce() * normal;
                     objA->applyForce(-fa);
