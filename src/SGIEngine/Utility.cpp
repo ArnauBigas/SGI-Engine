@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include <fstream>
 #include <regex>
+#include <geometric.hpp>
 
 #if defined WINDOWS
 #include <windows.h>
@@ -166,4 +167,11 @@ std::string printVec3(glm::vec3 vec){
     std::stringstream ss;
     ss << vec.x << ", " << vec.y << ", " << vec.z;
     return ss.str();
+}
+
+glm::vec3 tangent(glm::vec3 vec){
+    glm::vec3 t1 = glm::cross(vec, glm::vec3(0.0, 0.0, 1.0));
+    glm::vec3 t2 = glm::cross(vec, glm::vec3(0.0, 1.0, 0.0));
+
+    return glm::length(t1) > glm::length(t2) ? t1 : t2;
 }

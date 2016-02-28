@@ -8,6 +8,7 @@
 #include "Utility.h"
 #include "definitions.h"
 #include "Logger.h"
+#include "Config.h"
 
 std::string* getSource(const char* path) {
     std::string* source = new std::string();
@@ -31,10 +32,10 @@ bool compileShader(unsigned int shaderID, const char* source) {
 
     // Check Vertex Shader
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-    glGetShaderInfoLog(shaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
     if (Result == GL_FALSE) {
+        glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+        std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+        glGetShaderInfoLog(shaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
         fprintf(stdout, "%s\n", &VertexShaderErrorMessage[0]);
     }
     return Result == GL_TRUE;
@@ -119,6 +120,8 @@ ShaderProgram::ShaderProgram(std::string file) {
                 glUniform1i(location, RANDOMNOISETEXTUREUNIT);
             } else if(uniform == "ssaoTexture"){
                 glUniform1i(location, SSAOTEXTUREUNIT);
+            } else if(uniform == "useSsao"){
+                glUniform1f(location, (Config::graphics.ssao ? 1.f : 0.f));
             }
         }
     }

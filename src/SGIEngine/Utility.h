@@ -36,6 +36,8 @@ glm::mat4 convertToRightHandedCoords(glm::mat4 matrix);
 
 std::string printVec3(glm::vec3 vec);
 
+glm::vec3 tangent(glm::vec3 vec);
+
 template <typename T>
 inline T random(T min, T max){
     return min + (((T) rand() / (T) RAND_MAX) * (max-min));
@@ -47,4 +49,3 @@ inline T lerp(T v0, T v1, T t) {
 }
 
 #endif	/* UTILITY_H */
-
