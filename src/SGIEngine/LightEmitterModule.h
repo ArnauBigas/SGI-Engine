@@ -15,15 +15,20 @@
 #include "Mesh.h"
 
 class LightEmitterModule : public BaseObjectModule<LightEmitterModule>{
-public:    
+public:
     void loadConfig(WorldObject* obj, rapidjson::Value& json);
     void loadModule(WorldObject* obj, World* world, rapidjson::Value& json);
     void onRender();
     virtual std::string getName(){return "lightEmitter";};
-private:
-    std::string type;
-    glm::vec3 dir;
+    
+    struct LightType {
+        std::string name;
+        PointLight *point;
+        SpotLight spot;
+    } type;
     glm::vec4 color;
+    glm::vec3 dir;
+private:
     PolyGroup* polyGroup = 0;
 };
 

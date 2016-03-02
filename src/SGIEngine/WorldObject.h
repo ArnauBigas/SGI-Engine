@@ -73,12 +73,12 @@ public:
     glm::vec3 rotation;
     float mass;
     float bounciness = 0.75f;
+    std::vector<ObjectModule*> modules;
     
     bool physics;
 protected:
     void loadFromJson(rapidjson::Value& json);
     
-    std::vector<ObjectModule*> modules;
     Collider* collider = 0;
     std::string shader;
     World* world = 0;

@@ -100,11 +100,11 @@ Camera* World::addSpotLightSource(SpotLight light, float fov){
     cam->direction = light.direction;
     cam->resize(Config::graphics.shadowmapResolution, Config::graphics.shadowmapResolution);
     light.depthBiasVP = glm::mat4(
- 0.5f, 0.0f, 0.0f, 0.0f,
- 0.0f, 0.5f, 0.0f, 0.0f,
- 0.0f, 0.0f, 0.5f, 0.0f,
- 0.5f, 0.5f, 0.5f, 1.0f
- ) * cam->getProjectionMatrix() * cam->getViewMatrix();
+        0.5f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.5f, 0.0f, 0.0f,
+        0.0f, 0.0f, 0.5f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f
+    ) * cam->getProjectionMatrix() * cam->getViewMatrix();
     addCamera(cam);
     spotlights.push_back(light);
 }
@@ -125,6 +125,8 @@ bool World::loadFromFile(std::string filename){
             //Logger::info << "loading object of type " << objects[i]["type"].GetString() << std::endl;
             WorldObject* o = getWorldObject(objects[i]["type"].GetString())->clone();
             o->initFromJson(this, objects[i]);
+            if (objects[i].HasMember("id"))
+                idObjectMap[objects[i]["id"].GetString()] = o;
             addObject(o);
             //Logger::info << "object loaded" << std::endl;
         }
@@ -142,13 +144,14 @@ ControllableEntity* World::getPlayer(){
 
 void World::addObject(WorldObject* object){
     ShaderProgram* shader = getShader(object->getShaderRequired());
-    if(renderMap.find(shader) == renderMap.end()){
-        renderMap.insert(std::make_pair(shader, std::vector<WorldObject*>()));
-    }
     renderMap[shader].push_back(object);
     objects.push_back(object);
 }
 
 void World::addCamera(Camera* camera){
     cameras.push_back(camera);
+}
+
+WorldObject *World::getWorldObjectById(std::string id) {
+    return idObjectMap.at(id);
 }

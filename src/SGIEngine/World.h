@@ -34,12 +34,14 @@ public:
     virtual std::vector<SpotLight>& getSpotLights();
     virtual ControllableEntity* getPlayer();
     virtual void registerPlayer(ControllableEntity *entity);
+    virtual WorldObject *getWorldObjectById(std::string id);
 protected:
     std::map<ShaderProgram*, std::vector<WorldObject*> > renderMap;
     std::vector<WorldObject*> objects;
     std::vector<Camera*> cameras;
     std::vector<PointLight*> pointlights;
     std::vector<SpotLight> spotlights;
+    std::map<std::string, WorldObject *> idObjectMap;
     ControllableEntity* player;
 };
 
