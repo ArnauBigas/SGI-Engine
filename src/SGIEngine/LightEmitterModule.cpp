@@ -18,7 +18,7 @@
 #include "Prop.h"
 
 void LightEmitterModule::loadConfig(WorldObject* obj, rapidjson::Value& json){
-    type = json["type"].GetString();
+    type.name = json["type"].GetString();
     if(json.HasMember("direction")){
         dir = getVec3(json["direction"]);
     }
@@ -35,30 +35,28 @@ void LightEmitterModule::onRender() {
 
 void LightEmitterModule::loadModule(WorldObject* prop, World* world, rapidjson::Value& json){
     BaseObjectModule::loadModule(prop, world, json);
-    if(type == "pointlight"){
-        PointLight *light = new PointLight();
+    if(type.name == "pointlight"){
+        type.point = new PointLight();
         color = glm::vec4(getVec3(json["color"]), 1.0f);
-        light->color = glm::vec3(color);
-        light->constantAttenuation = (float) json["constantAttenuation"].GetDouble();
-        light->linearAttenuation = (float) json["linearAttenuation"].GetDouble();
-        light->exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
-        light->position = prop->position;
-        world->addPointLightSource(light);
-    } else if(type == "spotlight"){
-        SpotLight light;
+        type.point->color = glm::vec3(color);
+        type.point->constantAttenuation = (float) json["constantAttenuation"].GetDouble();
+        type.point->linearAttenuation = (float) json["linearAttenuation"].GetDouble();
+        type.point->exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
+        type.point->position = prop->position;
+        world->addPointLightSource(type.point);
+    } else if(type.name == "spotlight"){
         color = glm::vec4(getVec3(json["color"]), 1.0f);
-        light.color = glm::vec3(color);
-        light.coneAngle = cos(glm::radians(json["coneAngle"].GetDouble()/2.0f));
+        type.spot.color = glm::vec3(color);
+        type.spot.coneAngle = cos(glm::radians(json["coneAngle"].GetDouble()/2.0f));
         glm::mat4 rot = glm::mat4(1.0f);
         rot = glm::rotate(rot, glm::radians(prop->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
         rot = glm::rotate(rot, glm::radians(prop->rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
         rot = glm::rotate(rot, glm::radians(prop->rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-        light.direction = glm::vec3(rot * glm::vec4(dir,0.0f));
-        light.constantAttenuation = (float) json["constantAttenuation"].GetDouble();
-        light.linearAttenuation = (float) json["linearAttenuation"].GetDouble();
-        light.exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
-        light.position = prop->position;
-        world->addSpotLightSource(light, json["coneAngle"].GetDouble());
-        
+        type.spot.direction = glm::vec3(rot * glm::vec4(dir,0.0f));
+        type.spot.constantAttenuation = (float) json["constantAttenuation"].GetDouble();
+        type.spot.linearAttenuation = (float) json["linearAttenuation"].GetDouble();
+        type.spot.exponentialAttenuation = (float) json["exponentialAttenuation"].GetDouble();
+        type.spot.position = prop->position;
+        world->addSpotLightSource(type.spot, json["coneAngle"].GetDouble());
     }
 }
