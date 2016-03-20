@@ -16,6 +16,7 @@
 GraphicsConfig Config::graphics;
 PhysicsConfig Config::physics;
 LogicConfig Config::logic;
+NetworkConfig Config::network;
 
 void setInt(int& i, rapidjson::Value& val, const char* name) {
     if (val.HasMember(name) && val[name].IsInt()) {
@@ -89,6 +90,15 @@ void serializeLogic(rapidjson::Document* doc){
     doc->AddMember("logic", l, doc->GetAllocator());
 }
 
+void serializeNetwork(rapidjson::Document* doc){
+    rapidjson::Value l(rapidjson::kObjectType);
+    {
+        l.AddMember("port", Config::network.port, doc->GetAllocator());
+        l.AddMember("ticksBetweenSnapshots", Config::network.ticksBetweenSnapshots, doc->GetAllocator());
+    }
+    doc->AddMember("network", l, doc->GetAllocator());
+}
+
 void deserializeGraphics(rapidjson::Value& g) {
     setInt(Config::graphics.width, g, "width");
     setInt(Config::graphics.height, g, "height");
@@ -121,6 +131,11 @@ void deserializeLogic(rapidjson::Value& l) {
     setInt(Config::logic.updatesPerSecond, l, "updatesPerSecond");
 }
 
+void deserializeNetwork(rapidjson::Value& l) {
+    setInt(Config::network.port, l, "port");
+    setInt(Config::network.ticksBetweenSnapshots, l, "ticksBetweenSnapshots");
+}
+
 void Config::serialize(rapidjson::Document* doc) {
     doc->SetObject();
     serializeGraphics(doc);
@@ -137,5 +152,8 @@ void Config::deserialize(rapidjson::Document* doc) {
     }
     if(doc->HasMember("logic")){
         deserializeLogic((*doc)["logic"]);
+    }
+    if(doc->HasMember("network")){
+        deserializeNetwork((*doc)["network"]);
     }
 }

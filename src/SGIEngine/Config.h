@@ -13,6 +13,7 @@
 #include "GraphicsConfig.h"
 #include "PhysicsConfig.h"
 #include "LogicConfig.h"
+#include "NetworkConfig.h"
 
 namespace Config {
 
@@ -51,6 +52,11 @@ namespace Config {
      * The struct containing logic configurations.
      */
     extern LogicConfig logic;
+    
+    /**
+     * The struct containing network configurations.
+     */
+    extern NetworkConfig network;
 };
 
 #endif	/* CONFIG_H */

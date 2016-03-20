@@ -48,5 +48,5 @@ void LoadingState::render() {
 }
 
 void LoadingState::update(){
-    
+    Game::enterState(stateName);    
 }

@@ -23,6 +23,7 @@
 #include "Model.h"
 #include "Text.h"
 #include "Logger.h"
+#include "CrashHandler.h"
 
 std::string windowTitle;
 SDL_Window* window;
@@ -48,17 +49,19 @@ Camera* currentCamera = 0;
 
 bool RenderEngine::init(std::string title) {
     windowTitle = title;
+    
+    if(SDL_Init(SDL_INIT_VIDEO) < 0){
+        CrashHandler::crash("Could not initialize SDL VIDEO! SDL error: %s", SDL_GetError());
+    }
 
     //Initialize the TTF SDL helper library
     if (TTF_Init() < 0) {
-        printf("TTF SDL Library could not initialize! SDL_TTF error: %s\n", TTF_GetError());
-        return false;
+        CrashHandler::crash("TTF SDL Library could not initialize! SDL_TTF error: %s", TTF_GetError());
     }
 
     //Initialize the PNG SDL helper library for PNGs
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-        printf("IMG SDL Library could not initialize! SDL_image error: %s\n", IMG_GetError());
-        return false;
+        CrashHandler::crash("IMG SDL Library could not initialize! SDL_image error: %s", IMG_GetError());
     }
 
     //Load the main font for the game engine

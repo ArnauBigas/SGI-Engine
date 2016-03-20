@@ -25,6 +25,7 @@
 #include "ResourceEngine.h"
 #include "LogicEngine.h"
 #include "AudioEngine.h"
+#include "NetworkEngine.h"
 #include "Utility.h"
 #include "Timer.h"
 #include "Profiler.h"
@@ -81,15 +82,6 @@ bool Game::init(std::string title, bool client) {
     //wonder what would happen if the game crashed while initializing the crash handler
     CrashHandler::init();
 
-    if (client) {
-        Logger::info << "Initializing SDL..." << std::endl;
-        if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-            printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-            Logger::error << "Couldn't start game." << std::endl;
-            return false;
-        }
-    }
-
     Logger::info << "Initializing Task Engine..." << std::endl;
     TaskEngine::init();
 
@@ -123,6 +115,12 @@ bool Game::init(std::string title, bool client) {
         Logger::error << "Couldn't start game." << std::endl;
         return false;
     }
+    
+    Logger::info << "Initializing Network Engine..." << std::endl;
+    if (!NetworkEngine::init(client)) {
+        Logger::error << "Couldn't start game." << std::endl;
+        return false;
+    }
 
     return true;
 }
@@ -135,6 +133,7 @@ void Game::start() {
     secondTimer.start();
     SDL_Event event;
     while (run) {
+        NetworkEngine::checkInboundConnections();
         Profiler::reset();
         while (SDL_PollEvent(& event)) {
             if (!states[currentState]->processSDLEvent(event)) {
@@ -162,6 +161,10 @@ void Game::start() {
             pData.ticks++;
             pData.tps++;
         }
+        
+        if(!_client){
+            continue;
+        }
 
         Profiler::start("render");
         states[currentState]->render();
@@ -187,6 +190,7 @@ void Game::start() {
     saveConfig();
     RenderEngine::kill();
     AudioEngine::kill();
+    NetworkEngine::kill();
     SDL_Quit();
 }
 

@@ -25,7 +25,9 @@ WorldState::~WorldState() {
 
 void WorldState::onEnter() {    
     world->loadFromFile(FMAPS"world/map.json");
-    SDL_SetRelativeMouseMode(SDL_TRUE);
+    if(Game::isClient()){
+        SDL_SetRelativeMouseMode(SDL_TRUE);
+    }
 }
 
 void WorldState::render() {

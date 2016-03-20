@@ -18,10 +18,15 @@
 
 #define STACKDEPTH 16
 
+/**
+ The maximum amount of characters as a string that can be passed into a crash reason
+ */
+#define MAXERRORLENGTH 512
+
 namespace CrashHandler {
     void init();
     
-    void crash(std::string reason);
+    void crash(const char * format, ...);
 };
 
 #endif /* CRASHHANDLER_H */

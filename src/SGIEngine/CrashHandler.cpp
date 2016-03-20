@@ -18,6 +18,7 @@
 #include <map>
 #include <sstream>
 #include <cstring>
+#include <stdarg.h>
 
 #include "definitions.h"
 
@@ -32,7 +33,7 @@
 std::map<int, std::string> names;
 
 void handleSignal(int signum) {
-    CrashHandler::crash(std::string("Received interrupt signal ")+std::to_string(signum)+std::string(" (")+names[signum]+std::string(")."));
+    CrashHandler::crash("Received interrupt signal %i (%s).", signum, names[signum]);
 }
 
 void addSignal(int signum, std::string name){
@@ -53,9 +54,14 @@ namespace CrashHandler {
         ADDSIGNAL(SIGTERM);
     }
     
-    void crash(std::string reason){
+    void crash(const char * format, ...){
+        char buff[MAXERRORLENGTH];
+        va_list args;
+        va_start(args, format);
+        vsnprintf(buff, MAXERRORLENGTH, format, args);
+        va_end(args);
         Logger::error << "Application crashed!" << std::endl;
-        Logger::error << reason << std::endl;
+        Logger::error << buff << std::endl;
         
         //Get a backtrace
         #if defined LINUX
@@ -109,7 +115,7 @@ namespace CrashHandler {
             Logger::error << "Couldn't generate a backtrace for this platform." << std::endl;
         #endif
         
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Ermagherd game crashed you idiot!", (reason+std::string("\nA crash report has been generated and saved.")).c_str(), RenderEngine::getWindow());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Ermagherd game crashed you idiot!", (std::string(buff)+std::string("\nA crash report has been generated and saved.")).c_str(), RenderEngine::getWindow());
         exit(0);
     }
 }

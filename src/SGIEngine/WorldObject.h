@@ -101,5 +101,7 @@ void registerWorldObject(std::string name, WorldObject* object);
 
 WorldObject* getWorldObject(std::string name);
 
+bool worldObjectExists(std::string name);
+
 #endif	/* WORLDOBJECT_H */
 

@@ -122,11 +122,13 @@ bool World::loadFromFile(std::string filename){
     if(readJsonFile(filename, doc)){
         rapidjson::Value& objects = doc["objects"];
         for (rapidjson::SizeType i = 0; i < objects.Size(); i++) {
-            //Logger::info << "loading object of type " << objects[i]["type"].GetString() << std::endl;
+            if(!worldObjectExists(objects[i]["type"].GetString())){
+                Logger::warning << "World Object \"" << objects[i]["type"].GetString() << "\" doesn't exist, skipping." << std::endl;
+                continue;
+            }
             WorldObject* o = getWorldObject(objects[i]["type"].GetString())->clone();
             o->initFromJson(this, objects[i]);
             addObject(o);
-            //Logger::info << "object loaded" << std::endl;
         }
         Logger::info << "Level loaded" << std::endl;
     }

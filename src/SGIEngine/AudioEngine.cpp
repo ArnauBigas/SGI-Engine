@@ -8,6 +8,8 @@
 #include "AudioEngine.h"
 #include "PositionalAudioObject.h"
 #include "Logger.h"
+#include "SDL.h"
+#include "CrashHandler.h"
 
 #include <vector>
 
@@ -52,7 +54,12 @@ bool removeAudio(AudioObject& audio){
     return false;
 }
 
-bool AudioEngine::init(){    
+bool AudioEngine::init(){  
+    
+    if(SDL_Init(SDL_INIT_AUDIO) < 0){
+        CrashHandler::crash("Could not initialize SDL AUDIO! SDL error: %s", SDL_GetError());
+    }
+    
     SDL_zero(spec);
     spec.freq = 44800;
     spec.format = AUDIO_S16SYS;

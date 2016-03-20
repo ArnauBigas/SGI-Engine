@@ -72,3 +72,7 @@ void registerWorldObject(std::string name, WorldObject* object){
 WorldObject* getWorldObject(std::string name){
     return objects.at(name);
 }
+
+bool worldObjectExists(std::string name){
+    return objects.find(name) != objects.end();
+}
