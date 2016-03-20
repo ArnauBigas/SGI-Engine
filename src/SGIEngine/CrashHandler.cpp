@@ -29,11 +29,16 @@
 
 #include "Logger.h"
 #include "RenderEngine.h"
+#include "Game.h"
 
 std::map<int, std::string> names;
 
 void handleSignal(int signum) {
-    CrashHandler::crash("Received interrupt signal %i (%s).", signum, names[signum]);
+    if(signum == 2){
+        CrashHandler::crash("Application termination requested.");
+    } else {
+        CrashHandler::crash("Received interrupt signal %i (%s).", signum, names[signum]);
+    }
 }
 
 void addSignal(int signum, std::string name){
@@ -55,6 +60,8 @@ namespace CrashHandler {
     }
     
     void crash(const char * format, ...){
+        Game::kill();
+        
         char buff[MAXERRORLENGTH];
         va_list args;
         va_start(args, format);

@@ -163,6 +163,7 @@ void Game::start() {
         }
         
         if(!_client){
+            SDL_Delay(1000 / (float) Config::logic.updatesPerSecond);
             continue;
         }
 
@@ -186,6 +187,10 @@ void Game::start() {
 //            Logger::info << "Render.Swap: " << Profiler::get("render")->get("swap")->timer.getTime() << std::endl;
         }
     }
+    kill();
+}
+
+void Game::kill(){
     Profiler::cleanup();
     saveConfig();
     RenderEngine::kill();

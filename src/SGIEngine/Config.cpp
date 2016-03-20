@@ -91,12 +91,12 @@ void serializeLogic(rapidjson::Document* doc){
 }
 
 void serializeNetwork(rapidjson::Document* doc){
-    rapidjson::Value l(rapidjson::kObjectType);
+    rapidjson::Value n(rapidjson::kObjectType);
     {
-        l.AddMember("port", Config::network.port, doc->GetAllocator());
-        l.AddMember("ticksBetweenSnapshots", Config::network.ticksBetweenSnapshots, doc->GetAllocator());
+        n.AddMember("port", Config::network.port, doc->GetAllocator());
+        n.AddMember("ticksBetweenSnapshots", Config::network.ticksBetweenSnapshots, doc->GetAllocator());
     }
-    doc->AddMember("network", l, doc->GetAllocator());
+    doc->AddMember("network", n, doc->GetAllocator());
 }
 
 void deserializeGraphics(rapidjson::Value& g) {
@@ -141,6 +141,7 @@ void Config::serialize(rapidjson::Document* doc) {
     serializeGraphics(doc);
     serializePhysics(doc);
     serializeLogic(doc);
+    serializeNetwork(doc);
 }
 
 void Config::deserialize(rapidjson::Document* doc) {

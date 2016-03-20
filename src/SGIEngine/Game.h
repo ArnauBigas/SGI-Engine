@@ -82,6 +82,13 @@ namespace Game {
      * @return ditto.
      */
     bool isClient();
+    
+    /**
+     * Kills the game, along with all the other engines and frees all resources.
+     * Warning: it is recommended the use of the stop function instead, this
+     * function should only be used for emergencies.
+     */
+    void kill();
 };
 
 #endif	/* GAME_H */
