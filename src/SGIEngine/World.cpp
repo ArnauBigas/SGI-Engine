@@ -49,7 +49,6 @@ void World::renderWorld() {
     GLint err = glGetError();
     if (err != GL_NO_ERROR) {
         Logger::info << "GL ERROR (world render): " << err << std::endl;
-        Logger::info << gluErrorString(err) << std::endl;
     }
 }
 

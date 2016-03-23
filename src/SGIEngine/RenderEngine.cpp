@@ -10,7 +10,6 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL.h>
-#include <GL/glu.h>
 #include <iostream>
 #include <gtx/transform.hpp>
 #include <SDL_image.h>
