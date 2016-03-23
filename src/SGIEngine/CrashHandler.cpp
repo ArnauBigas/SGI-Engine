@@ -37,7 +37,7 @@ void handleSignal(int signum) {
     if(signum == 2){
         CrashHandler::crash("Application termination requested.");
     } else {
-        CrashHandler::crash("Received interrupt signal %i (%s).", signum, names[signum]);
+        CrashHandler::crash("Received interrupt signal %i (%s).", signum, names[signum].c_str());
     }
 }
 
