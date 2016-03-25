@@ -13,7 +13,7 @@
 
 class ShaderProgram {
 public:
-    ShaderProgram(std::string file);
+    ShaderProgram(std::string shaderRoot, std::string file);
 
     void link();
 

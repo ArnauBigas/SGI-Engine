@@ -88,10 +88,10 @@ unsigned int loadProgram(const char* vertexShaderFile, const char* fragmentShade
     }
 }
 
-ShaderProgram::ShaderProgram(std::string file) {
+ShaderProgram::ShaderProgram(std::string shaderRoot, std::string file) {
     rapidjson::Document doc;
-    if(readJsonFile(file, doc)){
-        programID = loadProgram((FSHADERS + std::string(doc["vertexShader"].GetString())).c_str(), (FSHADERS + std::string(doc["fragmentShader"].GetString())).c_str());
+    if(readJsonFile(shaderRoot + file, doc)){
+        programID = loadProgram((shaderRoot + std::string(doc["vertexShader"].GetString())).c_str(), (shaderRoot + std::string(doc["fragmentShader"].GetString())).c_str());
         link();
         rapidjson::Value& uniforms = doc["uniforms"];
         for (rapidjson::SizeType i = 0; i < uniforms.Size(); i++) {

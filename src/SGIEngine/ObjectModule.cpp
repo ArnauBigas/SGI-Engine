@@ -14,5 +14,9 @@ void addObjectModule(ObjectModule* module){
 }
 
 ObjectModule* getObjectModule(std::string name){
-    return modules.at(name);
+    return modules[name];
+}
+
+bool hasObjectModule(std::string name){
+    return modules.find(name) != modules.end();
 }

@@ -44,5 +44,7 @@ void addObjectModule(ObjectModule* module);
 
 ObjectModule* getObjectModule(std::string name);
 
+bool hasObjectModule(std::string name);
+
 #endif	/* OBJECTMODULE_H */
 

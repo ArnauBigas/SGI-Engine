@@ -14,6 +14,7 @@
 #include <string>
 #include <document.h>
 #include <iostream>
+#include <map>
 
 #include "Collider.h"
 #include "RenderEngine.h"
@@ -102,6 +103,8 @@ void registerWorldObject(std::string name, WorldObject* object);
 WorldObject* getWorldObject(std::string name);
 
 bool worldObjectExists(std::string name);
+
+std::map<std::string, WorldObject*>& getWorldObjectMap();
 
 #endif	/* WORLDOBJECT_H */
 

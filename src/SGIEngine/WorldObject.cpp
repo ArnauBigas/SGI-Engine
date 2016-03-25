@@ -2,7 +2,6 @@
 #include "SphereCollider.h"
 #include "Logger.h"
 
-#include <map>
 #include <iostream>
 
 WorldObject::WorldObject(const WorldObject& other) {
@@ -29,9 +28,13 @@ void WorldObject::loadFromJson(rapidjson::Value& json){
     shader = json["shader"].GetString();
     rapidjson::Value& mdls = json["modules"];
     for (rapidjson::SizeType i = 0; i < mdls.Size(); i++) {
-        ObjectModule* module = getObjectModule(mdls[i]["name"].GetString())->clone();
-        module->loadConfig(this, mdls[i]);
-        this->modules.push_back(module);
+        if(hasObjectModule(mdls[i]["name"].GetString())){
+            ObjectModule* module = getObjectModule(mdls[i]["name"].GetString())->clone();
+            module->loadConfig(this, mdls[i]);
+            this->modules.push_back(module);
+        } else {
+            Logger::warning << "Couldn't find object module " << mdls[i]["name"].GetString() << std::endl;
+        }
     }
 }
 
@@ -75,4 +78,8 @@ WorldObject* getWorldObject(std::string name){
 
 bool worldObjectExists(std::string name){
     return objects.find(name) != objects.end();
+}
+
+std::map<std::string, WorldObject*>& getWorldObjectMap(){
+    return objects;
 }

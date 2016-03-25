@@ -28,5 +28,7 @@ void loadTextures();
 
 void loadAudio();
 
+void setResourceLocation(std::string location);
+
 #endif	/* RESOURCEENGINE_H */
 
