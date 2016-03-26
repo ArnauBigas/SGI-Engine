@@ -8,7 +8,7 @@
 #ifndef GUISTATE_H
 #define	GUISTATE_H
 
-#include <SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 #include "State.h"
 #include "Gui.h"

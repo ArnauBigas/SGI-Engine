@@ -11,7 +11,7 @@
 #include "ObjectModule.h"
 
 #include "Light.h"
-#include <vec4.hpp>
+#include <glm/vec4.hpp>
 #include "Mesh.h"
 
 class LightEmitterModule : public BaseObjectModule<LightEmitterModule>{

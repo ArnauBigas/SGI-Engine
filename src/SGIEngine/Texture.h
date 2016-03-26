@@ -10,7 +10,7 @@
 
 #include <GL/glew.h>
 #include <string>
-#include <SDL_surface.h>
+#include <SDL2/SDL_surface.h>
 
 GLuint generateTexture(GLint internalFormat, int width, int height, GLint imageFormat, void* data, GLenum type, GLint mag_filter, GLint min_filter);
 

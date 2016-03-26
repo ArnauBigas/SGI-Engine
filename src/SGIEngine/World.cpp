@@ -7,10 +7,10 @@
 
 #include "World.h"
 
-#include <rapidjson.h>
-#include <document.h>
+#include <rapidjson/rapidjson.h>
+#include <rapidjson/document.h>
 #include <GL/glew.h>
-#include <gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <algorithm>
 
 #include "RenderEngine.h"

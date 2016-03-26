@@ -10,7 +10,7 @@
 
 #include "AudioObject.h"
 
-#include <vec3.hpp>
+#include <glm/vec3.hpp>
 
 class PositionalAudioObject : public AudioObject {
 public:

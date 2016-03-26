@@ -8,7 +8,7 @@
 #ifndef MATERIAL_H
 #define	MATERIAL_H
 
-#include <vec4.hpp>
+#include <glm/vec4.hpp>
 
 struct Material{
     glm::vec4 emission = glm::vec4(0, 0, 0, 1);

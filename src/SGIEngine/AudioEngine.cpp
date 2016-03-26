@@ -8,7 +8,7 @@
 #include "AudioEngine.h"
 #include "PositionalAudioObject.h"
 #include "Logger.h"
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include "CrashHandler.h"
 
 #include <vector>

@@ -13,9 +13,9 @@
 #include <vector>
 #include <map>
 
-#include <vec3.hpp>
-#include <mat4x4.hpp>
-#include <gtc/matrix_transform.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 struct PolyGroup {
     Material material;

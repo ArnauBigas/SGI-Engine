@@ -15,7 +15,7 @@
 #include "Logger.h"
 #include "CrashHandler.h"
 #include "Config.h"
-#include "SDL_stdinc.h"
+#include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_net.h>
 
 //This instance is a server

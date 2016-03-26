@@ -10,7 +10,7 @@
 
 #include "Entity.h"
 
-#include <SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 #define xTrig(x, z, y) (cos(glm::radians(y))*x + sin(glm::radians(-y))*z)
 #define zTrig(x, z, y) (sin(glm::radians(y))*x + cos(glm::radians(-y))*z)

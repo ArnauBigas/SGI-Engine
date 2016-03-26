@@ -9,7 +9,7 @@
 #define	WORLDSTATE_H
 
 #include <string>
-#include <SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 #include "GuiState.h"
 #include "World.h"

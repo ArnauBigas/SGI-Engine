@@ -8,8 +8,8 @@
 #ifndef GUIELEMENT_H
 #define	GUIELEMENT_H
 
-#include <vec2.hpp>
-#include <SDL_events.h>
+#include <glm/vec2.hpp>
+#include <SDL2/SDL_events.h>
 
 enum Clamp {//VH
     TL, TR, BL, BR,

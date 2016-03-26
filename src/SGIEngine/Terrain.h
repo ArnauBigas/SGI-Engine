@@ -8,8 +8,8 @@
 #ifndef TERRAIN_H
 #define	TERRAIN_H
 
-#include <SDL_surface.h>
-#include <mat4x4.hpp>
+#include <SDL2/SDL_surface.h>
+#include <glm/mat4x4.hpp>
 
 #include "Model.h"
 
