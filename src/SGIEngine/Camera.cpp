@@ -14,9 +14,9 @@ Camera::Camera(World* world, RenderingTechnique* technique, bool screen){
     viewport = {0, 0, 1, 1};
     
     this->mode = CAMERA_3D;
-    this->fov = Config::graphics.fov;
-    this->near = Config::graphics.nearPlaneClipping;
-    this->far = Config::graphics.renderDistance;
+    this->fov_ = Config::graphics.fov;
+    this->near_ = Config::graphics.nearPlaneClipping;
+    this->far_ = Config::graphics.renderDistance;
     if (screen) {
         RenderEngine::registerCamera(this);
     }
@@ -41,7 +41,7 @@ void Camera::enable(){
 }
 
 glm::mat4 Camera::getProjectionMatrix(){
-    return mode == CAMERA_3D ? glm::perspective((float)glm::radians(fov), (w*viewport.w)/(h*viewport.h), near, far) : glm::ortho(0.0f, (float)w, 0.0f, (float)h);
+    return mode == CAMERA_3D ? glm::perspective((float)glm::radians(fov_), (w*viewport.w)/(h*viewport.h), near_, far_) : glm::ortho(0.0f, (float)w, 0.0f, (float)h);
 }
 
 void Camera::disable(){

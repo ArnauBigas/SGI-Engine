@@ -92,7 +92,7 @@ std::vector<PointLight *>& World::getPointLights(){
 
 Camera* World::addSpotLightSource(SpotLight light, float fov){
     Camera* cam = new Camera(this, new ShadowMapping(light.shadowMap, SHADOWMAPPINGSHADER), false);
-    cam->fov = fov;
+    cam->fov_ = fov;
     cam->position = light.position;
     cam->useDirection = true;
     cam->direction = light.direction;

@@ -40,7 +40,7 @@ public:
     World* world;
 
     CameraMode mode;
-    float fov, far, near;
+    float fov_, far_, near_;
     virtual glm::mat4 getViewMatrix();
     glm::mat4 getProjectionMatrix();
 private:
