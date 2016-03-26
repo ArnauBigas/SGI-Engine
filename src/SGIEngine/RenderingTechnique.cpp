@@ -166,7 +166,7 @@ void DeferredRendering::enable(Camera* cam){
         glUniform1i(shaderptr->getUniform("kernelSize"), KERNELSIZE);
         GLenum err = glGetError();
         if(err != GL_NONE){
-            Logger::error << err << std::endl;
+            Logger::error << "DeferredRendering Enable: " << err << std::endl;
         }
     }
 }
@@ -198,6 +198,11 @@ void DeferredRendering::disable(Camera* cam){
     glBindTexture(GL_TEXTURE_2D, depthTexture);
     ShaderProgram* shaderptr;
     
+    GLenum err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable texture binds: " << err << std::endl;
+    }
+    
     if(Config::graphics.ssao){
         shaderptr = getShader(SSAOSHADER);
         RenderEngine::setCurrentShader(shaderptr);
@@ -209,11 +214,34 @@ void DeferredRendering::disable(Camera* cam){
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
     
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable ssao: " << err << std::endl;
+    }
+    
     //Draw the final output
     glBindFramebuffer(GL_FRAMEBUFFER, target);
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable final binds framebuffer: " << err << std::endl;
+    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable final binds glclear: " << err << std::endl;
+    }
     glDisable(GL_DEPTH_TEST);
+    
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable final binds depth disable: " << err << std::endl;
+    }
     glBlendFunc(GL_ONE, GL_ONE); 
+    
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable final binds: blend one one " << err << std::endl;
+    }
     
     shaderptr = getShader(AMBIENTSHADER);
     
@@ -222,6 +250,11 @@ void DeferredRendering::disable(Camera* cam){
     uploadBuffers(shaderptr, cam);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable Ambient: " << err << std::endl;
+    }
     
     shaderptr = getShader(POINTLIGHTSHADER);
     
@@ -232,6 +265,11 @@ void DeferredRendering::disable(Camera* cam){
     for(PointLight *light : cam->world->getPointLights()){
         uploadPointLight(light, shaderptr);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    }
+    
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable Pointlight: " << err << std::endl;
     }
     
     shaderptr = getShader(SPOTLIGHTSHADER);
@@ -247,4 +285,9 @@ void DeferredRendering::disable(Camera* cam){
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
+    
+    err = glGetError();
+    if(err != GL_NONE){
+        Logger::error << "DeferredRendering Disable Spotlight: " << err << std::endl;
+    }
 }

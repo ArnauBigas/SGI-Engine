@@ -43,12 +43,11 @@ void World::renderWorld() {
                 o->render();
             }
         }
+        GLint err = glGetError();
+        if (err != GL_NO_ERROR) {
+            Logger::info << "GL ERROR (world render): " << err << std::endl;
+        }
         camera->disable();
-    }
-
-    GLint err = glGetError();
-    if (err != GL_NO_ERROR) {
-        Logger::info << "GL ERROR (world render): " << err << std::endl;
     }
 }
 
