@@ -10,11 +10,11 @@
 
 #include <string>
 #include <vector>
-#include <vec3.hpp>
-#include <vec4.hpp>
-#include <document.h>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <rapidjson/document.h>
 #include <rapidxml.hpp>
-#include <mat4x4.hpp>
+#include <glm/mat4x4.hpp>
 
 std::vector<std::string> getSubDirectories(std::string baseDir);
 

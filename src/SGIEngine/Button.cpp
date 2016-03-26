@@ -8,8 +8,8 @@
 #include "Button.h"
 
 #include <GL/glew.h>
-#include <vec3.hpp>
-#include <gtc/matrix_transform.hpp>
+#include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "RenderEngine.h"
 #include "Texture.h"

@@ -9,10 +9,10 @@
 
 #include <GL/glew.h>
 #include <GL/gl.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
-#include <gtx/transform.hpp>
-#include <SDL_image.h>
+#include <glm/gtx/transform.hpp>
+#include <SDL2/SDL_image.h>
 #include <map>
 #include <algorithm>
 

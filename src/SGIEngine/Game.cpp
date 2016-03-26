@@ -7,11 +7,11 @@
 
 #include "Game.h"
 
-#include <document.h>
-#include <stringbuffer.h>
-#include <prettywriter.h>
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <fstream>
 #include <map>

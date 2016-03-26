@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include <fstream>
-#include <document.h>
+#include <rapidjson/document.h>
 
 #include "Utility.h"
 #include "definitions.h"

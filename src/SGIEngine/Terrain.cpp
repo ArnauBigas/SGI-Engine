@@ -7,10 +7,10 @@
 
 #include "Terrain.h"
 
-#include <SDL_image.h>
-#include <SDL_surface.h>
-#include <vec3.hpp>
-#include <geometric.hpp>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_surface.h>
+#include <glm/vec3.hpp>
+#include <glm/geometric.hpp>
 
 #include "Model.h"
 #include "definitions.h"

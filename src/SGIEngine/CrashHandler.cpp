@@ -14,7 +14,7 @@
 #include "CrashHandler.h"
 
 #include <csignal>
-#include <SDL_messagebox.h>
+#include <SDL2/SDL_messagebox.h>
 #include <map>
 #include <sstream>
 #include <cstring>

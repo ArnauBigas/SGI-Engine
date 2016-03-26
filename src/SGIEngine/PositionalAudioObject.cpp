@@ -9,7 +9,7 @@
 #include "AudioEngine.h"
 
 #include <iostream>
-#include <geometric.hpp>
+#include <glm/geometric.hpp>
 
 //TODO: select audio channel as source for that sample (output mono samples)
 bool PositionalAudioObject::generateSamples(float* stream, size_t streamLength){

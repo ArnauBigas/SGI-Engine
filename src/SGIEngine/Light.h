@@ -8,8 +8,8 @@
 #ifndef LIGHT_H
 #define	LIGHT_H
 
-#include <mat4x4.hpp>
-#include <vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/vec3.hpp>
 #include <string>
 
 #include "Shader.h"

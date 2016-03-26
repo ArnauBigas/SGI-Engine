@@ -9,7 +9,7 @@
 
 #include <map>
 #include <GL/glew.h>
-#include <document.h>
+#include <rapidjson/document.h>
 
 #include "Utility.h"
 #include "Texture.h"

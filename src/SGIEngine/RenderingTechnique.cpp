@@ -12,16 +12,16 @@
  */
 
 #include "RenderingTechnique.h"
-#include "gl/glew.h"
+#include <GL/glew.h>
 #include "RenderEngine.h"
 #include "definitions.h"
-#include "detail/func_matrix.hpp"
+#include <glm/detail/func_matrix.hpp>
 #include "Logger.h"
 #include "Camera.h"
 #include "Config.h"
 #include "Light.h"
 #include "World.h"
-#include <gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #define KERNELSIZE 16
 #define NOISESIZE 16

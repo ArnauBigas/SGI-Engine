@@ -7,7 +7,7 @@
 
 #include "LoadingState.h"
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 
 #include "ResourceEngine.h"
 #include "RenderEngine.h"

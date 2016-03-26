@@ -7,7 +7,7 @@
 
 #include "Animation.h"
 
-#include <gtx/matrix_interpolation.hpp>
+#include <glm/gtx/matrix_interpolation.hpp>
 
 glm::mat4 interpolateAnimation(Animation* anim, float deltaTime){
     glm::mat4 ret;

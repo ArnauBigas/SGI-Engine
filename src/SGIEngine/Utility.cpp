@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include <fstream>
 #include <regex>
-#include <geometric.hpp>
+#include <glm/geometric.hpp>
 
 #if defined WINDOWS
 #include <windows.h>

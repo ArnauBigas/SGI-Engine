@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 #include <GL/glew.h>
-#include <gtc/type_ptr.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <document.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <rapidjson/document.h>
 
 #include "Utility.h"
 #include "definitions.h"

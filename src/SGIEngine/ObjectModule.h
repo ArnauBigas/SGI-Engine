@@ -8,7 +8,7 @@
 #ifndef OBJECTMODULE_H
 #define	OBJECTMODULE_H
 
-#include <document.h>
+#include <rapidjson/document.h>
 
 class WorldObject;
 class World;

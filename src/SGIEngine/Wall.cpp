@@ -9,10 +9,10 @@
 
 #include "Texture.h"
 #include "Logger.h"
-#include <document.h>
+#include <rapidjson/document.h>
 #include <GL/glew.h>
-#include <gtx/rotate_vector.hpp>
-#include <gtc/type_ptr.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Wall::Wall(std::string dir) {
     rapidjson::Document doc;

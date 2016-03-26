@@ -7,8 +7,8 @@
 
 #include "Material.h"
 
-#include <gl/glew.h>
-#include <gtc/type_ptr.hpp>
+#include <GL/glew.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "RenderEngine.h"
 #include "definitions.h"

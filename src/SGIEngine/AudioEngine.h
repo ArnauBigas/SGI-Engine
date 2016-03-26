@@ -9,8 +9,8 @@
 #define	AUDIOENGINE_H
 
 #include <string>
-#include <SDL_audio.h>
-#include <vec3.hpp>
+#include <SDL2/SDL_audio.h>
+#include <glm/vec3.hpp>
 
 #include "AudioObject.h"
 

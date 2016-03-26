@@ -10,7 +10,7 @@
 
 #include <string>
 #include <map>
-#include <mat4x4.hpp>
+#include <glm/mat4x4.hpp>
 #include <list>
 
 #include "Mesh.h"

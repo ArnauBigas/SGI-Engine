@@ -12,9 +12,9 @@
 #include "World.h"
 #include "Material.h"
 #include <iostream>
-#include <vec4.hpp>
-#include <mat4x4.hpp>
-#include <vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/vec3.hpp>
 #include "Prop.h"
 
 void LightEmitterModule::loadConfig(WorldObject* obj, rapidjson::Value& json){
