@@ -19,15 +19,7 @@ public:
     
     virtual void interact();
     
-    float getEyeLevel() {return eyeLevel;}
-    
-    float getCameraPitch() {return cameraPitch;}
-    
-    float getCameraYaw() {return cameraYaw;}
-protected:
-    float eyeLevel = 1.75f;
-    float cameraPitch = 0;
-    float cameraYaw = 0;
+    virtual float getEyeLevel() {return 0;}
 };
 
 #endif	/* ENTITY_H */

@@ -17,8 +17,8 @@ FirstPersonCamera::FirstPersonCamera(World* world, RenderingTechnique* technique
 
 void FirstPersonCamera::enable(){
     ControllableEntity* entity = world->getPlayer();
-    this->pitch = entity->getCameraPitch();
-    this->yaw = entity->getCameraYaw();
+    this->pitch = entity->rotation.x;
+    this->yaw = entity->rotation.y;
     this->position = glm::vec3(entity->position.x, entity->position.y + entity->getEyeLevel(), entity->position.z);
     Camera::enable();
 }

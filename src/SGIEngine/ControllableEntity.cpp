@@ -14,16 +14,16 @@ ControllableEntity::ControllableEntity(float speed) {
 
 bool ControllableEntity::processSDLEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEMOTION) {
-        cameraYaw += (event.motion.xrel) * 0.1f;
-        cameraPitch += (event.motion.yrel) * -0.1f;
-        if (cameraPitch > 89.9f)
-            cameraPitch = 89.9f;
-        else if (cameraPitch < -89.9f)
-            cameraPitch = -89.9f;
-        if (cameraYaw > 360)
-            cameraYaw = 0;
-        else if (cameraYaw < 0)
-            cameraYaw = 360;
+        rotation.y += (event.motion.xrel) * 0.1f;
+        rotation.x += (event.motion.yrel) * -0.1f;
+        if (rotation.x > 89.9f)
+            rotation.x = 89.9f;
+        else if (rotation.x < -89.9f)
+            rotation.x = -89.9f;
+        if (rotation.y > 360)
+            rotation.y = 0;
+        else if (rotation.y < 0)
+            rotation.y = 360;
     } else {
         return false;
     }
@@ -47,11 +47,11 @@ void ControllableEntity::update() {
     if (keystate[SDL_SCANCODE_LCTRL]) movSpeed /= 2;
 
     glm::vec3 mov = glm::normalize(glm::vec3(
-            xTrig(motionX, motionZ, cameraYaw),
+            xTrig(motionX, motionZ, rotation.y),
 
             motionY,
 
-            zTrig(motionX, motionZ, cameraYaw))) * movSpeed;
+            zTrig(motionX, motionZ, rotation.y))) * movSpeed;
 
     if (glm::isnan(mov.x) || glm::isnan(mov.y) || glm::isnan(mov.z)) mov = glm::vec3(0.f, 0.f, 0.f);
 
