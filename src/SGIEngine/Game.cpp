@@ -40,12 +40,9 @@ std::map<std::string, State*> states;
 std::chrono::high_resolution_clock::time_point startTime;
 long long microseconds = 0;
 
-struct PerformanceData {
-    long long frames;
-    long long ticks;
-    int fps;
-    int tps;
-} pData;
+Game::PerformanceData pData;
+
+void (*perfDataFunc)(Game::PerformanceData) = NULL;
 
 void saveConfig() {
     Logger::info << "Saving config file..." << std::endl;
@@ -178,7 +175,10 @@ void Game::start() {
         pData.fps++;
 
         if (secondTimer.getTime() >= 1000) {
-            Logger::info << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
+            if (perfDataFunc != NULL) {
+                perfDataFunc(pData);
+            }
+//            Logger::info << "FPS: " << +pData.fps << ", TPS: " << +pData.tps << " \tFrames: " << +pData.frames << ", Ticks: " << +pData.ticks << "\t Last second: " << +secondTimer.getTime() << std::endl;
             secondTimer.reset();
             pData.fps = pData.tps = 0;
 
@@ -230,4 +230,8 @@ void Game::addState(std::string name, State* state) {
 
 bool Game::isClient() {
     return _client;
+}
+
+void Game::setPerformaceDataFunc(void (*func)(PerformanceData)) {
+    perfDataFunc = func;
 }

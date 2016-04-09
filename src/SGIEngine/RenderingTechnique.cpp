@@ -22,6 +22,7 @@
 #include "Light.h"
 #include "World.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <QtGui/qopenglext.h>
 
 #define KERNELSIZE 16
 #define NOISESIZE 16

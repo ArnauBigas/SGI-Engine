@@ -14,6 +14,13 @@
 
 namespace Game {
 
+    struct PerformanceData {
+        long long frames;
+        long long ticks;
+        int fps;
+        int tps;
+    };
+
     /**
      * Initializes the game along with all the other engines
      * 
@@ -76,19 +83,21 @@ namespace Game {
      * @return The duration in microseconds.
      */
     long lastTickTime();
-    
+
     /**
      * Returns whether the game is a client instance or a server instance.
      * @return ditto.
      */
     bool isClient();
-    
+
     /**
      * Kills the game, along with all the other engines and frees all resources.
      * Warning: it is recommended the use of the stop function instead, this
      * function should only be used for emergencies.
      */
     void kill();
+    
+    void setPerformaceDataFunc(void (*func)(PerformanceData));
 };
 
 #endif	/* GAME_H */

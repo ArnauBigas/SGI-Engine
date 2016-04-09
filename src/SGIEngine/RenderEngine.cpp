@@ -266,9 +266,7 @@ glm::vec2 RenderEngine::getGlyphPos(char c) {
 }
 
 void RenderEngine::drawString(std::string s, int x, int y) {
-    if (s.find(T_SUB) == std::string::npos) {
-        s = C_WHITE + s;
-    }
+    s = C_WHITE + s;
     std::stringstream ss(s);
     std::string item;
     std::vector<std::string> secs;
