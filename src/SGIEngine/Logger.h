@@ -49,7 +49,7 @@ namespace Logger {
             strftime(buf, sizeof(buf), "%X", &tstruct);
             
             std::ostringstream buffer;
-            buffer << "[" << buf << "][" << severity << "]: " << data;
+            buffer << std::dec << "[" << buf << "][" << severity << "]: " << data;
             static_cast<std::ostream&>(*this) << buffer.str();
             return *this;
         }
